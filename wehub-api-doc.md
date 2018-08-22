@@ -6,27 +6,20 @@
  2018.7.30|v1.0|方清| 规范action的业务名 以及request 和respone的数据结构
  2018.8.8 |v1.0|方清| 重新定义回调接口下发的任务格式 
  2018.8.13 |v1.1|方清| 新增(4,5,6,7,8)等5种新的任务,新增report_room_member_info 业务名 
-
-
+2018.8.22|v1.1|方清|pull task的定时轮询时间可在wehub上设置;上报链接消息;修正wehub 多实例运行中的bug
 
 ## 概述
 ```
 WeTool: 
 	推宝科技在2017年推出的一款微信PC客户端的辅助产品,详情见[wetool网站](https://www.wxb.com/wetool)
 WeHub:  
-	WeHub是一款类似于WeTool的产品,它除了保留原来wetool就具备的各种功能,还提供了对接企业API的能力
-第三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口)
-WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request,回调接口返回http respone
+	WeHub是一款类似于WeTool的产品,它除了保留原来wetool就具备的各种功能,还提供了对接企业API的能力.第三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request,回调接口返回http respone
 
 appid: 
-	使用WeHub服务的第三方需在WeHub中配置一个appid和回调接口,appid需要第三方向推宝科技申请,
-申请时需提交第三方自己的回调接口地址,推宝科技会对该地址做审核,WeHub会将相关的request数据post到这个到回调接口上.第三方在使用WeHub时首先要在WeHub中配置appid和回调接口,WeHub验证通过后才会post数据到该回调接口
+	使用WeHub服务的第三方需在WeHub中配置一个appid和回调接口,appid需要第三方向推宝科技申请,申请时需提交第三方自己的回调接口地址,推宝科技会对该地址做审核,WeHub会将相关的request数据post到这个到回调接口上.第三方在使用WeHub时首先要在WeHub中配置appid和回调接口,WeHub验证通过后才会post数据到该回调接口
 
 wxid: 
-	每一个微信号或者微信群,微信系统都定义了唯一的标识字符串.
-对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);
-对于个人微信号,其格式为wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)
-或者 xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如 fangqing_hust).
+	每一个微信号或者微信群,微信系统都定义了唯一的标识字符串.对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);对于个人微信号,其格式wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)或者 xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如 fangqing_hust).
 本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
 ```
 
@@ -61,7 +54,9 @@ wehub主动发起的数据(简称为:request)json格式为:
 	error_code其值语义为一个具体的错误码(数字),因此0前后不需要""符号
 ```
 
-​	
+注意:wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析
+
+
 
 
 以登录为例，当微信登录，则会向回调接口上报如下数据(request)：
@@ -116,6 +111,8 @@ respone格式
 ### 上报当前好友列表和群列表
 
 这是紧接着微信登录通知之后发送的request
+
+(因为群中成员数据量太大了,所以这里没有上报群内部的成员列表)
 
 request格式
 ```
@@ -199,7 +196,7 @@ respone格式
 
 ### 上报新的聊天消息
 
-触发时机:当收到私聊消息或所在的某个群内有人发言,目前wehub只上报文本消息
+触发时机:当收到私聊消息或所在的某个群内有人发言,目前wehub上报文本消息 和链接消息
 
 request
 ```
