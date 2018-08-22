@@ -3,6 +3,10 @@
 wehub 回调接口开发文档: 见 wehub-api-doc.md  
 faq:在与第三方企业在对接过程中遇到的相关的问题的记录(整理中)     
 
+WeHub对接企业交流qq群: 830137009
+
+官方网站: https://www.wxb.com/wetool
+
 版本更新记录:
 
 ```
