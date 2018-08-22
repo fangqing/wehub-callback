@@ -14,10 +14,11 @@ WeTool:
 	推宝科技在2017年推出的一款微信PC客户端的辅助产品,详情见[wetool网站](https://www.wxb.com/wetool)
 WeHub:  
 	WeHub是一款类似于WeTool的产品,它除了保留原来wetool就具备的各种功能,还提供了对接企业API的能力.第 
-三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request,回调接口返回http respone
+三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).		
+WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request,回调接口返回http respone
 
 appid: 
-	使用WeHub服务的第三方需在WeHub中配置一个appid和回调接口,appid需要第三方向推宝科技申请,申请时需提交第三方自己的回调接口地址,推宝科技会对该地址做审核,WeHub会将相关的request数据post到这个到回调接口上.第三方在使用WeHub时首先要在WeHub中配置appid和回调接口,WeHub验证通过后才会post数据到该回调接口
+	使用WeHub服务的第三方需在WeHub中配置一个appid和回调接口,appid需要第三方向推宝科技申请,申请时需  提交第三方自己的回调接口地址,推宝科技会对该地址做审核,WeHub会将相关的request数据post到这个到回调接口上.第三方在使用WeHub时首先要在WeHub中配置appid和回调接口,WeHub验证通过后才会post数据到该回调接口
 
 wxid: 
 	每一个微信号或者微信群,微信系统都定义了唯一的标识字符串.对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);对于个人微信号,其格式wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)或者 xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如 fangqing_hust).
