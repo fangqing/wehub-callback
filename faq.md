@@ -16,3 +16,16 @@ log的配置文件为C:\Users\xxxxx\AppData\Roaming\WeHub\system\cfg\log4cxx.pro
 wehub 将utf-8编码的json格式的request以post方式发往回调接口(http 的ContentType 为application/json)
 回调接口的respone也必须为utf-8的编码的json格式数据,否则wehub无法正确解析
 ```
+
+wehub是否可以多开?
+```
+wehub是可以多开的,但不会主动帮你多开微信.
+你必须首先多开微信,再多开wehub才有意义
+```
+
+回调接口该如何处理上报的聊天消息?
+```
+wehub提供基础的微信聊天消息上报的能力,不过滤发送者的wxid(但会过滤公众号推送的内容)
+因此回调接口在做自动回复的时候,需要过滤自己的微信号发的消息.否则会陷入"回调接口下发自动 
+回复内容--->wehub发消息--->微信消息事件回调--->wehub上报刚才自己发的消息--->回调接口又下发聊天任务"的死循环
+```
