@@ -13,6 +13,6 @@ WeHub对接企业交流qq群: 830137009
 2018.8.22
 pull task的定时轮询时间可在wehub上设置;上报链接消息;修正wehub 多实例运行中的bug
 wehub最新版本
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180822.zip
+http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180823.zip
 ```
 
