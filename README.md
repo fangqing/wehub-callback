@@ -18,7 +18,8 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180831.zip
 2018.8.31
 http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180831.zip
 1.新增文件上传功能:在wehub上可以配置上传的文件类型(目前只支持上传图片)
-第三方需开发一个文件上传的接口并在wehub上进行配置 wehub_callback_server项目中有文件上传的示范代码.  https://github.com/fangqing/wehub_callback_server
+第三方需开发一个文件上传的接口并在wehub上进行配置,wehub_callback_server项目中有文件上传的示范代码  
+https://github.com/fangqing/wehub_callback_server
    图片消息增加file_index 字段,该字段用来标识图片文件的索引值
 2.groupinfo 结构增加member_wxid_list字段(这会导致report_contact 的包比较大)
 3.群成员发生变化时增量上报 (action为report_room_member_change)
