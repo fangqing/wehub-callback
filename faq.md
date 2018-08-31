@@ -3,6 +3,8 @@
 如何查看wehub与 回调接口之间的数据通讯?
 ```
 方法1:安装fiddler,该软件可以很直接的观察到wehub 的所有的http通讯
+    在本机上开发和部署回调接口服务的开发者,需下载最新版wehub,打开设置界面,切换到"其他设置"-->设置http代理为127.0.0.1:8888(保持和fiddler默认的代理设置一致),然后就可以在fiddler中查看wehub发送的http request
+	
 方法2:Wehub在 C:\Users\xxxxxx\AppData\Roaming\WeHub\system\log 目录下会产生log文件   
 log的配置文件为C:\Users\xxxxx\AppData\Roaming\WeHub\system\cfg\log4cxx.properties,    
 若要看很详细的log,请提高loglevel:
