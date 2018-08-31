@@ -22,7 +22,8 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180831.zip
 2.groupinfo 结构增加member_wxid_list字段(这会导致report_contact 的包比较大)
 3.群成员发生变化时增量上报 (action为report_room_member_change)
 4.wehub和回调接口之间的http连接可设置http代理,方便调试
-	在本机上开发和部署回调接口服务的开发者,需下载最新版wehub,打开设置界面,切换到"其他设置"-->设置http代理为127.0.0.1:8888(保持和fiddler默认的代理设置一致),然后就可以在fiddler中查看wehub发送的http request
+	在本机上开发和部署回调接口服务的开发者,需下载最新版wehub,打开设置界面,切换到"其他设置",  
+	设置http代理为127.0.0.1:8888(保持和fiddler默认的代理设置一致),然后就可以在fiddler中查看wehub  发送的http request
 ```
 ```
 2018.8.22
