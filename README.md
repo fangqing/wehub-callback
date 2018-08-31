@@ -9,11 +9,13 @@ WeHub对接企业交流qq群: 830137009
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
 
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server
+
+
+当前最新版wehub下载地址    
+
+http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180831.zip  
+
 版本更新记录:
-
-当前最新版wehub
-
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180831.zip
 
 ```
 2018.8.31
