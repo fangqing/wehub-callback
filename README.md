@@ -6,7 +6,8 @@ faq:在与第三方企业在对接过程中遇到的相关的问题的记录(整
 WeHub对接企业交流qq群: 830137009         
 
 官方网站: https://www.wxb.com/wetool   
-对接的demo(php版) : https://gitee.com/chinalu/codes/hxreqplwf0ydi4gjokz7292   
+对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
+
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server
 版本更新记录:
 
