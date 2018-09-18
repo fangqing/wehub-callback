@@ -1,22 +1,23 @@
-#                                                        WeHub API接口规范v1.2
+#                                                        WeHub API接口规范
 
 ## 修改记录
-修改时间|版本号|作者|修改内容
-----|---|---|----
-2018.7.30|v1.0|方清| 规范action的业务名 以及request 和respone的数据结构
-2018.8.8 |v1.0|方清| 重新定义回调接口下发的任务格式 
-2018.8.13 |v1.1|方清| 新增(4,5,6,7,8)等5种新的任务,新增report_room_member_info 业务名 
-2018.8.22|v1.1|方清|pull task的定时轮询时间可在wehub上设置;上报链接消息;修正wehub 多实例运行中的bug
-2018.8.29|v1.2|方清| 新增文件上传功能(wehub上可以设置上传文件的类型),groupinfo 结构增加member_wxid_list字段,群成员发生变化时增量上报 (report_room_member_change);
-
+修改时间|作者|修改内容
+----|---|----
+2018.7.30|方清| 规范action的业务名 以及request 和respone的数据结构
+2018.8.8 |方清| 重新定义回调接口下发的任务格式 
+2018.8.13 |方清| 新增(4,5,6,7,8)等5种新的任务,新增report_room_member_info 业务名 
+2018.8.22|方清|pull task的定时轮询时间可在wehub上设置;上报链接消息;修正wehub 多实例运行中的bug
+2018.8.29|方清| 新增文件上传功能(wehub上可以设置上传文件的类型),groupinfo 结构增加member_wxid_list字段,群成员发生变化时增量上报 (report_room_member_change);
+2018.9.18|方清|新增"小程序,转账,发文件,个人名片,表情,语音,视频,微信系统消息"等消息事件的上报;新增report_friend_add_request,report_new_room两个action;新增发群公告,个人名片,删除好友,自动通过好友验证等4种新任务类型; 新增视频文件上传(微信版本号必须>=2.6.4.56);相关数据结构有微调(格式向下兼容)
 ## 概述
+
 ```
 WeTool: 
 	推宝科技在2017年推出的一款微信PC客户端的辅助产品,详情见[wetool网站](https://www.wxb.com/wetool)
 WeHub:  
 	WeHub是一款类似于WeTool的产品,它除了保留原来wetool就具备的各种功能,还提供了对接企业API的能力.第 
 三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).		
-WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request,回调接口返回http respone
+WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request(post方式),回调接口返回http respone
 
 appid: 
 	使用WeHub服务的第三方需在WeHub中配置一个appid和回调接口,appid需要第三方向推宝科技申请,申请时需  提交第三方自己的回调接口地址,推宝科技会对该地址做审核,WeHub会将相关的request数据post到这个到回调接口上.第三方在使用WeHub时首先要在WeHub中配置appid和回调接口,WeHub验证通过后才会post数据到该回调接口
@@ -26,7 +27,7 @@ wxid:
 本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
 ```
 
-## 基本的数据结构
+## 基本的数据结构(request/respone)
 wehub主动发起的数据(简称为:request)json格式为:
 ```
 {
@@ -57,12 +58,16 @@ wehub主动发起的数据(简称为:request)json格式为:
 	error_code其值语义为一个具体的错误码(数字),因此0前后不需要""符号
 ```
 
-注意:wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析
+注意:wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析 ,文档的示例代码中出现的  "$xxx"  符号代表这里应该出现一个名为"xxx"结构的数据域,如 $memberInfo,$task,$report_msgunit等
 
 
+## 业务数据定义
+当前的支持的业务名有:login,logout,report_contact,report_new_friend,
+report_new_msg,pull_task,report_task_result , report_room_member_info,report_room_member_change,report_friend_add_request,report_new_room. 
+这些业务名代表当前wehub支持的业务能力
 
-
-以登录为例，当微信登录，则会向回调接口上报如下数据(request)：
+### 微信登录通知/login
+数据格式见上面的例子中的描述,这是appid验证通过并且微信登陆后回调接口受到的第一个request
 ```
 {
   "action" : "login",				 //登录的业务名为"login"
@@ -84,15 +89,7 @@ wehub主动发起的数据(简称为:request)json格式为:
     "data":{}
 }
 ```
-
-## 业务数据定义
-当前的支持的业务名有:login,logout,report_contact,report_new_friend,
-report_new_msg,pull_task,report_task_result , 这些业务名代表当前wehub支持的业务能力
-
-### 微信登录通知
-数据格式见上面的例子中的描述,这是appid验证通过并且微信登陆后回调接口受到的第一个request
-
-### 微信退出通知
+### 微信退出通知/logout
 request格式:
 ```
 {
@@ -111,7 +108,7 @@ respone格式
     "data":{}
 }
 ```
-### 上报当前好友列表和群列表
+### 上报当前好友列表和群列表/report_contact
 
 这是紧接着微信登录通知之后发送的request
 
@@ -122,15 +119,8 @@ request格式
     "appid": "xxxxxx",
     "wxid": "wxid_xxxxxxx",
     "data":{
-        "group_list":[
-            $groupinfo1,
-            $groupinfo2,
-            $groupinfo3,
-            ......
-        ],
-        "friend_list":[
-            $userInfo1,$userInfo2,$userInfo3
-        ]
+        "group_list":[$groupinfo,$groupinfo, $groupinfo,......],
+        "friend_list":[$userInfo,$userInfo,$userInfo,...]
     }
 }
 data中相关字段描述
@@ -141,7 +131,7 @@ data中相关字段描述
         "owner_wxid": "xxxxxxxx",           //群主的wxid
         "member_count":  100,               //该群成员总数
         "head_img":"http://xxxxxxxx"        //群的头像的url地址
-        "member_wxid_list" :['wxid_xxx1','wxid_xxx2','wxid_xxx2   //当前群的成员wxid的列表
+        "member_wxid_list" :['wxid_xxx1','wxid_xxx2',...]  //当前群的成员wxid的列表
     }
     
     - userInfo(好友信息结构)
@@ -163,7 +153,7 @@ respone格式
     "data":{}
 }
 ```
-### 上报群成员详细信息
+### 上报群成员详细信息/report_room_member_info
 触发时机: 由回调接口通过下发"任务"来被触发
 ```
 {
@@ -174,12 +164,12 @@ respone格式
    	   room_data_list:[
            {
            	  "room_wxid":"xxxxx1@chatroom",  //群wxid
-           	  "memberInfo_list":[$memberInfo1,$memberInfo2.....] 
+           	  "memberInfo_list":[$memberInfo,$memberInfo.....] 
            	  //群内成员信息
            },
             {
            	  "room_wxid":"xxxxx2@chatroom",
-           	  "memberInfo_list":[$memberInfo1,$memberInfo2.....]
+           	  "memberInfo_list":[$memberInfo,$memberInfo.....]
            },
            ........
    	   ]
@@ -195,7 +185,7 @@ respone格式
         "head_img":"http://xxxxxxxx"    //头像的url地址
  }
 ```
-### 上报群成员变化
+### 上报群成员变化/report_room_member_change
 
 触发:群成员增加或减少时上报
 
@@ -219,9 +209,38 @@ respone
     "data":{}                        
 }
 ```
-### 上报新的聊天消息
 
-触发时机:当收到私聊消息或所在的某个群内有人发言,目前wehub上报文本消息 和链接消息
+### 上报新群/report_new_room
+
+```
+request
+{
+	"action":"report_new_room",
+	"appid":"xxxxxxx",
+	"wxid": "wxid_xxxxxxx",
+    "data":{
+    	"wxid":"xxxxx",   //新群的wxid
+    	"name:"xxxx",	  //群名(可能为空)
+    	"owner_wxid":"xxxxx", //群主的wxid
+    	"head_img":"xxxx",  //群头像的url地址
+    	"memberInfo_list":[$memberInfo,$memberInfo,.....]  //见memberInfo结构
+    }
+}
+
+respone
+{
+   "error_code": 0,                    
+    "error_reason": "",      
+    "ack_type":"report_new_room_ack",          
+    "data":{}                        
+}
+```
+
+### 上报新的聊天消息/report_new_msg
+
+触发时机:当收到私聊消息或所在的某个群内有人发言(含自己发送的消息)
+
+**对于做了自动回复功能的第三方接口,需要过滤自己发的消息.否则会陷入"回调接口下发自动回复-->wehub发消息--->微信消息事件回调--->wehub上报刚才自己发的消息--->回调接口又下发聊天任务"的死循环**
 
 request
 ```
@@ -230,80 +249,201 @@ request
   "appid": "xxxxxxxx",				//申请的appid
   "wxid" : "wxid_fo1039029348sfj",
   "data" : {
-    "msg": $msgunit       //上报单条消息,格式见下方
+    "msg": $report_msgunit       //上报单条消息
+    //report_msgunit格式见[上报的消息单元的格式]
     }
 }
 ```
-**聊天消息单元的格式($msgunit)**
-
- 聊天消息类型|类型值msg_type
-   ----|----
-   文本消息|1
-   图片消息|3
-   链接消息|49
-
-```
-- 文本消息
-{
-    "msg_type": 1,                       //1 代表文本消息
-    "room_wxid": "xxxxxxxx@chatroom",    //聊天消息发生在哪个群(如果是私聊则为空)
-    "wxid":  "wxid_xxxxxx",     		//聊天消息发送者的wxid
-    								//如果是自己发的消息这里的wxid就是当前登陆的微信号
-    "msg": "xxxxxxxx"           		//具体的文本内容
-}
-- 图片消息
-{
-	"msg_type": 3, 					//3 代表图片消息
-	"room_wxid": "xxxxxxxx@chatroom", //同文本消息
-	"wxid": "wxid_xxxxxx", 			//同文本消息
-	"msg": "xxxxxxxx" 			    //图片的url绝对地址:http://xxxxxxx/xx.jpg或png 
-									//该字段在回调接口下发任务时有效
-	"file_index":"xxxxxx"   		//图片文件的唯一索引(由wehub生成)
-									//该字段在wehub上报消息时有效
-}
-当wehub向回调接口上报图片消息时,忽略msg字段,file_index为图片文件的唯一索引,之后wehub通过文件上传接口上传该图片(具体见文件上传)
-
-      
-当回调接口下发图片消息任务时,忽略upload_image_index字段,msg为图片的绝对地址
-
-- 链接消息(分享某个链接)
-{
-	"msg_type":49, 					//49 代表链接消息
-    "room_wxid": "xxxxxxxx@chatroom", //同文本消息
-    "wxid": "wxid_xxxxxx", 			//同文本消息
-    "link_url":"http://xxxxx", 		//分享链接的url
-    "link_title":"标题", 			  //链接标题
-    "link_desc": "副标题",           //链接描述（副标题）
-    "link_img_url": "http://xxxxxxx" //链接的缩略图的的Url,jpg或者png格式
-}
-```
-**对于做了自动回复功能的第三方接口,需要过滤自己发的消息.否则会陷入"回调接口下发自动回复-->wehub发消息--->微信消息事件回调--->wehub上报刚才自己发的消息--->回调接口又下发聊天任务"的死循环**
-
-
 
 respone
-
 (为便于扩展,回复的内容以"**任务**"的形式返回,"任务"的种类之后会扩展)
-
 ```
 {
     "error_code": 0,                    
     "error_reason": "",      
     "ack_type":"report_new_msg_ack",          
     "data":{                          	
-        "reply_task_list": [$task1,$task2...]  //支持多个任务,但不要超过3个任务
+        "reply_task_list": [$task,$task,...]  //任务列表,支持多个任务,但不要超过3个任务
         //如果没有要回复的任务,则列表为空
-        //task格式见[respone中的任务格式]
+        //$task格式见[respone中下发的任务格式]
     }
 }
 ```
+**上报的消息单元的格式($report_msgunit)**
 
+ 聊天消息类型|类型值msg_type|是否支持任务下发|是否支持上传消息中的文件
+   ----|----|---|----
+   文本消息|1|支持|----
+   图片消息|3|支持|支持消息中的图片文件上传
+   个人名片|42|支持|----
+   语音|34|暂不支持|暂不支持
+   视频|43|支持|支持消息中的视频文件上传
+   表情消息|47|暂不支持|不支持
+   链接消息 |49|支持|----
+   小程序|4901|暂不支持|----
+ 转账 |4902|暂不支持|----
+ 文件 |4903|暂不支持|暂不支持
+   微信系统通知 |10000|不支持|----
+
+```
+- 文本消息
+{
+    "msg_type": 1,                      //1 代表文本消息
+    "room_wxid": "xxxxxxxx@chatroom",   //聊天消息发生在哪个群(如果是私聊则为空)
+    "wxid_from":  "wxid_xxxxxx",     	//消息发送者的wxid
+    								    //如果是自己发的消息这里的wxid就是自己的微信号
+    "wxid_to": 	"wxid_xxxxx",			//消息的接收者的wxid
+   										//如果发往群的消息,这个值就是群的wxid
+    									//如果是别人私聊给自己的消息,这里就是自己的微信号
+    "msg": "xxxxxxxx"           		//具体的文本内容
+}
+例如:
+  A用户在B群里发了一条消息:
+  "room_wxid": "B群wxid",
+  "wxid_from":"A的wxid",
+  "wxid_to": "B群wxid",
+  A给我私聊了一条消息:
+    "room_wxid": "",
+    "wxid_from":"A的wxid",
+    "wxid_to": "我的wxid",
+  我在B群里发了一条消息:
+   "room_wxid": "B群wxid",
+    "wxid_from":"我的wxid",
+    "wxid_to": "B群wxid",
+  我向A发了一条私聊消息:
+    "room_wxid": "",
+    "wxid_from":"我的wxid",
+    "wxid_to": "A的wxid",
+    
+- 图片消息
+{
+	"msg_type": 3, 					  //3 代表图片消息
+	"room_wxid": "xxxxxxxx@chatroom", //同文本消息
+	"wxid_from": "wxid_xxxxxx", 	//同文本消息
+	"wxid_to": 	"wxid_xxxxx",		//同文本消息
+	"file_index":"xxxxxx"   		//图片文件的唯一索引(由wehub生成)
+									//该字段在wehub上报消息时有效
+}
+
+- 链接消息(分享某个网页链接)
+{
+	"msg_type":49, 					//49 代表链接消息
+    "room_wxid": "xxxxxxxx@chatroom", 
+    "wxid_from": "wxid_xxxxxx", 
+    "wxid_to": "wxid_xxxxxx", 
+    "link_url":"http://xxxxx", 		//分享链接的url
+    "link_title":"标题", 			  //链接标题
+    "link_desc": "副标题",           //链接描述（副标题）
+    "link_img_url": "http://xxxxxxx" //链接的缩略图的的Url,jpg或者png格式
+}
+
+- 表情消息
+{
+  	"msg_type":47, 					
+    "room_wxid": "xxxxxxxx@chatroom", 
+    "wxid_from": "wxid_xxxxxx", 
+    "wxid_to": "wxid_xxxxxx", 
+    "emoji_url": "xxxxxxxxx" //表情的url地址(若有需要,请回调接口自行下载该文件)
+    "raw_msg": "xxxxxxx"
+}
+
+- 小程序
+{
+	"msg_type":4901, 					
+    "room_wxid": "xxxxxxxx@chatroom", 
+    "wxid_from": "wxid_xxxxxx", 
+    "wxid_to": "wxid_xxxxxx", 
+    "raw_msg": "xxxxxxx"    //微信中的小程序信息的原始数据,xml格式,请自行解析
+    						//username,nickname 为关键字段
+}
+
+- 转账事件 
+触发时机:
+情况一:我转账给他人
+   1.发起转账时:wxid_from='我的wxid',wxid_to='他人的wxid',paysubtype=1
+   2.对方确认收账时:wxid_from ='他人的wxid',wxid_to='我的wxid',paysubtype=3
+情况二:他人转账给我:
+   1.发起转账时:wxid_from ='他人的wxid',wxid_to='我的wxid',paysubtype=1
+   (只有这种情况下才能自动收账,格式见自动收账任务)
+   2.我确认收账时:wxid_from='我的wxid',wxid_to='他人的wxid',paysubtype=3
+{
+	"msg_type":4902, 					
+    "wxid_from": "wxid_xxxxxx", 
+    "wxid_to": "wxid_xxxxxx", 
+    "transferid": "xxxxxxx"   //转账的ID
+    "paysubtype":paysubtype,  //这笔账单的状态
+    "raw_msg": "xxxxxxx"	  //微信中的转账事件的原始数据,xml格式				
+}
+
+- 发送文件
+(目前还不能获取到消息中文件的内容,暂时不支持上传,file_index预留为空值)
+{
+	"msg_type":4903, 					
+    "room_wxid": "xxxxxxxx@chatroom", //发生在那个群里
+    "wxid_from": "wxid_xxxxxx", 	  //文件发送者
+    "wxid_to":"wxid_xxxxx",	  //文件接收者
+    "file_index":"",  
+    "raw_msg": "xxxxxxx"   //微信中的文件的原始消息,xml格式,请自行解析
+}
+- 个人名片
+{
+    "msg_type":42, 					
+    "room_wxid": "xxxxxxxx@chatroom", 
+    "wxid_from": "wxid_xxxxxx", 
+    "wxid_to": "wxid_xxxxxx", 
+    "raw_msg": "xxxxxxx"   //微信中的名片信息的原始数据,xml格式,请自行解析
+}
+- 语音消息
+(目前还不能获取到消息中语音文件的内容,暂时不支持上传,file_index预留为空值)
+{
+    "msg_type":34, 					
+    "room_wxid": "xxxxxxxx@chatroom", 
+    "wxid_from": "wxid_xxxxxx", 
+    "wxid_to": "wxid_xxxxxx", 
+    "file_index":"", 
+    "raw_msg": "xxxxxxx"   //微信中的原始消息,xml格式
+}
+- 视频消息
+{
+    "msg_type":43, 					
+    "room_wxid": "xxxxxxxx@chatroom", 
+    "wxid_from": "wxid_xxxxxx", 
+    "wxid_to": "wxid_xxxxxx", 
+    "file_index":"xxxxxx",  //视频文件的索引
+    "raw_msg":"xxxxxxx",	//视频文件详细信息(文件大小length,播放时长playlength),
+    				//需服务端自行解析;可根据文件大小来判断是否要上传
+}
+
+- 微信系统通知
+{
+    "msg_type":10000, 					
+    "room_wxid": "xxxxxxxx@chatroom", 
+    "wxid_from": "wxid_xxxxxx", 
+    "wxid_to": "wxid_xxxxxx", 
+    "raw_msg": "xxxxxxxx"     //具体的通知内容,纯文本格式
+}
+无需对系统通知做自动回复
+eg:
+1.发消息-被对方拉黑之后,raw_msg 为"消息已发出，但被对方拒收了"
+2.有红包出没时:"发出红包，请在手机上查看"
+3.修改群名称后:"你修改群名为“新的群名称123ABCabc”"
+4.修改群公告后:""设置群公告内容xxxxxx""
+其他:
+	"群主已恢复默认进群方式。"
+	"群主已启用“群聊邀请确认”，群成员需群主确认才能邀请朋友进群。"
+	"你已成为新群主"
+	""老情人"已成为新群主"
+	"你邀请xxxx加入了群聊"
+	"xxxx邀请xxxx加入了群聊"
+	"xxxxx通过扫描你分享的二维码加入群聊"
+	"xxxxx通过扫描xxxxxx分享的二维码加入群聊"
+```
 
 ### 文件上传
 ```
 基本流程:
-1.wehub收到图片消息,上报基本信息(此时wehub仅仅通过report_new_msg上报该图片的索引file_index值,不上传具体文件的二进制信息,二进制相同的文件,其file_index是一样的)
-2.回调接口根据file_index的值查询第三方的文件存储系统中是否已经存在该索引的文件,若需要wehub上传,在report_new_msg_ack的respone中携带文件上传的任务通知wehub上传二进制文件,格式见[respone中的任务格式]
+1.wehub收到图片消息/视频消息,上报基本信息(此时wehub仅仅通过report_new_msg上报该图片的索引file_index值,不上传具体文件的二进制信息)
+2.回调接口根据file_index的值查询当前服务端文件存储系统中是否已经存在该索引的文件,若需要wehub上传,在report_new_msg_ack的respone中携带文件上传的任务通知wehub上传二进制文件,格式见[respone中下发的任务格式].若在wehub客户端设置了不上传某类型的文件,即使收到了上传指令wehub也不上传
 3.wehub收到指令后通过第三方自定义的上传接口上传文件(post 方式)
 4.上传接口返回文件处理的结果
  {
@@ -313,7 +453,7 @@ respone
      'file_index':file_index     //接收到的文件的file_index
  }
 ```
-以下为 wehub向上传接口上传文件时的http request示例
+以下为 wehub向上传接口上传图片文件的http request示例
 ```
 Content-Type: multipart/form-data; boundary="boundary_.oOo._OTg2Ng==MzU3Mg==MjEwNzE="
 MIME-Version: 1.0
@@ -337,15 +477,68 @@ xxxxxxxxxxxxxxx.....  //图片的2进制字节流
 xxxxxxxxxxxxxxx.....
 ```
 
+上传视频
+```
+Content-Type: multipart/form-data; boundary="boundary_.oOo._MTQ5NDU=Mjg1Nzk=MTAyNzE="
+MIME-Version: 1.0
+Content-Length: 1351338
+Connection: Keep-Alive
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,en,*
+User-Agent: Mozilla/5.0
+Host: localhost.:5678
+
+--boundary_.oOo._MTQ5NDU=Mjg1Nzk=MTAyNzE=
+Content-Type: text/plain
+Content-Disposition: form-data; name="file_index"
+
+306b0201000464306202010002041cdc709b02032f56c10204cde5e77302045b99fc32043d617570766964656f5f356665376666383735333737623337355f313533363831383232345f3137353730343133303931383637613066633434323433300204010400040201000400
+--boundary_.oOo._MTQ5NDU=Mjg1Nzk=MTAyNzE=
+Content-Type: video/mp4
+Content-Disposition: form-data; name="file";filename="c899cebad9877280af73d4e595f5d1e41e7b1ed8.mp4"
+
+xxxxxxxxxxxxxxx.....  //视频文件的2进制字节流
+xxxxxxxxxxxxxxx.....
+```
 注意: 服务端的上传接口接收到wehub的request后需要取出 request中 file_index的值
 
-目前wehub只上传图片类型的文件(之后上传的文件类型会拓展)
+目前wehub只上传图片/视频类型的文件(之后上传的文件类型会拓展)
 
 
 
-### 新好友通知
+### 新的加好友请求/report_friend_add_request
+收到添加好友的请求(此时对方还不是我的好友,不能给对方发消息)
+微信系统对每个账号每天通过的好友请求有限制(每天200左右)
+服务端需要储存(v1,v2) 值, 以便通过任务下发的方式通过好友验证
+request格式
+```
+{
+  "action" : "report_friend_add_request",
+  "appid": "xxxxxxx",
+  "wxid" : "wxid_fo1039029348sfj",
+  "data" : {
+   	"v1":"xxxxxx",			  //若要自动通过,请在ack中回传
+   	"v2":"xxxxxxx",			  //若要自动通过,请在ack中回传
+   	"raw_msg":"xxxxxxxxxxx"   //微信中的原始消息,xml格式
+  }
+}
+```
+respone格式
+```
+{
+    "error_code": 0,                      
+    "error_reason": "",         
+    "ack_type":"report_friend_add_request_ack",                
+    "data":{
+      	"op_code": 1  //1通过好友请求(此时必须有v1和V2);其他值,不处理
+      	"v1":"xxxxxx",
+   		"v2":"xxxxxxx"
+    }
+}
+```
+### 新好友通知/report_new_friend
 
-每当有新的好友时,上报新好友的个人信息
+每当有新的好友时,上报新好友的个人信息(对方已经成为了我的好友)
 
 request格式
 ```
@@ -357,7 +550,10 @@ request格式
     "fans_wxid": "wxid_ljsdlfjslfjl",		 // 新好友的wxid
     "nickname": "Jerry",					// 新好友的昵称
     "wx_alias": "jerry"						// 新好友的微信号,可能为空
-    "notice_word":  "xxxxxxx"  				 // 新好友加我时的打招呼的内容,可能为空
+    "head_img": "xxxxx",			//头像url
+    "notice_word":  "xxxxxxx"  		// 新好友加我时的打招呼的内容,可能为空
+    "sourceusername": "xxxxx"		//推荐人的wxid,可能为空
+    "sourcenickname":"xxxxxxx" 		//推荐人昵称,可能为空
   }
 }
 ```
@@ -368,43 +564,75 @@ respone格式
     "error_reason": "",         
     "ack_type":"report_new_friend_ack",                
     "data":{
-        "reply_task_list":[$task1,$task2....]  
-        // 这里的回复格式和report_new_msg_ack 一样
+        "reply_task_list":[$task,$task,....]    //任务列表
+        // $task格式见[respone中下发的任务格式]
     }
 }
 ```
-### respone中的任务格式
+### 任务格式 $task(respone中下发的任务格式)
 
 (将来会有更多的任务格式支持)
 
 任务类型|类型值task_type
    ----|----
-   发消息任务|1
+   发消息任务|1(只支持文字,图片,链接,视频,个人名片)
    踢人任务|2
-   拉群任务|3
- 上报群成员信息 |4
+ 拉群任务(邀请入群) |3
+   上报群成员信息 |4
    加群成员为好友|5
    修改好友备注|6
    修改群昵称|7
    退群|8
-   上传文件|9   //只通过report_new_msg_ack来下发
+   上传文件|9   //通过report_new_msg_ack来下发
+   发群公告|10 
+   自动收账|11
+   删除好友|12
+   通过好友验证|13
 ```
 - 发消息任务:
 (向一个微信群或一个微信号发一组消息单元)
 {
-    "task_type": 1,    //任务类型
+    "task_type": 1,  
     "task_dict":
     {	
-    	//若发群消息:room_wxid为群对象,wxid为要@的对象
+    	//若发群消息:room_wxid为群对象,wxid为要@的对象(仅文字消息时生效)
     	//若发私聊,room_wxid 为空,wxid为具体的私聊对象
     	"room_wxid": "xxxxxx",  
     	"wxid":"xxxxxxx",	   				  
-    	"msg_list":[$msgunit,$msgunit2....]  
-         //将一条或多条消息单元发送给receiver_wxid
-    	//$msgunit中的room_wxid,wxid等信息将被忽略
-    	//格式见[聊天消息单元的格式($msgunit)]
+    	"msg_list":[$push_msgunit,$push_msgunit,....]  
+         //待发送的消息单元列表
 	}
 }
+ 发消息任务中的$push_msgunit格式
+	⑴文字消息
+    {
+        'msg_type':1,
+        'msg': "xxxxxx"  发送的文字
+    }
+    ⑵图片消息
+    {
+         'msg_type':3,
+         'msg':"xxxx"  //图片的url绝对地址:http://xxxxxxx/xx.jpg或png 
+    }
+    ⑶链接消息
+    {
+        "msg_type":49, 					//49 代表链接消息
+        "link_url":"http://xxxxx", 		//分享链接的url
+        "link_title":"标题", 			  //链接标题
+        "link_desc": "副标题",           //链接描述（副标题）
+        "link_img_url": "http://xxxxxxx" //链接的缩略图的的Url,jpg或者png格式
+    }
+    ⑷视频消息
+    {
+        "msg_type":43, 	
+        "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
+    }
+    ⑸个人名片
+    {
+     	"msg_type":42, 	
+        "wxid_card":"xxxxxx" 		//发送谁的个人名片
+    }
+
 - 踢人任务:
 (把一个微信号从指定的群踢出,当前微信必须有群主权限)
 {
@@ -483,11 +711,49 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     	"flag":1   //若为0代表不用上传,1代表需要上传
 	}
 }
-//第三方需要将wehub上传的文件保存起来,建立file_index与存储文件的索引
+//第三方需要将wehub上传的文件保存起来,建立file_index与上传文件的对应关系
+
+- 发群公告
+{
+    "task_type":10,
+    "task_dict":
+    {
+        "room_wxid":"xxxxxx",   //微信群
+        "msg":"xxxxxx" //群公告的内容
+    }
+}
+
+- 自动收账 (只能收取别人发给自己的转账)
+{
+    "task_type":11,
+    "task_dict":
+    {
+    	"wxid_from": "xxxxxx" 	 //转账发起者wxid
+        "transferid":"xxxxxx"    //transferid:自动收哪一笔转账
+    }
+}
+- 删除好友
+ {
+     "task_type":12,
+      "task_dict":
+      {
+       "wxid_delete": "xxxxx"  //要被删除的好友的wxid
+	}
+ }
+ -通过好友验证
+ {
+ 	"task_type":12,
+ 	"task_dict":
+      {
+       "v1": "xxxxx",
+       "v2": "xxxxx"
+	}
+}
 ```
 ### 向回调接口请求一个任务(pull_task)
-wehub在appid验证通过以后,每5秒请求一次
+wehub在appid验证通过以后,每间隔x秒请求一次(时间间隔可在wehub上设置,最少1秒,默认是5秒)
 request格式
+
 ```
 {
     "action": "pull_task",
@@ -506,12 +772,12 @@ respone格式
          //wehub通过task_id来识别不同的任务(task_id其值是由回调接口生成的字符串,请保证有唯一性)
         "task_id": "任务id",    
         "task_data": $task    //单个任务
-         //具体的任务格式见[respone中的任务格式]
+         //$task格式见[respone中下发的任务格式]
          //wehub取到任务以后,会立即开始执行,执行完成后会把结果异步地反馈给回调接口
     }
 }
 ```
-### 向回调接口反馈任务执行的结果
+### 向回调接口反馈任务执行的结果/report_task_result 
 request格式
 ```
 {
