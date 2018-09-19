@@ -519,7 +519,7 @@ request格式
   "data" : {
    	"v1":"xxxxxx",			  //若要自动通过,请在ack中回传
    	"v2":"xxxxxxx",			  //若要自动通过,请在ack中回传
-   	"raw_msg":"xxxxxxxxxxx"   //微信中的原始消息,xml格式
+   	"raw_msg":"xxxxxxxxxxx"   //微信中的原始消息,xml格式(xml中的content字段为打招呼的内容)
   }
 }
 ```
