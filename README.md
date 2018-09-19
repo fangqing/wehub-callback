@@ -1,8 +1,15 @@
 本project 包含以下内容:
 
 wehub 回调接口开发文档: 见 wehub-api-doc.md  
-faq:在与第三方企业在对接过程中遇到的相关的问题的记录(整理中)     
-​		
+
+https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc.md
+
+
+
+faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理中)     
+https://github.com/fangqing/wehub-callback/blob/master/faq.md	
+
+​	
 WeHub对接企业交流qq群: 830137009         
 
 官方网站: https://www.wxb.com/wetool   
@@ -23,7 +30,7 @@ wehub版本更新记录:
 新版本地址:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.4.exe
 
 ```
-发布 0.1.4版本
+发布wehub 0.1.4版本
 http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.4.exe
 1.新增"小程序,转账,发文件,个人名片,表情,语音,视频,微信系统消息"等消息事件的上报;
 2.新增report_friend_add_request,report_new_room两个action;
