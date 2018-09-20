@@ -1,3 +1,10 @@
+微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.5.exe  
+
+目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56 这三个版本的微信
+
+--------------------------------------------------------------------------------
+
 本project 包含以下内容:
 
 wehub 回调接口开发文档: 见 wehub-api-doc.md  
@@ -6,16 +13,12 @@ https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc.md
 faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理中)     
 https://github.com/fangqing/wehub-callback/blob/master/faq.md	
 
-​	
 WeHub对接企业交流qq群: 830137009  
 官方网站: https://www.wxb.com/wetool   
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server  
 
-最新版本微信下载地址:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.5.exe  
 
-目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56 这三个版本的微信
 
 版本更新记录:  
 2018.9.20

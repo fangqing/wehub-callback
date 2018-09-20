@@ -4,7 +4,6 @@
 修改时间|对应的客户端版本|修改内容
 ----|---|---
 2018.7.30|| 规范action的业务名 以及request 和respone的数据结构
-2018.8.8 ||重新定义回调接口下发的任务格式 
 2018.8.13 ||新增(4,5,6,7,8)等5种新的任务,新增report_room_member_info 业务名 
 2018.8.22||pull task的定时轮询时间可在wehub上设置;上报链接消息;修正wehub 多实例运行中的bug
 2018.8.29||新增文件上传功能(wehub上可以设置上传文件的类型),groupinfo 结构增加member_wxid_list字段,群成员发生变化时增量上报 (report_room_member_change);
@@ -16,9 +15,7 @@
 WeTool: 
 	推宝科技在2017年推出的一款微信PC客户端的辅助产品,详情见[wetool网站](https://www.wxb.com/wetool)
 WeHub:  
-	WeHub是一款类似于WeTool的产品,它除了保留原来wetool就具备的各种功能,还提供了对接企业API的能力.第 
-三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).	
-WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request(post方式),回调接口返回http respone
+	WeHub是一款类似于WeTool的产品,它除了保留原来wetool就具备的各种功能,还提供了对接 企业API的能力.第三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).  WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request(post方式),回调接口返回http respone
 
 appid: 
 	使用WeHub服务的第三方需在WeHub中配置一个appid和回调接口,appid需要第三方向推宝科技申请,申请时需  提交第三方自己的回调接口地址,推宝科技会对该地址做审核,WeHub会将相关的request数据post到这个到回调接口上.第三方在使用WeHub时首先要在WeHub中配置appid和回调接口,WeHub验证通过后才会post数据到该回调接口
