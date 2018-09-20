@@ -1,14 +1,15 @@
 #                                                        WeHub API接口规范
 
 ## 修改记录
-修改时间|作者|修改内容
-----|---|----
-2018.7.30|方清| 规范action的业务名 以及request 和respone的数据结构
-2018.8.8 |方清| 重新定义回调接口下发的任务格式 
-2018.8.13 |方清| 新增(4,5,6,7,8)等5种新的任务,新增report_room_member_info 业务名 
-2018.8.22|方清|pull task的定时轮询时间可在wehub上设置;上报链接消息;修正wehub 多实例运行中的bug
-2018.8.29|方清| 新增文件上传功能(wehub上可以设置上传文件的类型),groupinfo 结构增加member_wxid_list字段,群成员发生变化时增量上报 (report_room_member_change);
-2018.9.18|方清|新增"小程序,转账,发文件,个人名片,表情,语音,视频,微信系统消息"等消息事件的上报;新增report_friend_add_request,report_new_room两个action;新增发群公告,个人名片,删除好友,自动通过好友验证等4种新任务类型; 新增视频文件上传(微信版本号必须>=2.6.4.56);相关数据结构有微调(格式向下兼容)
+修改时间|对应的客户端版本|修改内容
+----|---|---
+2018.7.30|| 规范action的业务名 以及request 和respone的数据结构
+2018.8.8 ||重新定义回调接口下发的任务格式 
+2018.8.13 ||新增(4,5,6,7,8)等5种新的任务,新增report_room_member_info 业务名 
+2018.8.22||pull task的定时轮询时间可在wehub上设置;上报链接消息;修正wehub 多实例运行中的bug
+2018.8.29||新增文件上传功能(wehub上可以设置上传文件的类型),groupinfo 结构增加member_wxid_list字段,群成员发生变化时增量上报 (report_room_member_change);
+2018.9.18|0.1.4|新增"小程序,转账,发文件,个人名片,表情,语音,视频,微信系统消息"等消息事件的上报;新增report_friend_add_request,report_new_room两个action;新增发群公告,个人名片,删除好友,自动通过好友验证等4种新任务类型; 新增视频文件上传(微信版本号必须>=2.6.4.56);相关数据结构有微调(格式向下兼容)
+2018.9.20|0.1.5|在login 和 logout 中增加 client_version字段;report_friend_add_request中增加notice_word字段；
 ## 概述
 
 ```
@@ -16,7 +17,7 @@ WeTool:
 	推宝科技在2017年推出的一款微信PC客户端的辅助产品,详情见[wetool网站](https://www.wxb.com/wetool)
 WeHub:  
 	WeHub是一款类似于WeTool的产品,它除了保留原来wetool就具备的各种功能,还提供了对接企业API的能力.第 
-三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).		
+三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).	
 WeHub和回调接口采用c/s的方式进行应答,WeHub向回调接口主动发起http request(post方式),回调接口返回http respone
 
 appid: 
@@ -75,8 +76,9 @@ report_new_msg,pull_task,report_task_result , report_room_member_info,report_roo
   "wxid" : "wxid_fo1039029348sfj",    //当前登陆的微信账号的wxid
   "data" : {
     "nickname": "Bill",               //微信昵称
-    "wx_alias": "mccbill",            //微信号(有可能为空)
-    "head_img": "http://xxxxxx"       //微信的头像地址
+    "wx_alias": "mccbill",           //微信号(有可能为空)
+    "head_img": "http://xxxxxx",     //微信的头像地址
+    "client_version":"xxxxxx"		 //wehub的版本号
   }
 }
 ```
@@ -96,7 +98,9 @@ request格式:
     "action":"logout",
     "appid": "xxxxxx",				//申请的appid
     "wxid": "wxid_xxxxxxx",
-    "data":{}
+    "data":{
+       "client_version":"xxxxxx"		//wehub的版本号 
+    }
 }
 ```
 respone格式
@@ -527,7 +531,8 @@ request格式
   "data" : {
    	"v1":"xxxxxx",			  //若要自动通过,请在ack中回传
    	"v2":"xxxxxxx",			  //若要自动通过,请在ack中回传
-   	"raw_msg":"xxxxxxxxxxx"   //微信中的原始消息,xml格式(xml中的content字段为打招呼的内容)
+   	"notice_word":"xxxxxxx", //新好友加我时的打招呼的内容,可能为空
+   	"raw_msg":"xxxxxxxxxxx"  //微信中的原始消息,xml格式
   }
 }
 ```
@@ -591,7 +596,7 @@ respone格式
    修改好友备注|6
    修改群昵称|7
    退群|8
-   上传文件|9   //通过report_new_msg_ack来下发
+   上传文件|9
    发群公告|10 
    自动收账|11
    删除好友|12
@@ -715,8 +720,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":9,
     "task_dict":
     {
-    	"file_index":"xxxxxxx",   //file_index的值由wehub维护
-    	"flag":1   //若为0代表不用上传,1代表需要上传
+    	"file_index":"xxxxxxx",   //需要上传的文件的file_index
 	}
 }
 //第三方需要将wehub上传的文件保存起来,建立file_index与上传文件的对应关系
