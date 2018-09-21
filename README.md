@@ -29,7 +29,6 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.6.exe
 ```
 
 2018.9.20
-
 ```
 发布wehub 0.1.5版本
 1.设置界面去掉了上传文件类型的复选框,wehub完全根据回调接口的"上传文件"的任务指令来上传文件(只要收到指令就上传,没收到指令就不上传,所以原来的复选框就完全没必要了)
@@ -38,8 +37,6 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.6.exe
 ```
 
 2018.9.18
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.4.exe
-
 ```
 发布wehub 0.1.4版本
 1.新增"小程序,转账,发文件,个人名片,表情,语音,视频,微信系统消息"等消息事件的上报;
@@ -49,7 +46,6 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.4.exe
 ```
 
 2018.8.31
-
 ```
 1.新增文件上传功能:在wehub上可以配置上传的文件类型(只支持上传图片)
 第三方需开发一个文件上传的接口并在wehub上进行配置,wehub_callback_server项目中有文件上传的示范代码  
