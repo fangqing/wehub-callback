@@ -1,5 +1,5 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.5.exe  
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.6.exe  
 
 目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56 这三个版本的微信
 
@@ -21,8 +21,14 @@ WeHub对接企业交流qq群: 830137009
 
 
 版本更新记录:  
+2018.9.21:
+http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.6.exe
+```
+发布wehub 0.1.6版本
+修复可能导致微信卡死的bug
+```
+
 2018.9.20
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.5.exe
 
 ```
 发布wehub 0.1.5版本
@@ -43,7 +49,6 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.4.exe
 ```
 
 2018.8.31
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180831.zip
 
 ```
 1.新增文件上传功能:在wehub上可以配置上传的文件类型(只支持上传图片)
@@ -58,7 +63,6 @@ https://github.com/fangqing/wehub_callback_server
 ```
 
 2018.8.22
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHub_release_20180823.zip
 ```
 pull task的定时轮询时间可在wehub上设置;上报链接消息;修正wehub多实例运行中的bug
 ```
