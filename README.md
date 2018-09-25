@@ -13,7 +13,6 @@ https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc.md
 faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理中)     
 https://github.com/fangqing/wehub-callback/blob/master/faq.md	
 
-WeHub对接企业交流qq群: 830137009  
 官方网站: https://www.wxb.com/wetool   
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server  
@@ -23,6 +22,7 @@ WeHub对接企业交流qq群: 830137009
 版本更新记录:  
 2018.9.21:
 http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.6.exe
+
 ```
 发布wehub 0.1.6版本
 修复可能导致微信卡死的bug
