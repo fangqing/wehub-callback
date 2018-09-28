@@ -752,7 +752,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
  }
  -通过好友验证
  {
- 	"task_type":12,
+ 	"task_type":13,
  	"task_dict":
       {
        "v1": "xxxxx",
