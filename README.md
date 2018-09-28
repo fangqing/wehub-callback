@@ -48,8 +48,8 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.0.exe
    "task_type": 1,  
    "task_dict":
     {	
-		"wxid_to":"xxxxxx"   	
-        "at_list":['xxxx','xxxx']  
+        "wxid_to":"xxxxxx",  	
+        "at_list":['xxxx','xxxx'],  
     	"msg_list":[$push_msgunit,$push_msgunit,....] 
 	}
 }
