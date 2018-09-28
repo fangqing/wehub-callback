@@ -9,9 +9,9 @@ wehub 回调接口开发文档:
 
 由于wehub自发布第一个版本至今,有多个版本的迭代,接口规范也在调整优化
 
-若使用的wehub版本号<=0.1.6,接口规范文档为
-https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc-v1.md
-自0.2.0版本之后,使用新的协议,简化了旧版本协议中繁琐的ack_type,接口规范文档为
+若使用的wehub版本号<=0.1.6,接口规范文档为  
+https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc-v1.md  
+自0.2.0版本之后,使用新的协议,简化了旧版本协议中繁琐的ack_type,接口规范文档为  
 https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc-v2.md
 
 faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理中)     
