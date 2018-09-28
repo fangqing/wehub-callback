@@ -1,25 +1,63 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.6.exe  
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.0.exe  
 
 目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56 这三个版本的微信
 
---------------------------------------------------------------------------------
+------
 
-本project 包含以下内容:
+wehub 回调接口开发文档: 
 
-wehub 回调接口开发文档: 见 wehub-api-doc.md  
-https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc.md
+由于wehub自发布第一个版本至今,有多个版本的迭代,接口规范也在调整优化
+
+若使用的wehub版本号<=0.1.6,接口规范文档为
+https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc-v1.md
+自0.2.0版本之后,使用新的协议,简化了旧版本协议中繁琐的ack_type,接口规范文档为
+https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc-v2.md
 
 faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理中)     
 https://github.com/fangqing/wehub-callback/blob/master/faq.md	
 
-官方网站: https://www.wxb.com/wetool   
+------
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server  
 
+(demo仅展示数据的处理方式,不保证数据结构的完整性)
 
-
+------
 版本更新记录:  
+2018.9.28:
+发布wehub 0.2.0 
+http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.0.exe
+
+```
+1.简化了ack中的协议
+2."发消息任务"的任务类型数据结构有调整:  
+调整前的数据结构为: 
+{
+    "task_type": 1,  
+    "task_dict":
+    {	
+    	"room_wxid": "xxxxxx",  
+    	"wxid":"xxxxxxx",	   				  
+    	"msg_list":[$push_msgunit,$push_msgunit,....] 
+	}
+}
+
+调整后的数据结构为
+{
+   "task_type": 1,  
+   "task_dict":
+    {	
+		"wxid_to":"xxxxxx"   	
+        "at_list":['xxxx','xxxx']  
+    	"msg_list":[$push_msgunit,$push_msgunit,....] 
+	}
+}
+
+调整后发群消息时可以at多个微信号了(原来只能at一个微信号)
+```
+
+
 2018.9.21:
 http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.6.exe
 

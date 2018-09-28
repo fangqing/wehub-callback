@@ -1,4 +1,4 @@
-#                                                        WeHub API接口规范
+#                                                        WeHub API接口规范v1
 
 ## 修改记录
 修改时间|对应的客户端版本|修改内容
@@ -65,7 +65,7 @@ report_new_msg,pull_task,report_task_result , report_room_member_info,report_roo
 这些业务名代表当前wehub支持的业务能力
 
 ### 微信登录通知/login
-数据格式见上面的例子中的描述,这是appid验证通过并且微信登陆后回调接口受到的第一个request
+这是appid验证通过并且微信登陆后向回调接口发送的第一个request
 ```
 {
   "action" : "login",				 //登录的业务名为"login"
