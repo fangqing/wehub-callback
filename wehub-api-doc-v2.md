@@ -340,11 +340,11 @@ respone格式为[通用的common_ack格式]
     "msg_type": 1,                      //1 代表文本消息
     "room_wxid": "xxxxxxxx@chatroom",   //聊天消息发生在哪个群(如果是私聊则为空)
     "wxid_from":  "wxid_xxxxxx",     	//消息发送者的wxid
-    								    //如果是自己发的消息这里的wxid就是自己的微信号
-    "wxid_to": 	"wxid_xxxxx",			//消息的接收者的wxid
-   										//如果发往群的消息,这个值就是群的wxid
-    									//如果是别人私聊给自己的消息,这里就是自己的微信号
-    "msg": "xxxxxxxx"           		//具体的文本内容
+                                        //如果是自己发的消息这里的wxid就是自己的微信号
+    "wxid_to": 	"wxid_xxxxx",		 //消息的接收者的wxid
+                                     //如果发往群的消息,这个值就是群的wxid
+                                     //如果是别人私聊给自己的消息,这里就是自己的微信号
+    "msg": "xxxxxxxx"                //具体的文本内容
   //如果A在群里面at了B(群昵称为BN),C(群昵称为CN),则msg的格式为"@BN @CN XXXXXX" (@BN @CN之间有空格)
 }
 例如:
