@@ -155,7 +155,7 @@ data中相关字段描述
 
 respone格式为
 
-[通用的common_ack格式]
+##### [通用的common_ack格式]
 
 ```
 {
@@ -165,12 +165,13 @@ respone格式为
     "data":{
          "reply_task_list": [$task,$task,...]  
         //回复的任务列表,如果没有要回复的任务,则列表为空
-//每个$task都是一个json对象,代表一个要下发给wehub执行的任务单元,格式见[respone中下发的任务格式]
+//每个$task都是一个json对象,代表一个要下发给wehub执行的任务单元,格式见[任务类型格式]
     }
 }
 ```
+
+示例:向wehub回复两个任务,第一个任务让wehub向一个群发送3条消息(1条文本消息(同时@了两个群成员),1条图片消息,1条链接消息),第二个任务让wehub上报两个微信群的群成员信息
 ```
-以下示例向wehub下发两个任务:第一个任务让wehub发送3条消息(1条群文本消息(同时@了两个群成员),1条图片消息,1条链接消息),第二个任务让wehub上报两个微信群的群成员信息
 {
    "error_code": 0,                      
    "error_reason": "",         
@@ -493,7 +494,7 @@ eg:
 ```
 基本流程:
 1.wehub收到图片消息/视频消息,上报基本信息(此时wehub仅仅通过report_new_msg上报该图片的索引file_index值,不上传具体文件的二进制信息)
-2.回调接口根据file_index的值查询当前服务端文件存储系统中是否已经存在该索引的文件,若需要wehub上传,在report_new_msg_ack的respone中携带文件上传的任务通知wehub上传二进制文件,格式见[respone中下发的任务格式].若在wehub客户端设置了不上传某类型的文件,即使收到了上传指令wehub也不上传
+2.回调接口根据file_index的值查询当前服务端文件存储系统中是否已经存在该索引的文件,若需要wehub上传,在report_new_msg_ack的respone中携带文件上传的任务通知wehub上传二进制文件,格式见[任务类型格式].若在wehub客户端设置了不上传某类型的文件,即使收到了上传指令wehub也不上传
 3.wehub收到指令后通过第三方自定义的上传接口上传文件(post 方式)
 4.上传接口返回文件处理的结果
  {
@@ -602,7 +603,7 @@ request格式
 
 respone格式为[通用的common_ack格式]
 ```
-### 任务格式 $task(respone中下发的任务格式)
+### 任务类型格式[respone中下发的任务格式]
 
 (将来会有更多的任务格式支持)
 
@@ -802,12 +803,13 @@ respone格式
          //wehub通过task_id来识别不同的任务(task_id其值是由回调接口生成的字符串,请保证有唯一性)
         "task_id": "任务id",    
         "task_data": $task    //单个任务
-         //$task格式见[respone中下发的任务格式]
+         //$task格式见[任务类型格式]
          //wehub取到任务以后,会立即开始执行,执行完成后会把结果异步地反馈给回调接口
     }
 }
-
+```
 示例: 向wehub下发一个任务(该任务将wxid_abc从群bcdef@chatroom 中踢出)
+```
 {
     "error_code": 0,                    
     "error_reason": "",     
@@ -823,10 +825,9 @@ respone格式
               "room_wxid":"bcdef@chatroom", 
               "wxid":"wxid_abc"		  
            }
-       }
+        }
     }
 }
-
 ```
 ### 向回调接口反馈任务执行的结果/report_task_result 
 request格式
