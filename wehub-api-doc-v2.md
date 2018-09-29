@@ -603,9 +603,9 @@ request格式
 
 respone格式为[通用的common_ack格式]
 ```
-### 任务类型格式[respone中下发的任务格式]
+### 任务类型格式[$task]
 
-(将来会有更多的任务格式支持)
+回调接口在 respone中下发的任务格式
 
 任务类型|类型值task_type
    ----|----
