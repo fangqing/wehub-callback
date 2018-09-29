@@ -172,47 +172,47 @@ respone格式为
 ```
 以下示例向wehub下发两个任务:第一个任务让wehub发送3条消息(1条群文本消息(同时@了两个群成员),1条图片消息,1条链接消息),第二个任务让wehub上报两个微信群的群成员信息
 {
-	"error_code": 0,                      
-	"error_reason": "",         
-	"ack_type":"common_ack",                
-	"data":
-	{
-		"reply_task_list": 
-		[
-			{
-				"task_type": 1,  
-				"task_dict":
-				{
-					"wxid_to":"wxid_test@chatroom",   		
-					"at_list":["wxid_b1","wxid_b2"], 
-					"msg_list":
-					[
-						{
-							"msg_type":1,
-							"msg":"自动回复,test"
-						},
-						{
-							"msg_type":3,
-							"msg":"https://www.baidu.com/img/bd_logo1.png"
-						},
-						{
-							'msg_type':49,
-							'link_url':"http://httpd.apache.org/",
-							"link_title":"apache",
-							"link_desc":"apache官网",		
-"link_img_url":"http://httpd.apache.org/images/httpd_logo_wide_new.png"
-						}
-					]  
-				}
-			},
-			{
-				"task_type":4,
-				"task_dict":
-				{
-					"room_wxid_list":["wxid_test1@chatroom","wxid_test2@chatroom"]
-				}
-	        }
-        ]  
+   "error_code": 0,                      
+   "error_reason": "",         
+    "ack_type":"common_ack",                
+    "data":
+    {
+       "reply_task_list": 
+        [
+           {
+              "task_type": 1,  
+              "task_dict":
+               {
+                  "wxid_to":"wxid_test@chatroom",   		
+                  "at_list":["wxid_b1","wxid_b2"], 
+                  "msg_list":
+                  [
+                     {
+                       "msg_type":1,
+                        "msg":"自动回复,test"
+                     },
+                     {
+                        "msg_type":3,
+                         "msg":"https://www.baidu.com/img/bd_logo1.png"
+                     },
+                     {
+                        'msg_type':49,
+                        'link_url':"http://httpd.apache.org/",
+                         "link_title":"apache",
+                         "link_desc":"apache官网",		
+                          "link_img_url":"http://httpd.apache.org/images/httpd_logo_wide_new.png"
+                     }
+                  ]  
+               }
+            },
+            {
+               "task_type":4,
+               "task_dict":
+               {
+                  "room_wxid_list":["wxid_test1@chatroom","wxid_test2@chatroom"]
+               }
+            }
+       ]  
     }
 }
 ```
@@ -809,22 +809,22 @@ respone格式
 
 示例: 向wehub下发一个任务(该任务将wxid_abc从群bcdef@chatroom 中踢出)
 {
-	"error_code": 0,                    
-	"error_reason": "",     
-	"ack_type":"pull_task_ack",         
-	"data":
+    "error_code": 0,                    
+    "error_reason": "",     
+    "ack_type":"pull_task_ack",         
+    "data":
     {
-		"task_id": "aaaa111222",    
-		"task_data": 
-		{
-			"task_type":2,
-			"task_dict":
-			{
-				"room_wxid":"bcdef@chatroom", 
-				"wxid":"wxid_abc"		  
-			}
-		}
-	}
+        "task_id": "aaaa111222",    
+        "task_data": 
+        {
+           "task_type":2,
+           "task_dict":
+           {
+              "room_wxid":"bcdef@chatroom", 
+              "wxid":"wxid_abc"		  
+           }
+       }
+    }
 }
 
 ```
