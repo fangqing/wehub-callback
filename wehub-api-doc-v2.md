@@ -77,6 +77,8 @@ report_new_room|common_ack
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s1.png)
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s2.png)
 
+若"任务轮询间隔" <=0 ,则wehub 不会向回调接口轮询任务.
+
 -  若开启安全性验证,wehub在发送login 请求时,data中会附带"nonce" 字段,并且会对返回的signature 进行校验,若校验失败则wehub无法正常工作.
 request格式为
 ```

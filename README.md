@@ -37,7 +37,6 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.2.exe
 
 2018.9.28:
 发布wehub 0.2.0 
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.0.exe
 
 ```
 1.简化了ack中的协议
@@ -67,9 +66,7 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.0.exe
 调整后发群消息时可以at多个微信号了(原来只能at一个微信号)
 ```
 
-
 2018.9.21:
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.1.6.exe
 
 ```
 发布wehub 0.1.6版本
