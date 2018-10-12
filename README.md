@@ -1,5 +1,5 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.0.exe  
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.2.exe
 
 目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56 这三个版本的微信
 
@@ -25,6 +25,16 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 ------
 版本更新记录:  
+
+2018.10.12
+发布wehub 0.2.2
+http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.2.exe
+
+```
+处于安全考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方管理员请登录wehub后台http://wehub.weituibao.com/user/login 回调参数进行配置, 系统会自动为每一个appID生成了单独的"secret key",第三方管理员可以开启/关闭 "安全性验证"(默认是不开启安全性验证). 若在后台配置为开启安全性验证,第三方回调接口必须在收到login request后将正确签名返回给wehub客户端进行验证.
+详情见文档 wehub-api-doc-v2.md
+```
+
 2018.9.28:
 发布wehub 0.2.0 
 http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.0.exe

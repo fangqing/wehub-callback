@@ -4,7 +4,7 @@
 修改时间|对应的客户端版本|修改内容
 ----|---|---
 2018.9.28|v0.2.0| 简化ack_type类型,"发消息任务"的字段有调整 
-
+2018.10.12|v0.2.2|回调地址改为到wehub后台网页里进行配置,增加secret key进行安全性验证
 ## 概述
 
 ```
@@ -70,19 +70,59 @@ report_friend_add_request|common_ack
 report_new_room|common_ack
 
 
-
-
 ### 微信登录通知/login
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
+
+注: 处于安全方面的考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com/user/login  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"(之后会允许手动修改这个值),同时第三方管理员可以自行开启/关闭 "安全性验证".  
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s1.png)
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s2.png)
+
+-  若开启安全性验证,wehub在发送login 请求时,data中会附带"nonce" 字段,并且会对返回的signature 进行校验,若校验失败则wehub无法正常工作.
+request格式为
 ```
 {
   "action" : "login",				 //登录的业务名为"login"
   "appid": "xxxx",					 //申请的appid
   "wxid" : "wxid_fo1039029348sfj",    //当前登陆的微信账号的wxid
   "data" : {
-    "nickname": "Bill",               //微信昵称
+    "nickname": "Bill",              //微信昵称
     "wx_alias": "mccbill",           //微信号(有可能为空)
     "head_img": "http://xxxxxx",     //微信的头像地址
+    "client_version":"xxxxxx"		 //wehub的版本号
+    "nonce":"xxxxxxxxxxxxxxx"       //回调接口在计算签名时用到这个nonce值
+    								//有这个字段时服务端必须返回正确的签名
+    								//没有这个字段时回调接口无需做签名处理								
+  }
+}
+```
+回调接口返回(respone):
+```
+{
+    "error_code": 0,                       
+    "error_reason": "",                    
+    "ack_type":"login_ack",
+    "data":{
+        "signature":"xxxxxxxxxxx"   //返回给wehub客户端的签名
+    }
+}
+签名算法:
+将login request中的wxid和nonce两个字段的值取出
+然后将wxid,nonce,secretkey用'#'符号拼接成字符串,计算出md5值,该md5值的32位编码字符串即为签名值.
+
+比如wxid为"fangqing_hust",nonce值为"helloworld",secretkey为"112233",
+则signature = md5("fangqing_hust#helloworld#112233") = "4B8D798F8B34A7BD2CD3B4CBFA309D9C"
+```
+
+-  若关闭了安全性验证,则request 的data中不带"nonce"字段,回调接口无需处理签名
+```
+{
+  "action" : "login",				 //登录的业务名为"login"
+  "appid": "xxxx",					 //申请的appid
+  "wxid" : "wxid_fo1039029348sfj",   //当前登陆的微信账号的wxid
+  "data" : {
+    "nickname": "Bill",               //微信昵称
+    "wx_alias": "mccbill",           //微信号(有可能为空)
+    "head_img": "http://xxxxxx",     	//微信的头像地址
     "client_version":"xxxxxx"		 //wehub的版本号
   }
 }
@@ -96,6 +136,8 @@ report_new_room|common_ack
     "data":{}
 }
 ```
+
+
 ### 微信退出通知/logout
 request格式:
 ```
