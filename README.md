@@ -25,18 +25,13 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 ------
 版本更新记录:  
+-  2018.10.12:
+发布wehub 0.2.2 http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.2.exe
 
-2018.10.12
-发布wehub 0.2.2
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.2.exe
+出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 请第三方管理员请登录wehub后台 http://wehub.weituibao.com/user/login 对回调参数进行配置, 系统会自动为每一个appID生成了单独的"secret key",第三方管理员可以开启/关闭 "安全性验证"(默认不开启安全性验证). 若在后台开启安全性验证,回调接口必须在收到 wehub 的login request后将正确签名返回给wehub客户端进行校验. 详情见文档 wehub-api-doc-v2.md
 
-```
-处于安全考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方管理员请登录wehub后台http://wehub.weituibao.com/user/login 回调参数进行配置, 系统会自动为每一个appID生成了单独的"secret key",第三方管理员可以开启/关闭 "安全性验证"(默认是不开启安全性验证). 若在后台配置为开启安全性验证,第三方回调接口必须在收到login request后将正确签名返回给wehub客户端进行验证.
-详情见文档 wehub-api-doc-v2.md
-```
-
-2018.9.28:
-发布wehub 0.2.0 
+- 2018.9.28:
+  发布wehub 0.2.0 
 
 ```
 1.简化了ack中的协议

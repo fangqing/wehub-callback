@@ -73,7 +73,7 @@ report_new_room|common_ack
 ### 微信登录通知/login
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
 
-注: 处于安全方面的考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com/user/login  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"(之后会允许手动修改这个值),同时第三方管理员可以自行开启/关闭 "安全性验证".  
+注: 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com/user/login  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"(之后会允许手动修改这个值),同时第三方管理员可以自行开启/关闭 "安全性验证".  
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s1.png)
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s2.png)
 
