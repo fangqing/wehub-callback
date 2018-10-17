@@ -1,5 +1,5 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.2.exe
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.3.exe
 
 目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56 这三个版本的微信
 
@@ -25,8 +25,17 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 ------
 版本更新记录:  
+
+- 208.10.17:
+
+   修复0.2.2版本中无法上传文件的bug
+
+  login 中增加 "local_ip" 字段
+
+  http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.3.exe
+
 -  2018.10.12:
-发布wehub 0.2.2 http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.2.exe
+发布wehub 0.2.2
 
 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 请第三方管理员请登录wehub后台 http://wehub.weituibao.com/user/login 对回调参数进行配置, 系统会自动为每一个appID生成了单独的"secret key",第三方管理员可以开启/关闭 "安全性验证"(默认不开启安全性验证). 若在后台开启安全性验证,回调接口必须在收到 wehub 的login request后将正确签名返回给wehub客户端进行校验. 详情见文档 wehub-api-doc-v2.md
 
