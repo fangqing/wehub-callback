@@ -1,5 +1,5 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.3.exe
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.4.exe
 
 目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56 这三个版本的微信
 
@@ -26,13 +26,20 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 ------
 版本更新记录:  
 
+- 2018.10.18:
+
+  发布0.2.4, 版本稳定性优化:
+
+   http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.4.exe
+
+
 - 208.10.17:
 
    修复0.2.2版本中无法上传文件的bug
 
-  login 中增加 "local_ip" 字段
+​        login 中增加 "local_ip" 字段
 
-  http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.3.exe
+
 
 -  2018.10.12:
 发布wehub 0.2.2
