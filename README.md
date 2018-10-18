@@ -33,9 +33,10 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
    http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.4.exe
 
 
+
 - 208.10.17:
 
-   修复0.2.2版本中无法上传文件的bug
+   发布0.2.3:修复0.2.2版本中无法上传文件的bug
 
 ​        login 中增加 "local_ip" 字段
 
