@@ -22,7 +22,7 @@ wxid:
 本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
 ```
 WeHub和回调接口采用c/s的方式进行通讯,WeHub向回调接口主动发起http request(post方式),回调接口返回http respone.微信-wehub-回调接口 三者之间的数据流如下
-![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_squence.png)
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_flow.png)
 
 --------------
 ## 基本的数据结构(request/respone)

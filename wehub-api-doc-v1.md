@@ -814,4 +814,4 @@ respone格式
 }
 ```
 流程图
-![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_squence.png)
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_flow.png)
