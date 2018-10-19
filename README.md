@@ -1,5 +1,5 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.4.exe
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.5.exe
 
 目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56 这三个版本的微信
 
@@ -26,11 +26,11 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 ------
 版本更新记录:  
 
-- 2018.10.18:
+- 2018.10.19:
 
-  发布0.2.4, 版本稳定性优化:
+  发布0.2.5, 版本稳定性优化:
 
-   http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.4.exe
+   http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.5.exe
 
 
 
