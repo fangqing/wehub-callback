@@ -26,6 +26,12 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 ------
 版本更新记录:  
 
+- 2018.10.23:
+
+  发布0.2.6,新增action "report_contact_update",用于改进上报的联系人列表不全的问题.
+
+   http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.6.exe
+
 - 2018.10.19:
 
   发布0.2.5, 版本稳定性优化:

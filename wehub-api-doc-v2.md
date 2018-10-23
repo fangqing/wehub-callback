@@ -6,6 +6,9 @@
 2018.9.28|v0.2.0| 简化ack_type类型,"发消息任务"的字段有调整 
 2018.10.12|v0.2.2|回调地址改为到wehub后台网页里进行配置,增加secret key进行安全性验证
 2018.10.17|v0.2.3|login中增加"local_ip"字段
+2018.10.23|v0.2.6|增加 report_contact_update ;   userInfo 结构新增sex,country,province,city等字段
+
+
 ## 概述
 
 ```
@@ -167,8 +170,8 @@ respone格式
 }
 ```
 ### 上报当前好友列表和群列表/report_contact
-
-这是紧接着微信登录通知之后发送的request
+这是紧接着微信登录通知之后发送的request.
+因为微信客户端对联系人的信息加载是个lazy load 的过程,因此在report_contact 中上报的联系人信息可能不全,比如有的头像信息没有获取到,wehub会通过 report_contact_update的方式进行增量更新,详情见[上报成员信息变化]
 
 request格式
 ```
@@ -199,13 +202,15 @@ data中相关字段描述
         "nickname":"xxxxx",             //微信昵称
         "remark_name" :"xxxx",          //好友备注
         "head_img":"http://xxxxxxxx"    //头像的url地址
+        "sex" : xx ,    				//性别:0或者1,默认是0,1代表女性
+        "country":"xxx",				//祖国(可能为空)
+        "province":"xxxx",				//省份(可能为空)
+        "city":"xxxxx"					//城市(可能为空)
     }
 ```
 
 respone格式为
-
 ##### [通用的common_ack格式]
-
 ```
 {
     "error_code": 0,                      
@@ -266,6 +271,34 @@ respone格式为
     }
 }
 ```
+### 上报成员信息变化/report_contact_update
+触发时机:
+wehub探测到联系人列表中的信息有更新(如昵称,头像等),这些信息可能是我的好友信息,也可能是某个群里的成员信息或公众号的信息;亦或是在上报report_contact时尚未获取到的联系人/群信息.   
+为节省流量,wehub 会每隔10s检查这些变化,然后上传这些变化的信息.
+
+request格式
+{
+​	"action":"report_contact_update",
+​	"appid":"xxxxxxxx",
+​	"wxid":"xxxxxxx",
+​	"data":{
+​		"update_list":[
+​                $userInfo,$groupbaseInfo,$userInfo,$groupbaseInfo   // 群基本信息和联系人信息的无序列表
+​		]
+​	}
+}
+
+$userInfo 同report_contact 中的userInfo 结构
+
+$groupbaseInfo (群基本信息):
+{
+​    "wxid": "xxxxxxx",                  //群的wxid:格式为 xxxxx@chatroom
+​    "name": "xxxxxx",                   //群名称
+​    "head_img":"http://xxxxxxxx"        //群头像的url地址
+}
+
+respone格式为[通用的common_ack格式]
+
 ### 上报群成员详细信息/report_room_member_info
 触发时机: 由回调接口通过下发"任务"来被触发
 ```
@@ -600,10 +633,9 @@ Content-Disposition: form-data; name="file";filename="c899cebad9877280af73d4e595
 xxxxxxxxxxxxxxx.....  //视频文件的2进制字节流
 xxxxxxxxxxxxxxx.....
 ```
-注意: 服务端的上传接口接收到wehub的request后需要取出 request中 file_index的值
-目前wehub只上传图片/视频类型的文件(之后上传的文件类型会拓展)
-
-
+注意: 
+1.服务端的上传接口接收到wehub的request后需要取出 request中 file_index的值.
+2.目前wehub支持上传图片/视频类型的文件,但wehub的文件上传功能并不是一个完全可靠的服务,当微信中的图片/视频没有下载完成时,wehub是无法上传这些文件的.
 
 ### 新的加好友请求/report_friend_add_request
 收到添加好友的请求(此时对方还不是我的好友,不能给对方发消息)
