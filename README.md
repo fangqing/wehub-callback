@@ -34,10 +34,7 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 - 2018.10.19:
 
-  发布0.2.5, 版本稳定性优化:
-
-   http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/WeHubSetup0.2.5.exe
-
+  发布0.2.5, 版本稳定性优化
 
 
 - 208.10.17:
