@@ -273,30 +273,31 @@ respone格式为
 ```
 ### 上报成员信息变化/report_contact_update
 触发时机:
-wehub探测到联系人列表中的信息有更新(如昵称,头像等),这些信息可能是我的好友信息,也可能是某个群里的成员信息或公众号的信息;亦或是在上报report_contact时尚未获取到的联系人/群信息.   
+wehub探测到联系人列表中的信息有更新(如昵称,头像等),这些信息可能是我的好友信息,也可能是某个群里的成员信息;亦或是在上报report_contact时尚未获取到的联系人/群信息.   
 为节省流量,wehub 会每隔10s检查这些变化,然后上传这些变化的信息.
 
 request格式
+```
 {
-​	"action":"report_contact_update",
-​	"appid":"xxxxxxxx",
-​	"wxid":"xxxxxxx",
-​	"data":{
-​		"update_list":[
-​                $userInfo,$groupbaseInfo,$userInfo,$groupbaseInfo   // 群基本信息和联系人信息的无序列表
-​		]
-​	}
+	"action":"report_contact_update",
+	"appid":"xxxxxxxx",
+	"wxid":"xxxxxxx",
+	"data":{
+		"update_list":[
+                $userInfo,$groupbaseInfo,$userInfo,$groupbaseInfo   // 群基本信息和联系人信息的无序列表
+		]
+	}
 }
 
 $userInfo 同report_contact 中的userInfo 结构
 
 $groupbaseInfo (群基本信息):
 {
-​    "wxid": "xxxxxxx",                  //群的wxid:格式为 xxxxx@chatroom
-​    "name": "xxxxxx",                   //群名称
-​    "head_img":"http://xxxxxxxx"        //群头像的url地址
+    "wxid": "xxxxxxx",                  //群的wxid:格式为 xxxxx@chatroom
+    "name": "xxxxxx",                   //群名称
+    "head_img":"http://xxxxxxxx"        //群头像的url地址
 }
-
+```
 respone格式为[通用的common_ack格式]
 
 ### 上报群成员详细信息/report_room_member_info
