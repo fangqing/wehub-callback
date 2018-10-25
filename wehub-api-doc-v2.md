@@ -65,6 +65,7 @@ login|login_ack
 logout|logout_ack
 pull_task|pull_task_ack
 report_contact|common_ack
+report_contact_update|common_ack
 report_new_friend|common_ack
 report_new_msg|common_ack
 report_task_result|common_ack
