@@ -330,7 +330,7 @@ request
     }
 }
 ```
- <a  name ="memberInfo">memberInfo结构</a>
+### <a name="memberInfo">memberInfo结构</a>
  ```
  {
         "wxid":  "wxid",             //wxid
