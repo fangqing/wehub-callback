@@ -74,6 +74,8 @@ report_room_member_change|common_ack
 report_friend_add_request|common_ack
 report_new_room|common_ack
 
+**上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**
+**对于其他不感兴趣/不想处理的action,可简单返回一个空的json {}**
 
 ### 微信登录通知/login
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
