@@ -55,7 +55,7 @@ wehub主动发起的数据(简称为:request)json格式为:
 又如: "error_code": 0, 
 	error_code其值语义为一个具体的错误码(数字),因此0前后不需要""符号
 ```
-注意:wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析 ,文档的示例代码中出现的  "$xxx"  符号代表这里应该出现一个名为"xxx"结构的数据对象,如 $memberInfo,$task,$report_msgunit等
+注意:wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析 ,文档的示例代码中出现的  "$xxx"  符号代表这里应该出现一个名为"xxx"结构的数据对象,如 <a href="#memberInfo">$memberInfo</a>,  <a href="#task">$task</a>,  <a   href ="#report_msgunit">$report_msgunit</a>等
 
 
 ## 业务数据定义
@@ -212,8 +212,9 @@ data中相关字段描述
     }
 ```
 
-respone格式为
-##### [通用的common_ack格式]
+respone格式为:common_ack格式
+
+####  <a name="common_ack">[common_ack格式]</a>
 ```
 {
     "error_code": 0,                      
@@ -303,7 +304,7 @@ $groupbaseInfo (群基本信息):
     "head_img":"http://xxxxxxxx"        //群头像的url地址
 }
 ```
-respone格式为[通用的common_ack格式]
+respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ### 上报群成员详细信息/report_room_member_info
 触发时机: 由回调接口通过下发"任务"来被触发
@@ -328,9 +329,9 @@ request
    	   ]
     }
 }
-respone格式为[通用的common_ack格式]
-
- memberInfo结构
+```
+ <a  name ="memberInfo">memberInfo结构</a>
+ ```
  {
         "wxid":  "wxid",             //wxid
         "wx_alias": "xxxxx",         //微信号(有可能为空)
@@ -338,7 +339,9 @@ respone格式为[通用的common_ack格式]
         "nickname":"xxxxx",             //微信昵称
         "head_img":"http://xxxxxxxx"    //头像的url地址
  }
-```
+ ```
+respone格式为<a href="#common_ack">[common_ack格式]</a>
+
 ### 上报群成员变化/report_room_member_change
 
 触发:群成员增加或减少时上报
@@ -355,8 +358,9 @@ request
     	"flag": flag //0,群成员减少;1,群成员增加
     }
 }
-respone格式为[通用的common_ack格式]
 ```
+respone格式为<a href="#common_ack">[common_ack格式]</a>
+
 
 ### 上报新群/report_new_room
 ```
@@ -373,9 +377,9 @@ request
     	"memberInfo_list":[$memberInfo,$memberInfo,.....]  //见memberInfo结构
     }
 }
-
-respone格式为[通用的common_ack格式]
 ```
+respone格式为<a href="#common_ack">[common_ack格式]</a>
+
 
 ### 上报新的聊天消息/report_new_msg
 
@@ -402,11 +406,10 @@ request
     //report_msgunit格式见[上报的消息单元的格式]
     }
 }
-
-respone格式为[通用的common_ack格式]
 ```
+respone格式为<a href="#common_ack">[common_ack格式]</a>
 
-**上报的消息单元的格式($report_msgunit)**
+###   <a name="report_msgunit">上报的消息单元的格式($report_msgunit)</a>
 
  聊天消息类型|类型值msg_type|是否支持任务下发|是否支持上传消息中的文件
    ----|----|---|----
@@ -661,10 +664,9 @@ request
    	"raw_msg":"xxxxxxxxxxx"  //微信中的原始消息,xml格式
   }
 }
-
-respone格式为[通用的common_ack格式]
 若要自动通过好友验证,可在reply_task_list字段中加入"通过好友验证"的任务(task_type为13)
 ```
+respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ### 新好友通知/report_new_friend
 
@@ -687,10 +689,10 @@ request格式
     "sourcenickname":"xxxxxxx" 		//推荐人昵称,可能为空
   }
 }
-
-respone格式为[通用的common_ack格式]
 ```
-### 任务类型格式[$task]
+respone格式为<a href="#common_ack">[common_ack格式]</a>
+
+### <a name="task"> 任务类型格式[$task]</a>
 
 回调接口在 respone中下发的任务格式
 
@@ -933,5 +935,6 @@ request格式
         "error_reason": ""  //为什么执行失败,若任务执行成功则为空
      }
 }
-respone格式为[通用的common_ack格式]
 ```
+respone格式为<a href="#common_ack">[common_ack格式]</a>
+
