@@ -227,7 +227,9 @@ respone格式为
 }
 ```
 
-示例:向wehub回复两个任务,第一个任务让wehub向一个群发送3条消息(1条文本消息(同时@了两个群成员),1条图片消息,1条链接消息),第二个任务让wehub上报两个微信群的群成员信息
+**<u>示例</u>**
+通过common_ack 向wehub回复两个任务,第一个任务让wehub向一个群发送3条消息(1条文本消息(同时@了两个群成员),1条图片消息,1条链接消息),第二个任务让wehub上报两个微信群的群成员信息
+
 ```
 {
    "error_code": 0,                      
@@ -893,7 +895,10 @@ respone格式
     }
 }
 ```
-示例: 向wehub下发一个任务(该任务将wxid_abc从群bcdef@chatroom 中踢出)
+**<u>示例</u>**
+
+通过pull_task_ack 向wehub下发一个任务(该任务将wxid_abc从群bcdef@chatroom 中踢出)
+
 ```
 {
     "error_code": 0,                    
