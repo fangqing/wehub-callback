@@ -330,8 +330,8 @@ request
     }
 }
 ```
-####  <a name="memberInfo">$memberInfo结构</a>
- ```
+####  <a name="memberInfo">$memberInfo格式</a>
+```
  {
         "wxid":  "wxid",             //wxid
         "wx_alias": "xxxxx",         //微信号(有可能为空)
@@ -339,7 +339,7 @@ request
         "nickname":"xxxxx",             //微信昵称
         "head_img":"http://xxxxxxxx"    //头像的url地址
  }
- ```
+```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ### 上报群成员变化/report_room_member_change
