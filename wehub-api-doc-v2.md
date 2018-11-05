@@ -585,7 +585,27 @@ eg:
 ```
 基本流程:
 1.wehub收到图片消息/视频消息,上报基本信息(此时wehub仅仅通过report_new_msg上报该图片的索引file_index值,不上传具体文件的二进制信息)
-2.回调接口根据file_index的值查询当前服务端文件存储系统中是否已经存在该索引的文件,若需要wehub上传,在report_new_msg_ack的respone中携带文件上传的任务通知wehub上传二进制文件,格式见[任务类型格式].若在wehub客户端设置了不上传某类型的文件,即使收到了上传指令wehub也不上传
+2.回调接口根据file_index的值查询当前服务端文件存储系统中是否已经存在该索引的文件,若需要wehub上传,在ack中携带上传文件的任务类型:
+比如
+{
+   "error_code": 0,                      
+   "error_reason": "",         
+    "ack_type":"common_ack",                
+    "data":
+    {
+       "reply_task_list": 
+        [
+          {
+              "task_type": 9,  
+              "task_dict":
+               {
+                  "file_index":"xxxxxxx"
+               }
+          }
+        ]
+    }
+}
+
 3.wehub收到指令后通过第三方自定义的上传接口上传文件(post 方式)
 4.上传接口返回文件处理的结果
  {
@@ -890,8 +910,8 @@ respone格式
     "ack_type":"pull_task_ack",         
     "data":{
          //wehub通过task_id来识别不同的任务(task_id其值是由回调接口生成的字符串,请保证有唯一性)
-        "task_id": "任务id",    
-        "task_data": $task    //单个任务
+        "task_id": "任务id",    //字符串
+        "task_data": $task     //单个任务
          //$task格式见[任务类型格式]
          //wehub取到任务以后,会立即开始执行,执行完成后会把结果异步地反馈给回调接口
     }
