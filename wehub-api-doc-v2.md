@@ -7,7 +7,7 @@
 2018.10.12|v0.2.2|回调地址改为到wehub后台网页里进行配置,增加secret key进行安全性验证
 2018.10.17|v0.2.3|login中增加"local_ip"字段
 2018.10.23|v0.2.6|增加 report_contact_update ;   userInfo 结构新增sex,country,province,city等字段
-2018.11.16|v0.2.15|login,logout中增加 machine_id 字段,起辅助作用,新增task_type 为14的任务类型
+2018.11.16|v0.2.15|login,logout中增加 machine_id 字段(起辅助作用);新增task_type 为14的任务类型
 
 ## 概述
 
