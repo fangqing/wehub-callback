@@ -1,13 +1,13 @@
 #                                                        WeHub API接口规范v2
 
 ## 修改记录
-修改时间|对应的客户端版本|修改内容
+修改时间|对应的客户端版本|协议修改内容
 ----|---|---
 2018.9.28|v0.2.0| 简化ack_type类型,"发消息任务"的字段有调整 
 2018.10.12|v0.2.2|回调地址改为到wehub后台网页里进行配置,增加secret key进行安全性验证
 2018.10.17|v0.2.3|login中增加"local_ip"字段
 2018.10.23|v0.2.6|增加 report_contact_update ;   userInfo 结构新增sex,country,province,city等字段
-
+2018.11.16|v0.2.15|login,logout中增加 machine_id 字段,起辅助作用,新增task_type 为14的任务类型
 
 ## 概述
 
@@ -103,6 +103,7 @@ request格式为
     								//没有这个字段时回调接口无需做签名处理
     "local_ip":"192.168.0.104|211.168.0.104"
     //当前wehub所在系统中的网卡ip,如有多个以'|'分隔, 该字段是在0.2.3 版本中新加入的
+     "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
   }
 }
 ```
@@ -137,6 +138,7 @@ request格式为
     "client_version":"xxxxxx"		 //wehub的版本号
     "local_ip":"192.168.0.104|211.168.0.104"
     //当前wehub所在系统中的网卡ip,如有多个以'|'分隔, 该字段是在0.2.3 版本中新加入的
+     "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
   }
 }
 ```
@@ -160,6 +162,7 @@ request格式:
     "wxid": "wxid_xxxxxxx",
     "data":{
        "client_version":"xxxxxx"		//wehub的版本号 
+        "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
     }
 }
 ```
@@ -731,6 +734,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    自动收账|11
    删除好友|12
    通过好友验证|13
+   重新上报当前好友列表和群列表|14
 ```
 - 发消息任务:
 (向一个微信群或一个微信号发一组消息单元)
@@ -811,8 +815,8 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":5,
     "task_dict":
     {
-     	"room_wxid":"xxxxx@chatroom", 　//群
-        "wxid":"xxxxxxx"		    //群成员的wxid
+     	"room_wxid":"xxxxx@chatroom",  //群wxid,可以留空
+        "wxid":"xxxxxxx"		    //要加谁为好友,不能为空
         "msg":"xxxxxx"				//打招呼消息,文本
 	}
 }
@@ -889,6 +893,13 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
        "v2": "xxxxx"
 	}
 }
+
+- 重新上报联系人 (wehub会重新发送report_contact)
+{
+    "task_type":14,
+ 	"task_dict":{}
+}
+
 ```
 ### 向回调接口请求一个任务(pull_task)
 wehub在appid验证通过以后,每间隔x秒请求一次(时间间隔可在wehub上设置,最少1秒,默认是5秒)
