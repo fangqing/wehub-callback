@@ -8,6 +8,7 @@
 2018.10.17|v0.2.3|login中增加"local_ip"字段
 2018.10.23|v0.2.6|增加 report_contact_update ;   userInfo 结构新增sex,country,province,city等字段
 2018.11.16|v0.2.15|login,logout中增加 machine_id 字段(起辅助作用);新增task_type 为14的任务类型
+2018.11.29|v0.3.0|在report_contact 中增加对当前账号关注的公众号信息的上报;开始支持语音消息中的语音数据上传;支持下发扩展的gif表情任务
 
 ## 概述
 
@@ -176,7 +177,7 @@ respone格式
 }
 ```
 ### 上报当前好友列表和群列表/report_contact
-这是紧接着微信登录通知之后发送的request.
+这是紧接login之后发送的request, 如果微信的好友/群的数量比较多,这个request post的数据将会非常大(不要试图在调试的代码中打印这个数据 )
 因为微信客户端对联系人的信息加载是个lazy load 的过程,因此在report_contact 中上报的联系人信息可能不全,比如有的头像信息没有获取到,wehub会通过 report_contact_update的方式进行增量更新,详情见[上报成员信息变化]
 
 request格式
@@ -186,8 +187,9 @@ request格式
     "appid": "xxxxxx",
     "wxid": "wxid_xxxxxxx",
     "data":{
-        "group_list":[$groupinfo,$groupinfo, $groupinfo,......],
-        "friend_list":[$userInfo,$userInfo,$userInfo,...]
+        "group_list":[$groupinfo,$groupinfo, $groupinfo,......],  //群
+        "friend_list":[$userInfo,$userInfo,$userInfo,...],		//好友
+        "public_list":[$publicinfo,$publicinfo,$publicinfo,....]  //公众号
     }
 }
 data中相关字段描述
@@ -213,6 +215,14 @@ data中相关字段描述
         "province":"xxxx",				//省份(可能为空)
         "city":"xxxxx"					//城市(可能为空)
     }
+    
+    - publicinfo(公众号信息)
+    {
+         "wxid":  "gh_xxxxx",   //某些公众号也可能以wxid_ 开头
+         "nickname":"xxxxx",    //公众号名称
+         "head_img":"http://xxxxxxxxxx"  //头像
+    }
+
 ```
 
 respone格式为:common_ack格式
@@ -419,9 +429,9 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    文本消息|1|支持|----
    图片消息|3|支持|支持消息中的图片文件上传
    个人名片|42|支持|----
-   语音|34|暂不支持|暂不支持
+   语音|34|暂不支持|从0.3.0版本开始支持
    视频|43|支持|支持消息中的视频文件上传
-   表情消息|47|暂不支持|不支持
+   表情消息|47|从0.3.0版本开始支持|不支持
    链接消息 |49|支持|----
    小程序|4901|暂不支持|----
  转账 |4902|暂不支持|----
@@ -539,13 +549,13 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "raw_msg": "xxxxxxx"   //微信中的名片信息的原始数据,xml格式,请自行解析
 }
 - 语音消息
-(目前还不能获取到消息中语音文件的内容,暂时不支持上传,file_index预留为空值)
+(从0.3.0版本开始支持上传消息中的语音文件,将微信中原始语音数据转化为MP3格式后上报)
 {
     "msg_type":34, 					
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
-    "file_index":"", 
+    "file_index":"xxxxxxx",//0.3.0之前的版本中该值都预留为空
     "raw_msg": "xxxxxxx"   //微信中的原始消息,xml格式
 }
 - 视频消息
@@ -555,8 +565,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
     "file_index":"xxxxxx",  //视频文件的索引
-    "raw_msg":"xxxxxxx",	//视频文件详细信息(文件大小length,播放时长playlength),
-    				//需服务端自行解析;可根据文件大小来判断是否要上传
+    "raw_msg":"xxxxxxx",	//视频文件详细信息(文件大小length,播放时长playlength),需服务端自行解析;可根据文件大小来判断是否要上传
 }
 
 - 微信系统通知
@@ -665,6 +674,27 @@ Content-Disposition: form-data; name="file";filename="c899cebad9877280af73d4e595
 xxxxxxxxxxxxxxx.....  //视频文件的2进制字节流
 xxxxxxxxxxxxxxx.....
 ```
+上传语音
+```
+Content-Type: multipart/form-data; boundary="boundary_.oOo._NDM2NQ==NTkyNQ==MzE1ODQ="
+MIME-Version: 1.0
+Content-Length: 2993
+Connection: Keep-Alive
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,en,*
+User-Agent: Mozilla/5.0
+Host: localhost.:5678
+
+--boundary_.oOo._NDM2NQ==NTkyNQ==MzE1ODQ=
+Content-Type: text/plain
+Content-Disposition: form-data; name="file_index"
+
+4166303733643135323139616165340028224211291867a0fc48766102
+--boundary_.oOo._NDM2NQ==NTkyNQ==MzE1ODQ=
+Content-Type: audio/mpeg
+Content-Disposition: form-data; name="file";filename="274cfbce78d88c83a9d0bd7d0cda9fe3c2da2d64.mp3"
+```
+
 注意: 
 1.服务端的上传接口接收到wehub的request后需要取出 request中 file_index的值.
 2.目前wehub支持上传图片/视频类型的文件,但wehub的文件上传功能并不是一个完全可靠的服务,当微信中的图片/视频没有下载完成时,wehub是无法上传这些文件的.
@@ -759,7 +789,12 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
          'msg_type':3,
          'msg':"xxxx"  //图片的url绝对地址:http://xxxxxxx/xx.jpg或png 
     }
-    ⑶链接消息
+    ⑶gif表情         //从0.3.0开始支持
+    {
+        "msg_type":47,
+        "msg":"http://xxxxxxx/xx.gif"  //gif的url:必须是gif格式
+    }
+  	⑷链接消息
     {
         "msg_type":49, 					//49 代表链接消息
         "link_url":"http://xxxxx", 		//分享链接的url
@@ -767,16 +802,18 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
         "link_desc": "副标题",           //链接描述（副标题）
         "link_img_url": "http://xxxxxxx" //链接的缩略图的的Url,jpg或者png格式
     }
-    ⑷视频消息
+   	⑸视频消息
     {
         "msg_type":43, 	
         "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
     }
-    ⑸个人名片
+    ⑹个人名片
     {
      	"msg_type":42, 	
         "wxid_card":"xxxxxx" 		//发送谁的个人名片
     }
+   
+
 
 - 踢人任务:
 (把一个微信号从指定的群踢出,当前微信必须有群主权限)
@@ -785,7 +822,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    "task_dict":
    	{
          "room_wxid":"xxxxx@chatroom", //被踢者所在的群,如果为空,则从所有的群踢出
-         "wxid":"xxxxxxx"		  //被踢者的wxid
+         "wxid":"xxxxxxx"		  	   //被踢者的wxid
 	}
 }
 - 拉群任务:

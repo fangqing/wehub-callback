@@ -1,7 +1,7 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
 wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.2.15.exe
 
-目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56|2.6.5.38 这四个版本的微信
+目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56|2.6.5.38|2.6.6.28 这5个版本的微信
 
 ------
 
@@ -19,24 +19,31 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 ------
 版本更新记录:  
-- 2018.11.16:
+
+- 2018.11.29:
+
+  发布 0.3.0 版本
+
+  适配微信最近发布的新版本2.6.6.28( !!注意在2.6.5.38 和2.6.6.28 之间微信临时推出了2.6.6.25版本,我们没有适配和支持这个版本)
+
+  支持消息中的语音上传
+
+  支持下发gif表情任务
+
+  report_contact 中增加公众号信息
+
+  http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.0.exe
+
+- 2018.11.16
 
   发布 0.2.15版本:
 
   适配微信最近发布的新版本2.6.5.38,同时修正了之前微信中的图片与视频在每天某时间段内(每天18:00之后)不自动下载的问题.
   http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.2.15.exe
 
-- 2018.10.24
-
-  0.2.7: fix bug
-
-
-
 - 2018.10.23:
 
   发布0.2.6,新增action "report_contact_update",用于改进上报的联系人列表不全的问题.
-
-
 
 - 208.10.17
 
