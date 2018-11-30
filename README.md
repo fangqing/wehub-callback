@@ -20,7 +20,7 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 ------
 版本更新记录:  
 
-- 2018.11.29:
+- 2018.11.30:
 
   发布 0.3.0 版本
 
