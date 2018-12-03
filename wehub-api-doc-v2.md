@@ -765,6 +765,11 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    删除好友|12
    通过好友验证|13
    重新上报当前好友列表和群列表|14
+
+[文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)
+
+当你在微信中发送一个的静态的![](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/001.png)表情时,其实你只是发送了 "[笑脸]" 这几个文字
+
 ```
 - 发消息任务:
 (向一个微信群或一个微信号发一组消息单元)
@@ -782,7 +787,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 	⑴文字消息
     {
         'msg_type':1,
-        'msg': "xxxxxx"  发送的文字
+        'msg': "xxxxxx"  发送的文字(可以嵌入转义的静态表情文字,参阅上方的链接 静态表情转义对照表)
     }
     ⑵图片消息
     {
