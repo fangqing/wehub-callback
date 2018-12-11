@@ -1,7 +1,7 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.0.exe
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.3.exe
 
-目前wehub支持2.6.3.78|2.6.4.38|2.6.4.56|2.6.5.38|2.6.6.28 这5个版本的微信
+支持2.6.4.56|2.6.5.38|2.6.6.28 这几个版本的微信
 
 ------
 
@@ -19,6 +19,12 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 ------
 版本更新记录:  
+-  2018.12.11:
+
+   发布 0.3.3 版本:上报的文本消息中新增atuserlist字段;支持发文件消息中的文件数据上传
+
+   http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.3.exe
+
 
 - 2018.11.30:
 

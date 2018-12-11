@@ -9,7 +9,7 @@
 2018.10.23|v0.2.6|增加 report_contact_update ;   userInfo 结构新增sex,country,province,city等字段
 2018.11.16|v0.2.15|login,logout中增加 machine_id 字段(起辅助作用);新增task_type 为14的任务类型
 2018.11.29|v0.3.0|在report_contact 中增加对当前账号关注的公众号信息的上报;开始支持语音消息中的语音数据上传;支持下发扩展的gif表情任务
-
+2018.12.11|v0.3.3|上报的文本消息中新增atuserlist字段;支持发文件消息中的文件数据上传;report_room_member_info有新增字段
 ## 概述
 
 ```
@@ -331,12 +331,12 @@ request
    	   room_data_list:[
            {
            	  "room_wxid":"xxxxx1@chatroom",  //群wxid
+           	  "name":"xxxx",  	     //群名(0.3.3版本中新增) 
+           	  "owner_wxid":"xxxxx",  //群主wxid(0.3.3版本中新增)
+           	  "head_img":"xxxxxxx",  //群头像(0.3.3版本中新增)
+           	  "member_count": xxx,   //群内有多少个成员(0.3.3版本中新增)
            	  "memberInfo_list":[$memberInfo,$memberInfo.....] 
            	  //群内成员信息
-           },
-            {
-           	  "room_wxid":"xxxxx2@chatroom",
-           	  "memberInfo_list":[$memberInfo,$memberInfo.....]
            },
            ........
    	   ]
@@ -448,6 +448,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "wxid_to": 	"wxid_xxxxx",		 //消息的接收者的wxid
                                      //如果发往群的消息,这个值就是群的wxid
                                      //如果是别人私聊给自己的消息,这里就是自己的微信号
+    "atUserList": ["xxx","xxx"]        //这条消息@的对象列表                       
     "msg": "xxxxxxxx"                //具体的文本内容
   //如果A在群里面at了B(群昵称为BN),C(群昵称为CN),则msg的格式为"@BN @CN XXXXXX" (@BN @CN之间有空格)
 }
@@ -531,14 +532,16 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 }
 
 - 文件
-(目前还不能获取到消息中文件的内容,暂时不支持上传,file_index预留为空值)
+(从0.3.3版本开始支持文件上传)
 {
 	"msg_type":4903, 					
-    "room_wxid": "xxxxxxxx@chatroom", //发生在那个群里
-    "wxid_from": "wxid_xxxxxx", 	  //文件发送者
-    "wxid_to":"wxid_xxxxx",	  //文件接收者
-    "file_index":"",  
-    "raw_msg": "xxxxxxx"   //微信中的文件的原始消息,xml格式,请自行解析
+    "room_wxid": "xxxxxxxx@chatroom", 	//发生在哪个群里
+    "wxid_from": "wxid_xxxxxx", 	  	//文件发送者
+    "wxid_to":"wxid_xxxxx",	  			//文件接收者
+    "file_index":"xxxxx",  		
+    "file_name": "xxxxxx",		//文件名
+    "file_size": xxxxx,		//字节数
+    "raw_msg": "xxxxxxx"   	//微信中的文件的原始消息,xml格式,请自行解析
 }
 - 个人名片
 {
