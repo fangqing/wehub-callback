@@ -180,6 +180,8 @@ respone格式
 这是紧接login之后发送的request, 如果微信的好友/群的数量比较多,这个request post的数据将会非常大(不要试图在调试的代码中打印这个数据 )
 因为微信客户端对联系人的信息加载是个lazy load 的过程,因此在report_contact 中上报的联系人信息可能不全,比如有的头像信息没有获取到,wehub会通过 report_contact_update的方式进行增量更新,详情见[上报成员信息变化]
 
+注意:report_contact 这个http请求Post的数据量会比较大(好友/群越多,post的数据就越大),请将服务端能接受的**post_max_size** 调整成至少10M 
+
 request格式
 ```
 {

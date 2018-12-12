@@ -129,3 +129,9 @@ wehub提供基础的微信聊天消息上报的能力,不过滤发送者的wxid(
   	可能你的网络问题,可能你的服务器没有正常启动(看wehub的log). 
   	若开启了安全验证,回调接口在处理logIn时可能没有正确地返回签名.
 ```
+
+- faq9:我在服务端代码里打了log,登陆后为什么没有收到 report_contact?
+```
+report_contact每次post的数据量会比较大(好友/群越多,post的数据就越大),请将服务端能接受的post_max_size 调整成至少10M.由于很多服务器比如ngix 默认的接收的最大量会比较小(比如1M),当report_contact的数据量超过这个上限时,服务端会无法接收这个request.请参考这个网页:
+https://www.jianshu.com/p/7797b200e1f4
+'''
