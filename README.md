@@ -21,7 +21,7 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 版本更新记录:  
 -  2018.12.11:
 
-   发布 0.3.3 版本:上报的文本消息中新增atuserlist字段;支持发文件消息中的文件数据上传
+   发布 0.3.3 版本:上报的文本消息中新增atuserlist字段;支持上传文件消息中的文件
 
    http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.3.exe
 
