@@ -788,22 +788,22 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
       }
   }
  发消息任务中的$push_msgunit格式
-    ⑴文字消息
+⑴文字消息
     {
         'msg_type':1,
         'msg': "xxxxxx"  发送的文字(可以嵌入转义的静态表情文字,参阅上方的链接 静态表情转义对照表)
     }
-    ⑵图片消息
+⑵图片消息
     {
          'msg_type':3,
          'msg':"xxxx"  //图片的url绝对地址:http://xxxxxxx/xx.jpg或png 
     }
-    ⑶gif表情         //从0.3.0开始支持
+⑶gif表情         //从0.3.0开始支持
     {
         "msg_type":47,
         "msg":"http://xxxxxxx/xx.gif"  //gif的url:必须是gif格式
     }
-    ⑷链接消息
+⑷链接消息
     {
         "msg_type":49,                    //49 代表链接消息
         "link_url":"http://xxxxx",        //分享链接的url
@@ -811,12 +811,12 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
         "link_desc": "副标题",             //链接描述（副标题）
         "link_img_url": "http://xxxxxxx"    //链接的缩略图的的Url,jpg或者png格式
     }
-    ⑸视频消息
+⑸视频消息
     {
         "msg_type":43, 	
         "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
     }
-    ⑹个人名片
+⑹个人名片
     {
         "msg_type":42, 	
         "wxid_card":"xxxxxx" 		//发送谁的个人名片
@@ -856,7 +856,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 }
 wehub 通过report_room_member_info来主动上报,详情见[上报群成员详细信息]
 
-－加群成员为好友：
+- 加群成员为好友：
 {
     "task_type":5,
     "task_dict":
@@ -893,7 +893,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
       "room_wxid":"xxxxxx",   //要退出的微信群wxid
     }
 }
--上传文件
+- 上传文件
 {
     "task_type":9,
     "task_dict":
@@ -923,15 +923,15 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     }
 }
 - 删除好友
- {
+{
     "task_type":12,
     "task_dict":
     {
       "wxid_delete": "xxxxx"  //要被删除的好友的wxid
     }
- }
- -通过好友验证
- {
+}
+- 通过好友验证
+{
     "task_type":13,
     "task_dict":
     {
@@ -1025,9 +1025,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
   前者的消息主要是视觉可感知的数据(如文本,图片) ,而后者的任务除了发消息,还包括很多不可感知的事件(如踢人出群,删除好友等)
 
 - common_ack 与 pull_task_ack 的区别
-
   common_ack中可携带多个下发的任务,但不会上报任务执行的结果
-
   pull_task_ack只能下发一个任务,且必须有task_id字段,通过pull_task_ack 下发的任务会通过report_task_result 上报任务执行的结果;
-
   common_ack 与pull_task_ack  中的任务格式都是一样的.见<a href="#task"> [任务类型格式]</a>
+
