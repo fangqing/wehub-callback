@@ -831,9 +831,9 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    "task_type":2,
    "task_dict":
    	{
-    	"room_wxid":"xxxxx@chatroom", //被踢者所在的群,如果为空,则从所有的群踢出
-    	"wxid":"xxxxxxx"		  	   //被踢者的wxid
-	}
+      "room_wxid":"xxxxx@chatroom", //被踢者所在的群,如果为空,则从所有的群踢出
+      "wxid":"xxxxxxx"		  	      //被踢者的wxid
+	  }
 }
 - 拉群任务:
 (向一个好友发入群邀请,注意必须是自己的好友)
@@ -841,19 +841,19 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "task_type":3,
     "task_dict":
     {
-    	"room_wxid":"xxxxx@chatroom", //目标群
-        "wxid":"xxxxxxx"		   //被拉进群的wxid
-	}
+      "room_wxid":"xxxxx@chatroom", //目标群
+      "wxid":"xxxxxxx"		   //被拉进群的wxid
+    }
 }
 - 上报群成员信息:
 (上报某个群里所有的群成员的详细信息,如果群成员比较多,上报的数据量会比较大)
 {
-	"task_type":4,
-	"task_dict":
-	{
-		//要上报的群列表
-		"room_wxid_list":["xxxxx@chatroom","xxxxx2@chatroom"....]  
-	}
+  	"task_type":4,
+    "task_dict":
+    {
+      //要上报的群列表
+      "room_wxid_list":["xxxxx@chatroom","xxxxx2@chatroom"....]  
+    }
 }
 wehub 通过report_room_member_info来主动上报,详情见[上报群成员详细信息]
 
@@ -862,45 +862,45 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":5,
     "task_dict":
     {
-     	"room_wxid":"xxxxx@chatroom",  //群wxid,可以留空
-        "wxid":"xxxxxxx"		    //要加谁为好友,不能为空
-        "msg":"xxxxxx"				//打招呼消息,文本
-	}
+      "room_wxid":"xxxxx@chatroom",  //群wxid,可以留空
+      "wxid":"xxxxxxx"		    //要加谁为好友,不能为空
+      "msg":"xxxxxx"				//打招呼消息,文本
+    }
 }
 - 修改好友备注:
 {
-	"task_type":6,
-	"task_dict":
-	{
-		"wxid":"xxxxxx",   //好友微信
-		"remark_name":"xxxxxx" 	//好友备注
-	}
+    "task_type":6,
+    "task_dict":
+    {
+      "wxid":"xxxxxx",   //好友微信
+      "remark_name":"xxxxxx" 	//好友备注
+    }
 }
 - 修改群昵称:
 (修改当前微信号在某个群里的群昵称)
 {
     "task_type":7,
-	"task_dict":
-	{
-		"room_wxid":"xxxxxx",   //微信群wxid
-		"room_nickname":"xxxxxx" 	//我在这个群里的昵称
-	}
+    "task_dict":
+    {
+      "room_wxid":"xxxxxx",   //微信群wxid
+      "room_nickname":"xxxxxx" 	//我在这个群里的昵称
+    }
 }
 - 退群:
 {
     "task_type":8,
     "task_dict":
     {
-		"room_wxid":"xxxxxx",   //要退出的微信群wxid
-	}
+      "room_wxid":"xxxxxx",   //要退出的微信群wxid
+    }
 }
 -上传文件
 {
     "task_type":9,
     "task_dict":
     {
-    	"file_index":"xxxxxxx",   //需要上传的文件的file_index
-	}
+      "file_index":"xxxxxxx",   //需要上传的文件的file_index
+    }
 }
 //第三方需要将wehub上传的文件保存起来,建立file_index与上传文件的对应关系
 
@@ -909,8 +909,8 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":10,
     "task_dict":
     {
-        "room_wxid":"xxxxxx",   //微信群
-        "msg":"xxxxxx" //群公告的内容
+      "room_wxid":"xxxxxx",   //微信群
+      "msg":"xxxxxx" //群公告的内容
     }
 }
 
@@ -919,32 +919,32 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":11,
     "task_dict":
     {
-    	"wxid_from": "xxxxxx" 	 //转账发起者wxid
-        "transferid":"xxxxxx"    //transferid:自动收哪一笔转账
+      "wxid_from": "xxxxxx" 	 //转账发起者wxid
+      "transferid":"xxxxxx"    //transferid:自动收哪一笔转账
     }
 }
 - 删除好友
  {
-     "task_type":12,
-      "task_dict":
-      {
-       "wxid_delete": "xxxxx"  //要被删除的好友的wxid
-	}
+    "task_type":12,
+    "task_dict":
+    {
+      "wxid_delete": "xxxxx"  //要被删除的好友的wxid
+    }
  }
  -通过好友验证
  {
- 	"task_type":13,
- 	"task_dict":
-      {
-       "v1": "xxxxx",
-       "v2": "xxxxx"
-	}
+    "task_type":13,
+    "task_dict":
+    {
+      "v1": "xxxxx",
+      "v2": "xxxxx"
+    }
 }
 
 - 重新上报联系人 (wehub会重新发送report_contact)
 {
     "task_type":14,
- 	"task_dict":{}
+    "task_dict":{}
 }
 
 ```
