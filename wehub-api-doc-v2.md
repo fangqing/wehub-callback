@@ -777,18 +777,18 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ```
 - 发消息任务:
-(向一个微信群或一个微信号发一组消息单元)
-{
-    "task_type": 1,  
-    "task_dict":
-    {	
-      "wxid_to":"xxxxxx",   		//消息发往的对象(群微信号或者个人微信号)
-      "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,否则忽略
-    	"msg_list":[$push_msgunit,$push_msgunit,....]  //待发送的消息单元列表
-    }
-}
+  (向一个微信群或一个微信号发一组消息单元)
+  {
+      "task_type": 1,  
+      "task_dict":
+      {
+        "wxid_to":"xxxxxx",   		//消息发往的对象(群微信号或者个人微信号)
+        "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,否则忽略
+        "msg_list":[$push_msgunit,$push_msgunit,....]  //待发送的消息单元列表
+      }
+  }
  发消息任务中的$push_msgunit格式
-	⑴文字消息
+    ⑴文字消息
     {
         'msg_type':1,
         'msg': "xxxxxx"  发送的文字(可以嵌入转义的静态表情文字,参阅上方的链接 静态表情转义对照表)
@@ -818,7 +818,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     }
     ⑹个人名片
     {
-     	"msg_type":42, 	
+        "msg_type":42, 	
         "wxid_card":"xxxxxx" 		//发送谁的个人名片
     }
    
