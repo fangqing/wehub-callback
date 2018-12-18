@@ -803,15 +803,15 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
         "msg_type":47,
         "msg":"http://xxxxxxx/xx.gif"  //gif的url:必须是gif格式
     }
-  	⑷链接消息
+    ⑷链接消息
     {
-        "msg_type":49, 					//49 代表链接消息
-        "link_url":"http://xxxxx", 		//分享链接的url
-        "link_title":"标题", 			  //链接标题
-        "link_desc": "副标题",           //链接描述（副标题）
-        "link_img_url": "http://xxxxxxx" //链接的缩略图的的Url,jpg或者png格式
+        "msg_type":49,                    //49 代表链接消息
+        "link_url":"http://xxxxx",        //分享链接的url
+        "link_title":"标题",              //链接标题
+        "link_desc": "副标题",             //链接描述（副标题）
+        "link_img_url": "http://xxxxxxx"    //链接的缩略图的的Url,jpg或者png格式
     }
-   	⑸视频消息
+    ⑸视频消息
     {
         "msg_type":43, 	
         "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
@@ -831,7 +831,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    "task_dict":
     {
       "room_wxid":"xxxxx@chatroom", //被踢者所在的群,如果为空,则从所有的群踢出
-      "wxid":"xxxxxxx"		  	      //被踢者的wxid
+      "wxid":"xxxxxxx"              //被踢者的wxid
     }
 }
 - 拉群任务:
@@ -841,7 +841,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "task_dict":
     {
       "room_wxid":"xxxxx@chatroom", //目标群
-      "wxid":"xxxxxxx"		   //被拉进群的wxid
+      "wxid":"xxxxxxx"              //被拉进群的wxid
     }
 }
 - 上报群成员信息:
@@ -861,9 +861,9 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":5,
     "task_dict":
     {
-      "room_wxid":"xxxxx@chatroom",  //群wxid,可以留空
-      "wxid":"xxxxxxx"		    //要加谁为好友,不能为空
-      "msg":"xxxxxx"				//打招呼消息,文本
+      "room_wxid":"xxxxx@chatroom", //群wxid,可以留空
+      "wxid":"xxxxxxx"              //要加谁为好友,不能为空
+      "msg":"xxxxxx"                //打招呼消息,文本
     }
 }
 - 修改好友备注:
@@ -871,7 +871,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":6,
     "task_dict":
     {
-      "wxid":"xxxxxx",   //好友微信
+      "wxid":"xxxxxx",        //好友微信
       "remark_name":"xxxxxx" 	//好友备注
     }
 }
@@ -881,7 +881,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":7,
     "task_dict":
     {
-      "room_wxid":"xxxxxx",   //微信群wxid
+      "room_wxid":"xxxxxx",     //微信群wxid
       "room_nickname":"xxxxxx" 	//我在这个群里的昵称
     }
 }
@@ -909,7 +909,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_dict":
     {
       "room_wxid":"xxxxxx",   //微信群
-      "msg":"xxxxxx" //群公告的内容
+      "msg":"xxxxxx"          //群公告的内容
     }
 }
 
@@ -918,8 +918,8 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":11,
     "task_dict":
     {
-      "wxid_from": "xxxxxx" 	 //转账发起者wxid
-      "transferid":"xxxxxx"    //transferid:自动收哪一笔转账
+      "wxid_from": "xxxxxx"     //转账发起者wxid
+      "transferid":"xxxxxx"     //transferid:自动收哪一笔转账
     }
 }
 - 删除好友
