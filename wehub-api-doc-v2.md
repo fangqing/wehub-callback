@@ -782,11 +782,10 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "task_type": 1,  
     "task_dict":
     {	
-		"wxid_to":"xxxxxx",   		//消息发往的对象(群微信号或者个人微信号)
-        "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,否则忽略
-    	"msg_list":[$push_msgunit,$push_msgunit,....]  
-         //待发送的消息单元列表
-	}
+      "wxid_to":"xxxxxx",   		//消息发往的对象(群微信号或者个人微信号)
+      "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,否则忽略
+    	"msg_list":[$push_msgunit,$push_msgunit,....]  //待发送的消息单元列表
+    }
 }
  发消息任务中的$push_msgunit格式
 	⑴文字消息
@@ -830,10 +829,10 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 {
    "task_type":2,
    "task_dict":
-   	{
+    {
       "room_wxid":"xxxxx@chatroom", //被踢者所在的群,如果为空,则从所有的群踢出
       "wxid":"xxxxxxx"		  	      //被踢者的wxid
-	  }
+    }
 }
 - 拉群任务:
 (向一个好友发入群邀请,注意必须是自己的好友)
@@ -848,7 +847,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 - 上报群成员信息:
 (上报某个群里所有的群成员的详细信息,如果群成员比较多,上报的数据量会比较大)
 {
-  	"task_type":4,
+    "task_type":4,
     "task_dict":
     {
       //要上报的群列表
