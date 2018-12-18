@@ -238,10 +238,10 @@ respone格式为:common_ack格式
     "data":{
          "reply_task_list": [$task,$task,...]  
         //回复的任务列表,如果没有要回复的任务,则列表为空
-//每个$task都是一个json对象,代表一个要下发给wehub执行的任务单元,格式见[任务类型格式]
     }
 }
 ```
+注:每个$task都是一个json对象,代表一个要下发给wehub执行的任务,格式见<a href="#task"> [任务类型格式]</a>
 
 **<u>示例</u>**
 通过common_ack 向wehub回复两个任务,第一个任务让wehub向一个群发送3条消息(1条文本消息(同时@了两个群成员),1条图片消息,1条链接消息),第二个任务让wehub上报两个微信群的群成员信息
@@ -970,11 +970,11 @@ respone格式
          //wehub通过task_id来识别不同的任务(task_id其值是由回调接口生成的字符串,请保证有唯一性)
         "task_id": "任务id",    //字符串
         "task_data": $task     //单个任务
-         //$task格式见[任务类型格式]
-         //wehub取到任务以后,会立即开始执行,执行完成后会把结果异步地反馈给回调接口
     }
 }
 ```
+注: $task是一个json对象,代表一个要下发给wehub执行的任务,格式见<a href="#task"> [任务类型格式]</a>,wehub接收到任务以后,会立即开始执行,执行完成后会把结果异步地反馈给回调接口
+
 **<u>示例</u>**
 
 通过pull_task_ack 向wehub下发一个任务(该任务将wxid_abc从群bcdef@chatroom 中踢出)
