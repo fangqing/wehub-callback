@@ -831,8 +831,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    "task_type":2,
    "task_dict":
    	{
-         "room_wxid":"xxxxx@chatroom", //被踢者所在的群,如果为空,则从所有的群踢出
-         "wxid":"xxxxxxx"		  	   //被踢者的wxid
+    	"room_wxid":"xxxxx@chatroom", //被踢者所在的群,如果为空,则从所有的群踢出
+    	"wxid":"xxxxxxx"		  	   //被踢者的wxid
 	}
 }
 - 拉群任务:
@@ -841,8 +841,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "task_type":3,
     "task_dict":
     {
-    	 "room_wxid":"xxxxx@chatroom", //目标群
-         "wxid":"xxxxxxx"		   //被拉进群的wxid
+    	"room_wxid":"xxxxx@chatroom", //目标群
+        "wxid":"xxxxxxx"		   //被拉进群的wxid
 	}
 }
 - 上报群成员信息:
@@ -891,7 +891,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":8,
     "task_dict":
     {
-    	"room_wxid":"xxxxxx",   //要退出的微信群wxid
+		"room_wxid":"xxxxxx",   //要退出的微信群wxid
 	}
 }
 -上传文件
