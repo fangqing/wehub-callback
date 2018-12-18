@@ -33,10 +33,10 @@ WeHub和回调接口采用http的方式进行通讯,WeHub向回调接口主动�
 wehub主动发起的数据(简称为:request)json格式为:
 ```
 {
-  "action": "具体业务名",
-  "appid": "第三方申请的id",
-  "wxid": "当前登录的wxid",
-  "data": {具体业务的相关数据}
+    "action": "具体业务名",
+    "appid": "第三方申请的id",
+    "wxid": "当前登录的wxid",
+    "data": {具体业务的相关数据}
 }
 ```
 回调接口返回的数据(简称为:respone)json格式为:
@@ -91,21 +91,21 @@ report_new_room|common_ack
 request格式为
 ```
 {
-  "action" : "login",				 //登录的业务名为"login"
-  "appid": "xxxx",					 //申请的appid
-  "wxid" : "wxid_fo1039029348sfj",    //当前登陆的微信账号的wxid
-  "data" : {
-    "nickname": "Bill",              //微信昵称
-    "wx_alias": "mccbill",           //微信号(有可能为空)
-    "head_img": "http://xxxxxx",     //微信的头像地址
-    "client_version":"xxxxxx"		 //wehub的版本号
-    "nonce":"xxxxxxxxxxxxxxx"       //回调接口在计算签名时用到这个nonce值
-    								//有这个字段时服务端必须返回正确的签名
-    								//没有这个字段时回调接口无需做签名处理
-    "local_ip":"192.168.0.104|211.168.0.104"
-    //当前wehub所在系统中的网卡ip,如有多个以'|'分隔, 该字段是在0.2.3 版本中新加入的
-     "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
-  }
+    "action" : "login",				 //登录的业务名为"login"
+    "appid": "xxxx",					 //申请的appid
+    "wxid" : "wxid_fo1039029348sfj",    //当前登陆的微信账号的wxid
+    "data" : {
+      "nickname": "Bill",              //微信昵称
+      "wx_alias": "mccbill",           //微信号(有可能为空)
+      "head_img": "http://xxxxxx",     //微信的头像地址
+      "client_version":"xxxxxx"		 //wehub的版本号
+      "nonce":"xxxxxxxxxxxxxxx"       //回调接口在计算签名时用到这个nonce值
+      								//有这个字段时服务端必须返回正确的签名
+      								//没有这个字段时回调接口无需做签名处理
+      "local_ip":"192.168.0.104|211.168.0.104"
+      //当前wehub所在系统中的网卡ip,如有多个以'|'分隔, 该字段是在0.2.3 版本中新加入的
+       "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
+    }
 }
 ```
 回调接口返回(respone):
@@ -129,18 +129,18 @@ request格式为
 -  若关闭了安全性验证,则request 的data中不带"nonce"字段,回调接口无需处理签名
 ```
 {
-  "action" : "login",				 //登录的业务名为"login"
-  "appid": "xxxx",					 //申请的appid
-  "wxid" : "wxid_fo1039029348sfj",   //当前登陆的微信账号的wxid
-  "data" : {
-    "nickname": "Bill",               //微信昵称
-    "wx_alias": "mccbill",           //微信号(有可能为空)
-    "head_img": "http://xxxxxx",     	//微信的头像地址
-    "client_version":"xxxxxx"		 //wehub的版本号
-    "local_ip":"192.168.0.104|211.168.0.104"
-    //当前wehub所在系统中的网卡ip,如有多个以'|'分隔, 该字段是在0.2.3 版本中新加入的
-     "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
-  }
+    "action" : "login",				 //登录的业务名为"login"
+    "appid": "xxxx",					 //申请的appid
+    "wxid" : "wxid_fo1039029348sfj",   //当前登陆的微信账号的wxid
+    "data" : {
+      "nickname": "Bill",               //微信昵称
+      "wx_alias": "mccbill",           //微信号(有可能为空)
+      "head_img": "http://xxxxxx",     	//微信的头像地址
+      "client_version":"xxxxxx"		 //wehub的版本号
+      "local_ip":"192.168.0.104|211.168.0.104"
+      //当前wehub所在系统中的网卡ip,如有多个以'|'分隔, 该字段是在0.2.3 版本中新加入的
+       "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
+    }
 }
 ```
 回调接口返回(respone):
@@ -195,35 +195,35 @@ request格式
     }
 }
 data中相关字段描述
-    - groupinfo(群信息结构):
-    {
-        "wxid": "xxxxxxx",                  //群的wxid,格式为 xxxxx@chatroom
-        "name": "xxxxxx",                   //群名称
-        "owner_wxid": "xxxxxxxx",           //群主的wxid
-        "member_count":  100,               //该群成员总数
-        "head_img":"http://xxxxxxxx"        //群的头像的url地址
-        "member_wxid_list" :['wxid_xxx1','wxid_xxx2',...]  //当前群的成员wxid的列表
-    }
-    
-    - userInfo(好友信息结构)
-    {
-        "wxid":  "wxid",                //wxid
-        "wx_alias": "xxxxx",            //微信号(有可能为空)
-        "nickname":"xxxxx",             //微信昵称
-        "remark_name" :"xxxx",          //好友备注
-        "head_img":"http://xxxxxxxx"    //头像的url地址
-        "sex" : xx ,    				//性别:0或者1,默认是0,1代表女性
-        "country":"xxx",				//祖国(可能为空)
-        "province":"xxxx",				//省份(可能为空)
-        "city":"xxxxx"					//城市(可能为空)
-    }
-    
-    - publicinfo(公众号信息)
-    {
-         "wxid":  "gh_xxxxx",   //某些公众号也可能以wxid_ 开头
-         "nickname":"xxxxx",    //公众号名称
-         "head_img":"http://xxxxxxxxxx"  //头像
-    }
+- groupinfo(群信息结构):
+{
+    "wxid": "xxxxxxx",                  //群的wxid,格式为 xxxxx@chatroom
+    "name": "xxxxxx",                   //群名称
+    "owner_wxid": "xxxxxxxx",           //群主的wxid
+    "member_count":  100,               //该群成员总数
+    "head_img":"http://xxxxxxxx"        //群的头像的url地址
+    "member_wxid_list" :['wxid_xxx1','wxid_xxx2',...]  //当前群的成员wxid的列表
+}
+
+- userInfo(好友信息结构)
+{
+    "wxid":  "wxid",                //wxid
+    "wx_alias": "xxxxx",            //微信号(有可能为空)
+    "nickname":"xxxxx",             //微信昵称
+    "remark_name" :"xxxx",          //好友备注
+    "head_img":"http://xxxxxxxx"    //头像的url地址
+    "sex" : xx ,    				//性别:0或者1,默认是0,1代表女性
+    "country":"xxx",				//祖国(可能为空)
+    "province":"xxxx",				//省份(可能为空)
+    "city":"xxxxx"					//城市(可能为空)
+}
+
+- publicinfo(公众号信息)
+{
+    "wxid":  "gh_xxxxx",   //某些公众号也可能以wxid_ 开头
+    "nickname":"xxxxx",    //公众号名称
+    "head_img":"http://xxxxxxxxxx"  //头像
+}
 
 ```
 
@@ -300,14 +300,14 @@ wehub探测到联系人列表中的信息有更新(如昵称,头像等),这些�
 request格式
 ```
 {
-	"action":"report_contact_update",
-	"appid":"xxxxxxxx",
-	"wxid":"xxxxxxx",
-	"data":{
-		"update_list":[
-                $userInfo,$groupbaseInfo,$userInfo,$groupbaseInfo   // 群基本信息和联系人信息的无序列表
-		]
-	}
+    "action":"report_contact_update",
+    "appid":"xxxxxxxx",
+    "wxid":"xxxxxxx",
+    "data":{
+        "update_list":[
+            $userInfo,$groupbaseInfo,$userInfo,$groupbaseInfo,.....   // 群基本信息和联系人信息的无序列表
+    ]
+  }
 }
 
 $userInfo 同report_contact 中的userInfo 结构
@@ -328,16 +328,16 @@ request
 {
     "action":"report_room_member_info",
     "appid": "xxxxxxxx",				//申请的appid
-  	"wxid" : "wxid_fo1039029348sfj",
- 	"data" : {
+    "wxid" : "wxid_fo1039029348sfj",
+    "data" : {
    	   room_data_list:[
            {
-           	  "room_wxid":"xxxxx1@chatroom",  //群wxid
-           	  "name":"xxxx",  	     //群名(0.3.3版本中新增) 
-           	  "owner_wxid":"xxxxx",  //群主wxid(0.3.3版本中新增)
-           	  "head_img":"xxxxxxx",  //群头像(0.3.3版本中新增)
-           	  "member_count": xxx,   //群内有多少个成员(0.3.3版本中新增)
-           	  "memberInfo_list":[$memberInfo,$memberInfo.....] 
+              "room_wxid":"xxxxx1@chatroom",  //群wxid
+              "name":"xxxx",  	     //群名(0.3.3版本中新增) 
+              "owner_wxid":"xxxxx",  //群主wxid(0.3.3版本中新增)
+              "head_img":"xxxxxxx",  //群头像(0.3.3版本中新增)
+              "member_count": xxx,   //群内有多少个成员(0.3.3版本中新增)
+              "memberInfo_list":[$memberInfo,$memberInfo.....] 
            	  //群内成员信息
            },
            ........
@@ -347,13 +347,13 @@ request
 ```
 ####  <a name="memberInfo">$memberInfo格式</a>
 ```
- {
-        "wxid":  "wxid",             //wxid
-        "wx_alias": "xxxxx",         //微信号(有可能为空)
-        "room_nickname":			//这个微信号的群昵称
-        "nickname":"xxxxx",             //微信昵称
-        "head_img":"http://xxxxxxxx"    //头像的url地址
- }
+{
+    "wxid":  "wxid",             //wxid
+    "wx_alias": "xxxxx",         //微信号(有可能为空)
+    "room_nickname":			//这个微信号的群昵称
+    "nickname":"xxxxx",             //微信昵称
+    "head_img":"http://xxxxxxxx"    //头像的url地址
+}
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
@@ -364,14 +364,14 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 ```
 request
 {
-	"action":"report_room_member_change",
-	"appid":"xxxxxxx",
-	"wxid": "wxid_xxxxxxx",
-    "data":{
-    	"room_wxid":"xxxxxxx@chatroom",
-    	"wxid_list";['xxxxxx','xxxxx'],  //变化的成员的wxid列表
-    	"flag": flag //0,群成员减少;1,群成员增加
-    }
+    "action":"report_room_member_change",
+    "appid":"xxxxxxx",
+    "wxid": "wxid_xxxxxxx",
+      "data":{
+        "room_wxid":"xxxxxxx@chatroom",
+        "wxid_list";['xxxxxx','xxxxx'],  //变化的成员的wxid列表
+        "flag": flag //0,群成员减少;1,群成员增加
+      }
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
@@ -381,16 +381,16 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 ```
 request
 {
-	"action":"report_new_room",
-	"appid":"xxxxxxx",
-	"wxid": "wxid_xxxxxxx",
-    "data":{
-    	"wxid":"xxxxx",   //新群的wxid
-    	"name:"xxxx",	  //群名(可能为空)
-    	"owner_wxid":"xxxxx", //群主的wxid
-    	"head_img":"xxxx",  //群头像的url地址
-    	"memberInfo_list":[$memberInfo,$memberInfo,.....]  //见memberInfo结构
-    }
+    "action":"report_new_room",
+    "appid":"xxxxxxx",
+    "wxid": "wxid_xxxxxxx",
+      "data":{
+        "wxid":"xxxxx",   //新群的wxid
+        "name:"xxxx",	  //群名(可能为空)
+        "owner_wxid":"xxxxx", //群主的wxid
+        "head_img":"xxxx",  //群头像的url地址
+        "memberInfo_list":[$memberInfo,$memberInfo,.....]  //见memberInfo结构
+      }
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
@@ -413,13 +413,13 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 ```
 request
 {
-  "action" : "report_new_msg",
-  "appid": "xxxxxxxx",				//申请的appid
-  "wxid" : "wxid_fo1039029348sfj",
-  "data" : {
-    "msg": $report_msgunit       //上报单条消息
-    //report_msgunit格式见[上报的消息单元的格式]
-    }
+    "action" : "report_new_msg",
+    "appid": "xxxxxxxx",				//申请的appid
+    "wxid" : "wxid_fo1039029348sfj",
+    "data" : {
+      "msg": $report_msgunit       //上报单条消息
+      //report_msgunit格式见[上报的消息单元的格式]
+      }
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
@@ -474,18 +474,18 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     
 - 图片消息
 {
-	"msg_type": 3, 					  //3 代表图片消息
-	"room_wxid": "xxxxxxxx@chatroom", //同文本消息
-	"wxid_from": "wxid_xxxxxx", 	//同文本消息
-	"wxid_to": 	"wxid_xxxxx",		//同文本消息
-	"file_index":"xxxxxx"   		//图片文件的唯一索引(由wehub生成)
-									//该字段在wehub上报消息时有效
-	//如果是自己发/转发的图片,file_index为本地的文件路径
+    "msg_type": 3, 					  //3 代表图片消息
+    "room_wxid": "xxxxxxxx@chatroom", //同文本消息
+    "wxid_from": "wxid_xxxxxx", 	//同文本消息
+    "wxid_to": 	"wxid_xxxxx",		//同文本消息
+    "file_index":"xxxxxx"   		//图片文件的唯一索引(由wehub生成)
+      //该字段在wehub上报消息时有效
+      //如果是自己发/转发的图片,file_index为本地的文件路径
 }
 
 - 链接消息(分享某个网页链接)
 {
-	"msg_type":49, 					//49 代表链接消息
+    "msg_type":49, 					//49 代表链接消息
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
@@ -497,7 +497,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 - 表情消息
 {
-  	"msg_type":47, 					
+    "msg_type":47, 					
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
@@ -507,12 +507,12 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 - 小程序
 {
-	"msg_type":4901, 					
+    "msg_type":4901, 					
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
     "raw_msg": "xxxxxxx"    //微信中的小程序信息的原始数据,xml格式,请自行解析
-    						//username,nickname 为关键字段
+        //username,nickname 为关键字段
 }
 
 - 转账事件 
@@ -525,7 +525,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    (只有这种情况下才能自动收账,格式见自动收账任务)
    2.我确认收账时:wxid_from='我的wxid',wxid_to='他人的wxid',paysubtype=3
 {
-	"msg_type":4902, 					
+    "msg_type":4902, 					
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
     "transferid": "xxxxxxx"   //转账的ID
@@ -536,7 +536,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 - 文件
 (从0.3.3版本开始支持文件上传)
 {
-	"msg_type":4903, 					
+    "msg_type":4903, 					
     "room_wxid": "xxxxxxxx@chatroom", 	//发生在哪个群里
     "wxid_from": "wxid_xxxxxx", 	  	//文件发送者
     "wxid_to":"wxid_xxxxx",	  			//文件接收者
@@ -625,12 +625,12 @@ eg:
 
 3.wehub收到指令后通过第三方自定义的上传接口上传文件(post 方式)
 4.上传接口返回文件处理的结果
- {
-     'error_code':0,        
-     'error_reason':'',     
-     'ack_type':'upload_file_ack',
-     'file_index':file_index     //接收到的文件的file_index
- }
+{
+    'error_code':0,        
+    'error_reason':'',     
+    'ack_type':'upload_file_ack',
+    'file_index':file_index     //接收到的文件的file_index
+}
 ```
 以下为 wehub向上传接口上传图片文件的http request示例
 ```
@@ -712,15 +712,15 @@ Content-Disposition: form-data; name="file";filename="274cfbce78d88c83a9d0bd7d0c
 ```
 request
 {
-  "action" : "report_friend_add_request",
-  "appid": "xxxxxxx",
-  "wxid" : "wxid_fo1039029348sfj",
-  "data" : {
-   	"v1":"xxxxxx",			  //若要自动通过,请在ack中回传
-   	"v2":"xxxxxxx",			  //若要自动通过,请在ack中回传
-   	"notice_word":"xxxxxxx", //新好友加我时的打招呼的内容,可能为空
-   	"raw_msg":"xxxxxxxxxxx"  //微信中的原始消息,xml格式
-  }
+    "action" : "report_friend_add_request",
+    "appid": "xxxxxxx",
+    "wxid" : "wxid_fo1039029348sfj",
+    "data" : {
+      "v1":"xxxxxx",			  //若要自动通过,请在ack中回传
+      "v2":"xxxxxxx",			  //若要自动通过,请在ack中回传
+      "notice_word":"xxxxxxx", //新好友加我时的打招呼的内容,可能为空
+      "raw_msg":"xxxxxxxxxxx"  //微信中的原始消息,xml格式
+    }
 }
 若要自动通过好友验证,可在reply_task_list字段中加入"通过好友验证"的任务(task_type为13)
 ```
@@ -734,18 +734,18 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 ```
 request格式
 {
-  "action" : "report_new_friend",
-  "appid": "xxxxxxx",
-  "wxid" : "wxid_fo1039029348sfj",
-  "data" : {
-    "fans_wxid": "wxid_ljsdlfjslfjl",		 // 新好友的wxid
-    "nickname": "Jerry",					// 新好友的昵称
-    "wx_alias": "jerry"						// 新好友的微信号,可能为空
-    "head_img": "xxxxx",			//头像url
-    "notice_word":  "xxxxxxx"  		//新好友加我时的打招呼的内容,可能为空
-    "sourceusername": "xxxxx"		//推荐人的wxid,可能为空
-    "sourcenickname":"xxxxxxx" 		//推荐人昵称,可能为空
-  }
+    "action" : "report_new_friend",
+    "appid": "xxxxxxx",
+    "wxid" : "wxid_fo1039029348sfj",
+    "data" : {
+      "fans_wxid": "wxid_ljsdlfjslfjl",		 // 新好友的wxid
+      "nickname": "Jerry",					// 新好友的昵称
+      "wx_alias": "jerry"						// 新好友的微信号,可能为空
+      "head_img": "xxxxx",			//头像url
+      "notice_word":  "xxxxxxx"  		//新好友加我时的打招呼的内容,可能为空
+      "sourceusername": "xxxxx"		//推荐人的wxid,可能为空
+      "sourcenickname":"xxxxxxx" 		//推荐人昵称,可能为空
+    }
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
@@ -777,58 +777,59 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ```
 - 发消息任务:
-  (向一个微信群或一个微信号发一组消息单元)
-  {
-      "task_type": 1,  
-      "task_dict":
-      {
-        "wxid_to":"xxxxxx",   		//消息发往的对象(群微信号或者个人微信号)
-        "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,否则忽略
-        "msg_list":[$push_msgunit,$push_msgunit,....]  //待发送的消息单元列表
-      }
-  }
- 发消息任务中的$push_msgunit格式
+(向一个微信群或一个微信号发一组消息单元)
+{
+    "task_type": 1,  
+    "task_dict":
+    {
+      "wxid_to":"xxxxxx",   		//消息发往的对象(群微信号或者个人微信号)
+      "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,否则忽略
+      "msg_list":[$push_msgunit,$push_msgunit,....]  //待发送的消息单元列表
+    }
+}
+
+发消息任务中的$push_msgunit格式
 ⑴文字消息
-    {
-        'msg_type':1,
-        'msg': "xxxxxx"  发送的文字(可以嵌入转义的静态表情文字,参阅上方的链接 静态表情转义对照表)
-    }
+{
+    'msg_type':1,
+    'msg': "xxxxxx"  发送的文字(可以嵌入转义的静态表情文字,参阅上方的链接 静态表情转义对照表)
+}
 ⑵图片消息
-    {
-         'msg_type':3,
-         'msg':"xxxx"  //图片的url绝对地址:http://xxxxxxx/xx.jpg或png 
-    }
+{
+    'msg_type':3,
+    'msg':"xxxx"  //图片的url绝对地址:http://xxxxxxx/xx.jpg或png 
+}
 ⑶gif表情         //从0.3.0开始支持
-    {
-        "msg_type":47,
-        "msg":"http://xxxxxxx/xx.gif"  //gif的url:必须是gif格式
-    }
+{
+    "msg_type":47,
+    "msg":"http://xxxxxxx/xx.gif"  //gif的url:必须是gif格式
+}
 ⑷链接消息
-    {
-        "msg_type":49,                    //49 代表链接消息
-        "link_url":"http://xxxxx",        //分享链接的url
-        "link_title":"标题",              //链接标题
-        "link_desc": "副标题",             //链接描述（副标题）
-        "link_img_url": "http://xxxxxxx"    //链接的缩略图的的Url,jpg或者png格式
-    }
+{
+    "msg_type":49,                    //49 代表链接消息
+    "link_url":"http://xxxxx",        //分享链接的url
+    "link_title":"标题",              //链接标题
+    "link_desc": "副标题",             //链接描述（副标题）
+    "link_img_url": "http://xxxxxxx"    //链接的缩略图的的Url,jpg或者png格式
+}
 ⑸视频消息
-    {
-        "msg_type":43, 	
-        "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
-    }
+{
+    "msg_type":43, 	
+    "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
+}
 ⑹个人名片
-    {
-        "msg_type":42, 	
-        "wxid_card":"xxxxxx" 		//发送谁的个人名片
-    }
+{
+    "msg_type":42, 	
+    "wxid_card":"xxxxxx" 		//发送谁的个人名片
+}
    
 
 
 - 踢人任务:
 (把一个微信号从指定的群踢出,当前微信必须有群主权限)
 {
-   "task_type":2,
-   "task_dict":
+    "task_type":2,
+    "task_dict":
     {
       "room_wxid":"xxxxx@chatroom", //被踢者所在的群,如果为空,则从所有的群踢出
       "wxid":"xxxxxxx"              //被踢者的wxid
@@ -1002,15 +1003,15 @@ respone格式
 request格式
 ```
 {
-     "action": "report_task_result",
-     "appid": "xxxxxxx",         
-     "wxid" : "wxid_xxxxxxxx"
-     "data":
-     {
-        "task_id": "任务id",
-        "task_result": 1,   //0,任务执行失败,1任务执行成功
-        "error_reason": ""  //为什么执行失败,若任务执行成功则为空
-     }
+    "action": "report_task_result",
+    "appid": "xxxxxxx",         
+    "wxid" : "wxid_xxxxxxxx"
+    "data":
+    {
+      "task_id": "任务id",
+      "task_result": 1,   //0,任务执行失败,1任务执行成功
+      "error_reason": ""  //为什么执行失败,若任务执行成功则为空
+    }
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
