@@ -1024,8 +1024,11 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
   前者的消息主要是视觉可感知的数据(如文本,图片) ,而后者的任务除了发消息,还包括很多不可感知的事件(如踢人出群,删除好友等)
 
-- common_ack 与 pull_task_ack 的区别
+- common_ack 与 pull_task_ack 的区别:
+
   common_ack中可携带多个下发的任务,但不会上报任务执行的结果
-  pull_task_ack只能下发一个任务,且必须有task_id字段,通过pull_task_ack 下发的任务会通过report_task_result 上报任务执行的结果;
-  common_ack 与pull_task_ack  中的任务格式都是一样的.见<a href="#task"> [任务类型格式]</a>
+
+  pull_task_ack只能下发一个任务,且必须有task_id字段,通过pull_task_ack 下发的任务会通report_task_result 上报任务执行的结果;
+
+  common_ack 与pull_task_ack中的任务格式都是一样的,见<a href="#task"> [任务类型格式]</a>
 
