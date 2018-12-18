@@ -25,7 +25,7 @@ wxid:
 	每一个微信号或者微信群,微信系统都定义了唯一的标识字符串.对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);对于个人微信号,其格式wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)或者 xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如 fangqing_hust).
 本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
 ```
-WeHub和回调接口采用c/s的方式进行通讯,WeHub向回调接口主动发起http request(post方式),回调接口返回http respone.微信-wehub-回调接口 三者之间的数据流如下
+WeHub和回调接口采用http的方式进行通讯,WeHub向回调接口主动发起http request(post方式),回调接口返回http respone.微信-wehub-回调接口 三者之间的数据流如下
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_flow.png)
 
 --------------
@@ -1016,3 +1016,19 @@ request格式
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
+### 容易混淆的地方
+- wehub主动上报的消息与服务端下发的任务的区别
+
+  (1).前者是在http request中(通过report_new_msg),数据从wehub流向server;后者是在http respone中(通过common_ack 或者pull_task_ack),数据由服务端流向wehub
+
+  (2).二者的格式不样,前者的消息格式见<a href="#report_msgunit">[上报的消息单元的格式]</a>;后者的任务格式见<a href="#task"> [任务类型格式]</a>
+
+  前者的消息主要是视觉可感知的数据(如文本,图片) ,而后者的任务除了发消息,还包括很多不可感知的事件(如踢人出群,删除好友等)
+
+- common_ack 与 pull_task_ack 的区别
+
+  common_ack中可携带多个下发的任务,但不会上报任务执行的结果
+
+  pull_task_ack只能下发一个任务,且必须有task_id字段,通过pull_task_ack 下发的任务会通过report_task_result 上报任务执行的结果;
+
+  common_ack 与pull_task_ack  中的任务格式都是一样的.见<a href="#task"> [任务类型格式]</a>
