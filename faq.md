@@ -17,55 +17,46 @@ log文件中记录的常见的错误列举
 错误1:log中出现  "unknow format reply data,error = xxxxx"
 原因: 回调接口收到wehub发送的http request后,返回的http respone不是json格式,wehub无法解析或解析出错
 
-错误2:log中出现"HubLogic OnReplyError, replay error = xxx", xxx的值是下方NetworkError枚举类型的值
+错误2:log中出现"HubLogic OnReplyError, replay error = xxx", xxx的值是下方表格中的错误码
 原因:回调接口的服务端运行不正常(比如服务没有开启,回调接口的域名无法解析等等)
-
-enum  NetworkError {
-        NoError = 0,
-// network layer errors [relating to the destination server] (1-99):
-        ConnectionRefusedError = 1,
-        RemoteHostClosedError,
-        HostNotFoundError,
-        TimeoutError,
-        OperationCanceledError,
-        SslHandshakeFailedError,
-        TemporaryNetworkFailureError,
-        NetworkSessionFailedError,
-        BackgroundRequestNotAllowedError,
-        TooManyRedirectsError,
-        InsecureRedirectError,
-        UnknownNetworkError = 99,
-
-        // proxy errors (101-199):
-        ProxyConnectionRefusedError = 101,
-        ProxyConnectionClosedError,
-        ProxyNotFoundError,
-        ProxyTimeoutError,
-        ProxyAuthenticationRequiredError,
-        UnknownProxyError = 199,
-
-        // content errors (201-299):
-        ContentAccessDenied = 201,
-        ContentOperationNotPermittedError,
-        ContentNotFoundError,
-        AuthenticationRequiredError,
-        ContentReSendError,
-        ContentConflictError,
-        ContentGoneError,
-        UnknownContentError = 299,
-
-        // protocol errors
-        ProtocolUnknownError = 301,
-        ProtocolInvalidOperationError,
-        ProtocolFailure = 399,
-
-        // Server side errors (401-499)
-        InternalServerError = 401,
-        OperationNotImplementedError,
-        ServiceUnavailableError,
-        UnknownServerError = 499
-    };
 ```
+错误码|Description
+----|--
+1|the remote server refused the connection (the server is not accepting requests)
+2|the remote server closed the connection prematurely, before the entire reply was received and processed
+3|the remote host name was not found (invalid hostname)
+4|the connection to the remote server timed out
+5|the operation was canceled  before it was finished.
+6|the SSL/TLS handshake failed and the encrypted channel could not be established
+7|the connection was broken due to disconnection from the network, however the system has initiated roaming to another access point. The request should be resubmitted and will be processed as soon as the connection is re-established.
+8|the connection was broken due to disconnection from the network or failure to start the network.
+9|the background request is not currently allowed due to platform policy.
+10|while following redirects, the maximum limit was reached. 
+11|while following redirects, the network access  detected a redirect from a encrypted protocol (https) to an unencrypted one (http). 
+99|an unknown network-related error was detected
+101|the connection to the proxy server was refused (the proxy server is not accepting requests)
+102|the proxy server closed the connection prematurely, before the entire reply was received and processed
+103|the proxy host name was not found (invalid proxy hostname)
+104|the connection to the proxy timed out or the proxy did not reply in time to the request sent
+105|the proxy requires authentication in order to honour the request but did not accept any credentials offered (if any)
+199|an unknown proxy-related error was detected
+201|the access to the remote content was denied (similar to HTTP error 403)
+202|the operation requested on the remote content is not permitted
+203|the remote content was not found at the server (similar to HTTP error 404)
+204|the remote server requires authentication to serve the content but the credentials provided were not accepted (if any)
+205|the request needed to be sent again, but this failed for example because the upload data could not be read a second time.
+206|the request could not be completed due to a conflict with the current state of the resource.
+207|the requested resource is no longer available at the server.
+299|an unknown error related to the remote content was detected
+301|the Network Access  cannot honor the request because the protocol is not known
+302|the requested operation is invalid for this protocol
+399|a breakdown in protocol was detected (parsing error, invalid or unexpected responses, etc.)
+401|the server encountered an unexpected condition which prevented it from fulfilling the request.
+402|the server does not support the functionality required to fulfill the request.
+403|the server is unable to handle the request at this time.
+499|an unknown error related to the server response was detected
+​    
+
 
 - faq2 wehub和回调接口的交互数据的编码方式
 ```
@@ -134,4 +125,5 @@ wehub提供基础的微信聊天消息上报的能力,不过滤发送者的wxid(
 ```
 report_contact每次post的数据量会比较大(好友/群越多,post的数据就越大),请将服务端能接受的post_max_size 调整成至少10M.由于很多服务器比如ngix 默认的接收的最大量会比较小(比如1M),当report_contact的数据量超过这个上限时,服务端会无法接收这个request.请参考这个网页:
 https://www.jianshu.com/p/7797b200e1f4
-'''
+```
+
