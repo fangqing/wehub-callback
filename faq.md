@@ -17,10 +17,10 @@ log文件中记录的常见的错误列举
 错误1:log中出现  "unknow format reply data,error = xxxxx"
 原因: 回调接口收到wehub发送的http request后,返回的http respone不是json格式,wehub无法解析或解析出错
 
-错误2:log中出现"HubLogic OnReplyError, replay error = xxx", xxx的值是下方表格中的错误码
+错误2:log中出现"HubLogic OnReplyError, replay error = xxx", xxx的值是下方表格中的网络错误码
 原因:回调接口的服务端运行不正常(比如服务没有开启,回调接口的域名无法解析等等)
 ```
-错误码|Description
+网络错误码|Description
 ----|--
 1|the remote server refused the connection (the server is not accepting requests)
 2|the remote server closed the connection prematurely, before the entire reply was received and processed
@@ -55,8 +55,6 @@ log文件中记录的常见的错误列举
 402|the server does not support the functionality required to fulfill the request.
 403|the server is unable to handle the request at this time.
 499|an unknown error related to the server response was detected
-​    
-
 
 - faq2 wehub和回调接口的交互数据的编码方式
 ```
