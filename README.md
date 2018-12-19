@@ -3,6 +3,12 @@ wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/W
 
 支持2.6.4.56|2.6.5.38|2.6.6.28 这几个版本的微信
 
+使用wehub是否会导致封号?
+
+WeHub只是一个提供些许便利的工具软件,无法保证你的微信不被封号. 
+
+是否封号取决于你使用工具做了什么(微信后台后分析和记录你的行为特征),当你无节制地滥用工具时,封号将是不可避免的.请心怀敬畏,用合适的工具做合适的事.
+
 ------
 
 wehub 回调接口开发文档:  
@@ -94,6 +100,3 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 调整后发群消息时可以at多个微信号了(原来只能at一个微信号)
 ```
-
-
-
