@@ -3,7 +3,8 @@
 - faq1.如何查看wehub与 回调接口之间的数据通讯?
 ```
 方法1:安装fiddler,该软件可以很直接的观察到wehub 的所有的http通讯
-    在本机上开发和部署回调接口服务的开发者,需下载最新版wehub,打开设置界面,切换到"其他设置"-->设置http代理为127.0.0.1:8888(保持和fiddler默认的代理设置一致),然后就可以在fiddler中查看wehub发送的http request和接收到的respone
+    在本机上开发和部署回调接口服务的开发者,需下载最新版wehub,打开设置界面,切换到"其他设置"-->设置http代理为127.0.0.1:8888(保持和fiddler默认的代理设置一致),
+    然后就可以在fiddler中查看wehub发送的http request和接收到的respone
 	
 方法2:Wehub在 C:\Users\xxxxxx\AppData\Roaming\WeHub\system\log 目录下会产生log文件,   log的配置文件为C:\Users\xxxxx\AppData\Roaming\WeHub\system\cfg\log4cxx.properties,    
 若要看很详细的log,请提高loglevel:
@@ -19,9 +20,10 @@ log文件中记录的常见的错误列举
 
 错误2:log中出现"HubLogic OnReplyError, replay error = xxx", xxx的值是下方表格中的网络错误码
 原因:回调接口的服务端运行不正常(比如服务没有开启,回调接口的域名无法解析等等)
+
 ```
 网络错误码|Description
-----|--
+:----:|--
 1|the remote server refused the connection (the server is not accepting requests)
 2|the remote server closed the connection prematurely, before the entire reply was received and processed
 3|the remote host name was not found (invalid hostname)
@@ -64,8 +66,10 @@ wehub 将utf-8编码的json格式的request以post方式发往回调接口(http 
 
 - faq3.为什么我的代码里按照你的文档里的json格式来写,下发的任务却没有执行?
 ```
-程序同学请先检查你的代码逻辑是否正确,书写格式是否规范,执行起来是否按照预想的流程在走.
-最最最重要的一点:你的代码执行到最后返回给wehub的json格式是否和文档中的一致,不少同学的服务端代码惨不忍睹,把代码执行中出现的各种trace全部返回给了wehub(尤其是用php,asp等语言开发的同学尤其注意),请打开wehub的log,看是否有异常(参考faq1)
+请先检查你的代码逻辑是否正确,书写格式是否规范,执行起来是否按照预想的流程在走.
+最最最重要的一点:你的代码执行到最后返回给wehub的json格式是否和文档中的一致,
+注意你的代码中出现的各种trace,你的服务器可能会把这些trace全部返回给了wehub,请打开wehub的log,
+看是否有异常(参考faq1)
 ```
 
 - faq4.wehub是否可以多开?
@@ -91,8 +95,11 @@ wehub提供基础的微信聊天消息上报的能力,不过滤发送者的wxid(
 - faq6.为什么有时候wehub无法监测到微信?
 ```
 1. 确定当前wehub 支持的微信版本号:
-   方法:  打开wehub的安装目录,进入WeChatVersion 子目录,会发现有以微信版本号命名的子文件夹如2.6.xx.xx等等,他们分别代表着wehub所支持的微信的版本号. 若你当前正在使用的微信的版本号不在上述之列,则表示你当前使用的wehub无法支持你当前运行的微信版本,请下载安装最新版的WeHub.目前最新的WeHub(0.3.0)已支持2.6.3.78|2.6.4.38|2.6.4.56|2.6.5.38|2.6.6.28 等5个版本的微信.
-   注意:360等软件可能会把wehub当成不安全的进程,从而误删除WeChatVersion目录下的文件,请使用wehub时退出360进程或将wehub加入到360的信任名单.(很重要,很重要,很重要)
+   方法:  打开wehub的安装目录,进入WeChatVersion 子目录,会发现有以微信版本号命名的子文件夹如2.6.xx.xx等等,
+   他们分别代表着wehub所支持的微信的版本号. 若你当前正在使用的微信的版本号不在上述之列,则表示你当前使用的wehub无法支持你当前运行的微信版本,
+   请下载安装最新版的WeHub.目前最新的WeHub(0.3.3)支持2.6.4.56|2.6.5.38|2.6.6.28 等3个版本的微信.
+   注意:360等软件可能会把wehub当成不安全的进程,从而误删除WeChatVersion目录下的文件,
+   请使用wehub时退出360进程或将wehub加入到360的信任名单.(很重要,很重要,很重要)
 
 2. 看系统中是否有僵死的微信进程:
    方法: 打开系统的任务管理器,对所有的进程按"名称" 排序查看,查看当前有多少个微信进程(只有名称为Wechat的进程才是微信进程,其他的如WeChatweb, WeChatStore都不是微信的主进程),同时查看你的任务栏里有多少个微信的聊天或登陆窗口. 比如你的任务管理器中显示有4个"Wechat"进程而在任务栏上你只看到了3个微信的窗口,说明有一个微信进程是僵死的.
@@ -104,9 +111,9 @@ wehub提供基础的微信聊天消息上报的能力,不过滤发送者的wxid(
 ```
 
 - faq7.为什么有时候wehub发图片很慢很慢?
-
 ```
-目前已知的情况是,运行在阿里云主机上的wehub发图片很慢很慢(猜测可能微信对运行阿里云的微信客户端有某些特殊的行为处理),更换成腾讯云的主机后一切都正常了
+目前已知的情况是,运行在阿里云主机上的wehub发图片很慢很慢(猜测可能微信对运行阿里云的微信客户端有某些特殊的行为处理),
+更换成腾讯云的主机后一切都正常了
 ```
 
 - faq8.为什么wehub 开启后,appid无法验证成功?
@@ -121,7 +128,13 @@ wehub提供基础的微信聊天消息上报的能力,不过滤发送者的wxid(
 
 - faq9:我在服务端代码里打了log,登陆后为什么没有收到 report_contact?
 ```
-report_contact每次post的数据量会比较大(好友/群越多,post的数据就越大),请将服务端能接受的post_max_size 调整成至少10M.由于很多服务器比如ngix 默认的接收的最大量会比较小(比如1M),当report_contact的数据量超过这个上限时,服务端会无法接收这个request.请参考这个网页:
-https://www.jianshu.com/p/7797b200e1f4
+report_contact每次post的数据量会比较大(好友/群越多,post的数据就越大),请将服务端能接受的post_max_size 调整成至少10M.
+由于很多服务器比如ngix 默认的接收的最大量会比较小(比如1M),当report_contact的数据量超过这个上限时,服务端会无法接收这个request.
+请参考这个网页:https://www.jianshu.com/p/7797b200e1f4
 ```
 
+- faq 10: 关于json中的数据类型
+```
+  task_id字段 必须为字符串
+  error_code,task_typ,msg_type字段必须为数字
+```
