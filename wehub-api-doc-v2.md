@@ -1019,7 +1019,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 ### 容易混淆的地方
 - wehub主动上报的消息与服务端下发的任务的区别
 
-  (1).前者是在http request中(通过report_new_msg),数据从wehub流向server;后者是在http respone中(通过common_ack 或者pull_task_ack),数据由服务端流向wehub
+  (1).前者是在http request中(通过report_xxxxx),数据从wehub流向server;后者是在http respone中(通过common_ack 或者pull_task_ack),数据由服务端流向wehub
 
   (2).二者的格式不样,前者的消息格式见<a href="#report_msgunit">[上报的消息单元的格式]</a>;后者的任务格式见<a href="#task"> [任务类型格式]</a>
 
@@ -1027,9 +1027,10 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 - common_ack 与 pull_task_ack 的区别:
 
-  common_ack中可携带多个下发的任务,但不会上报任务执行的结果
+  common_ack中可携带多个下发的任务(data中有reply_task_list字段),但不会上报任务执行的结果
 
-  pull_task_ack只能下发一个任务,且必须有task_id字段,通过pull_task_ack 下发的任务会通report_task_result 上报任务执行的结果;
+  pull_task_ack只能下发一个任务(data中没有reply_task_list字段),且必须有task_id字段,通过pull_task_ack 下发的任务会通report_task_result 上报任务执行的结果;
 
   common_ack 与pull_task_ack中的任务格式都是一样的,见<a href="#task"> [任务类型格式]</a>
 
+更多的问题请参考<a href="../faq.md">[faq]</a>
