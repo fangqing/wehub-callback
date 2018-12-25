@@ -3,10 +3,12 @@
 - faq1.如何查看wehub与 回调接口之间的数据通讯?
 ```
 方法1:安装fiddler,该软件可以很直接的观察到wehub 的所有的http通讯
-    在本机上开发和部署回调接口服务的开发者,需下载最新版wehub,打开设置界面,切换到"其他设置"-->设置http代理为127.0.0.1:8888(保持和fiddler默认的代理设置一致),
+    在本机上开发和部署回调接口服务的开发者,需下载最新版wehub,打开设置界面,切换到"其他设置"-->
+    设置http代理为127.0.0.1:8888(保持和fiddler默认的代理设置一致),
     然后就可以在fiddler中查看wehub发送的http request和接收到的respone
 	
-方法2:Wehub在 C:\Users\xxxxxx\AppData\Roaming\WeHub\system\log 目录下会产生log文件,   log的配置文件为C:\Users\xxxxx\AppData\Roaming\WeHub\system\cfg\log4cxx.properties,    
+方法2:Wehub在 C:\Users\xxxxxx\AppData\Roaming\WeHub\system\log 目录下会产生log文件,
+log的配置文件为C:\Users\xxxxx\AppData\Roaming\WeHub\system\cfg\log4cxx.properties,
 若要看很详细的log,请提高loglevel:
 用记事本打开log配置文件,将第1行"log4j.rootLogger = DEBUG,logFile"中的"DEBUG" 修改为"TRACE",
 将第6行的"log4j.appender.logFile.Threshold = DEBUG"中的"DEBUG" 修改为"TRACE",然后重启wehub.
@@ -102,7 +104,10 @@ wehub提供基础的微信聊天消息上报的能力,不过滤发送者的wxid(
    请使用wehub时退出360进程或将wehub加入到360的信任名单.(很重要,很重要,很重要)
 
 2. 看系统中是否有僵死的微信进程:
-   方法: 打开系统的任务管理器,对所有的进程按"名称" 排序查看,查看当前有多少个微信进程(只有名称为Wechat的进程才是微信进程,其他的如WeChatweb, WeChatStore都不是微信的主进程),同时查看你的任务栏里有多少个微信的聊天或登陆窗口. 比如你的任务管理器中显示有4个"Wechat"进程而在任务栏上你只看到了3个微信的窗口,说明有一个微信进程是僵死的.
+    打开系统的任务管理器,对所有的进程按"名称" 排序查看,查看当前有多少个微信进程.
+    只有名称为Wechat的进程才是微信进程,其他的如WeChatweb, WeChatStore都不是微信的主进程,
+    同时查看你的任务栏里有多少个微信的聊天或登陆窗口. 比如你的任务管理器中显示有4个"Wechat"进程
+    而在任务栏上你只看到了3个微信的窗口,说明有一个微信进程是僵死的.
     若出现这种情况,请杀掉所有的微信进程,然后重新开启wehub登陆微信
     
 3. 看系统是否安装了360等安全软件,或者其他的类似于wehub的微信辅助软件.
@@ -133,7 +138,7 @@ report_contact每次post的数据量会比较大(好友/群越多,post的数据�
 请参考这个网页:https://www.jianshu.com/p/7797b200e1f4
 ```
 
-- faq 10: 关于json中的数据类型
+- faq 10: 关于下发的任务中的字段的数据类型
 ```
   task_id字段 必须为字符串
   error_code,task_typ,msg_type字段必须为数字
