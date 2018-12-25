@@ -1033,4 +1033,4 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
   common_ack 与pull_task_ack中的任务格式都是一样的,见<a href="#task"> [任务类型格式]</a>
 
-更多的问题请参考<a href="../faq.md">[faq]</a>
+更多的问题请参考<a href="./faq.md">[faq]</a>
