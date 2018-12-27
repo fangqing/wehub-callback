@@ -783,7 +783,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "task_dict":
     {
       "wxid_to":"xxxxxx",   		//消息发往的对象(群微信号或者个人微信号)
-      "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,否则忽略
+      "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,可以为空
+      							  //at_list对msg_list里所有的文本消息生效
       "msg_list":[$push_msgunit,$push_msgunit,....]  //待发送的消息单元列表
     }
 }
