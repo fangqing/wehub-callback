@@ -26,10 +26,11 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 ------
 版本更新记录:  
 
-  2018.12.27:
+-   2018.12.27:
 
--  发布0.3.6版本:  增加缓存清理功能
+    发布0.3.6版本:  增加缓存清理功能  
     http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.6.exe
+
 -  2018.12.11:
 
    发布 0.3.3 版本:上报的文本消息中新增atuserlist字段;支持上传文件消息中的文件
@@ -64,7 +65,7 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
    发布0.2.3: login 中增加 "local_ip" 字段
 
 -  2018.10.12:
-  发布wehub 0.2.2
+    发布wehub 0.2.2
 
 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 请第三方管理员请登录wehub后台 http://wehub.weituibao.com  对回调参数进行配置, 系统会自动为每一个appID生成了单独的"secret key",第三方管理员可以开启/关闭 "安全性验证"(默认不开启安全性验证). 若在后台开启安全性验证,回调接口必须在收到 wehub 的login request后将正确签名返回给wehub客户端进行校验. 详情见文档 wehub-api-doc-v2.md
 
