@@ -5,7 +5,7 @@ wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/W
 
 使用wehub是否会导致封号?
 
-WeHub只是一个提供些许便利的工具软件,无法保证你的微信不被封号. 
+WeHub只是一个提供些许便利的工具软件,无法保证你的微信不被封号.
 
 是否封号取决于你使用工具做了什么(微信后台后分析和记录你的行为特征),当你无节制地滥用工具时,封号将是不可避免的.请心怀敬畏,用合适的工具做合适的事.
 
@@ -15,7 +15,7 @@ wehub 回调接口开发文档:
 https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc-v2.md
 
 faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理中)     
-https://github.com/fangqing/wehub-callback/blob/master/faq.md	
+https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 ------
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
@@ -34,8 +34,6 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 -  2018.12.11:
 
    发布 0.3.3 版本:上报的文本消息中新增atuserlist字段;支持上传文件消息中的文件
-
-   http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.3.exe
 
 
 - 2018.11.30:
@@ -74,19 +72,19 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 
 - 2018.9.28:
-  发布wehub 0.2.0 
+  发布wehub 0.2.0
 
 ```
 1.简化了ack中的协议
 2."发消息任务"的任务类型数据结构有调整:  
-调整前的数据结构为: 
+调整前的数据结构为:
 {
     "task_type": 1,  
     "task_dict":
-    {	
+    {
     	"room_wxid": "xxxxxx",  
     	"wxid":"xxxxxxx",	   				  
-    	"msg_list":[$push_msgunit,$push_msgunit,....] 
+    	"msg_list":[$push_msgunit,$push_msgunit,....]
 	}
 }
 
@@ -94,10 +92,10 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 {
    "task_type": 1,  
    "task_dict":
-    {	
+    {
         "wxid_to":"xxxxxx",  	
         "at_list":['xxxx','xxxx'],  
-    	"msg_list":[$push_msgunit,$push_msgunit,....] 
+    	"msg_list":[$push_msgunit,$push_msgunit,....]
 	}
 }
 
