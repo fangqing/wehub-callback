@@ -81,7 +81,9 @@ report_new_room|common_ack
 ### 微信登录通知/login
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
 
-注: 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"(之后会允许手动修改这个值),同时第三方管理员可以自行开启/关闭 "安全性验证".  
+注: 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"(之后会允许手动修改这个值),同时第三方管理员可以自行开启/关闭 "安全性验证". 
+
+==WeHub 的收费策略是按照使用的微信号的数量收费的,因此登陆的微信号的多少直接影响到第三方的wehub使用费用.为了使登陆的微信号处于可控状态,第三方必须在服务端建立微信号白名单,在处理login请求时对白名单之外的微信号返回失败.==
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s1.png)
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s2.png)
 
@@ -126,7 +128,9 @@ request格式为
 则signature = md5("fangqing_hust#helloworld#112233") = "4B8D798F8B34A7BD2CD3B4CBFA309D9C"
 ```
 
--  若关闭了安全性验证,则request 的data中不带"nonce"字段,回调接口无需处理签名
+-  若关闭了安全性验证,则request 的data中不带"nonce"字段,回调接口无需处理签名.
+
+   该模式请仅在调试期使用(正式收费开始之后请勿使用)
 ```
 {
     "action" : "login",				 //登录的业务名为"login"
