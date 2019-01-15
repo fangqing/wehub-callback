@@ -26,7 +26,7 @@ wxid:
 	每一个微信号或者微信群,微信系统都定义了唯一的标识字符串.对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);对于个人微信号,其格式wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)或者 xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如 fangqing_hust).
 本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
 ```
-WeHub和回调接口采用http的方式进行通讯,WeHub向回调接口主动发起http request(post方式),回调接口返回http respone.微信-wehub-回调接口 三者之间的数据流如下
+WeHub和回调接口采用http的方式进行通讯(因此配置的回调地址必须是能正常接收到http包的url地址),WeHub向回调接口主动发起http request(post方式),回调接口返回http respone.微信-wehub-回调接口 三者之间的数据流如下
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_flow.png)
 
 --------------
