@@ -737,7 +737,7 @@ request
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ### 删除好友通知/report_friend_removed
-成功删除了好友
+当某个好友被删除了会上报该事件
 ```
 request格式
 {
