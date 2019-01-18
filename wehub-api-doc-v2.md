@@ -11,6 +11,7 @@
 2018.11.29|v0.3.0|在report_contact 中增加对当前账号关注的公众号信息的上报;开始支持语音消息中的语音数据上传;支持下发扩展的gif表情任务
 2018.12.11|v0.3.3|上报的文本消息中新增atuserlist字段;支持发文件消息中的文件数据上传;report_room_member_info有新增字段
 2018.12.27|v0.3.6|客户端增加缓存清理设置(接口协议无修改)
+2019.1.18|v0.3.8|增加report_friend_removed
 ## 概述
 
 ```
@@ -75,7 +76,7 @@ report_room_member_info|common_ack
 report_room_member_change|common_ack
 report_friend_add_request|common_ack
 report_new_room|common_ack
-
+report_friend_removed|common_ack  
 **上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**
 **对于其他不感兴趣/不想处理的action,可简单返回一个空的json {}**
 
@@ -299,7 +300,8 @@ respone格式为:common_ack格式
 ```
 ### 上报成员信息变化/report_contact_update
 触发时机:
-wehub探测到联系人列表中的信息有更新(如昵称,头像等),这些信息可能是我的好友信息,也可能是某个群里的成员信息;亦或是在上报report_contact时尚未获取到的联系人/群信息.   
+wehub探测到联系人列表中的信息有更新(如昵称,头像等)."联系人"可能是我的好友,也可能是某个群里的成员,也可能是某个陌生人---总之这个联系人不表述好友关系);
+亦或是在上报report_contact时尚未获取到的联系人/群信息.
 为节省流量,wehub 会每隔10s检查这些变化,然后上传这些变化的信息.
 
 request格式
@@ -310,7 +312,8 @@ request格式
     "wxid":"xxxxxxx",
     "data":{
         "update_list":[
-            $userInfo,$groupbaseInfo,$userInfo,$groupbaseInfo,.....   // 群基本信息和联系人信息的无序列表
+            $userInfo,$groupbaseInfo,$userInfo,$groupbaseInfo,.....   
+            // 群基本信息和联系人信息的无序列表
     ]
   }
 }
@@ -322,6 +325,8 @@ $groupbaseInfo (群基本信息):
     "wxid": "xxxxxxx",                  //群的wxid:格式为 xxxxx@chatroom
     "name": "xxxxxx",                   //群名称
     "head_img":"http://xxxxxxxx"        //群头像的url地址
+    "owner_wxid":"xxxxxx",				//群主的wxid,0.3.8版本中加入
+    "member_count":xx					//群成员总数,0.3.8版本中加入
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
@@ -374,6 +379,7 @@ request
     "wxid": "wxid_xxxxxxx",
       "data":{
         "room_wxid":"xxxxxxx@chatroom",
+        "owner_wxid":"xxxxx",	//群主wxid, 0.3.8版本中加入
         "wxid_list";['xxxxxx','xxxxx'],  //变化的成员的wxid列表
         "flag": flag //0,群成员减少;1,群成员增加
       }
@@ -730,6 +736,21 @@ request
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
+### 删除好友通知/report_friend_removed
+成功删除了好友
+```
+request格式
+{
+    "action":"report_friend_removed",
+    "appid": "xxxxxxx",
+    "wxid":	"xxxxxxx",
+    "data":{
+    	"wxid_removed":"xxxxxx"	    //被删除的好友的wxid
+	}
+}
+```
+respone格式为<a href="#common_ack">[common_ack格式]</a>
+
 ### 新好友通知/report_new_friend
 
 每当有新的好友时,上报新好友的个人信息(对方已经成为了我的好友)
@@ -740,11 +761,11 @@ request格式
 {
     "action" : "report_new_friend",
     "appid": "xxxxxxx",
-    "wxid" : "wxid_fo1039029348sfj",
+    "wxid" : "xxxxxx",
     "data" : {
       "fans_wxid": "wxid_ljsdlfjslfjl",		 // 新好友的wxid
       "nickname": "Jerry",					// 新好友的昵称
-      "wx_alias": "jerry"						// 新好友的微信号,可能为空
+      "wx_alias": "jerry"				// 新好友的微信号,可能为空
       "head_img": "xxxxx",			//头像url
       "notice_word":  "xxxxxxx"  		//新好友加我时的打招呼的内容,可能为空
       "sourceusername": "xxxxx"		//推荐人的wxid,可能为空

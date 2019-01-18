@@ -1,5 +1,5 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.6.exe
+wehub最新版本下载:http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.8.exe
 
 支持2.6.4.56|2.6.5.38|2.6.6.28 这几个版本的微信
 
@@ -25,6 +25,12 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 ------
 版本更新记录:  
+
+- 2019.1.18:
+
+  发布0.3.8版本:  新增report_friend_removed (上报好友被删除的事件)
+
+  http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.8.exe
 
 -   2018.12.27:
 
