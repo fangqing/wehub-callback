@@ -313,7 +313,9 @@ request格式
     "data":{
         "update_list":[
             $userInfo,$groupbaseInfo,$userInfo,$groupbaseInfo,.....   
-            // 群基本信息和联系人信息的无序列表
+            // 群基本信息(groupbaseInfo)和联系人信息(userInfo)的无序列表
+            // 如果其wxid字段以@chatroom结尾,其为groupbaseInfo
+            // 否则代表联系人信息(userInfo)
     ]
   }
 }
@@ -328,6 +330,8 @@ $groupbaseInfo (群基本信息):
     "owner_wxid":"xxxxxx",				//群主的wxid,0.3.8版本中加入
     "member_count":xx					//群成员总数,0.3.8版本中加入
 }
+
+
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
