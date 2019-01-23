@@ -3,12 +3,10 @@ import codecs
 import os
 import sys
 import re
-
 from emoj_data import emj_datebase
-def gen_emoj_html():
-	fsave = open("emoji_index.html",'w',encoding='gbk')
 
-	with open("emo_config.txt","r",encoding='utf-8') as f:
+def gen_emoj_html():
+	with open("emoji_index.html","w",encoding='gbk') as fsave:
 		fsave.writelines(r'''<html><meta http-equiv="Content-Type" content="text/html; charset=gb2312">''')
 		fsave.writelines(r'''<style>
 	        table { width: 200px; min-height: 25px; line-height: 25px; text-align: center; border-color:#b6ff00; border-collapse: collapse;}   
@@ -19,13 +17,9 @@ def gen_emoj_html():
 			index = key
 			name = value.get("value")
 			print (name)
-		
 			tip = value.get("tip")
-			print(tip)
-
 			image = value.get("image")
 			emj_png = "<img src=\"./Emoji/%s\"</>"%(image)
-			print (emj_png)
 			fsave.writelines(str("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>").format(index,name,tip,emj_png))
 
 		fsave.writelines("</table></div></body></html>")
