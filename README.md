@@ -17,13 +17,15 @@ https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc-v2.md
 faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理中)     
 https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
+微信消息的静态表情转义对照表见emoji_index.html 或
+http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html
+
 ------
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server  
 
 (demo仅展示数据的处理方式)
 
-emoji_index.html:微信消息的静态表情转义对照表
 ------
 版本更新记录:  
 
