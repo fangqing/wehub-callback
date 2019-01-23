@@ -21,8 +21,9 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server  
 
-(demo仅展示数据的处理方式,不保证数据结构的完整性)
+(demo仅展示数据的处理方式)
 
+emoji_index.html:微信消息的静态表情转义对照表
 ------
 版本更新记录:  
 
