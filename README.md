@@ -1,5 +1,5 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:https://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.12.exe
+wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.3.12.exe
 
 支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40 这几个版本的微信
 
@@ -18,7 +18,7 @@ faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理
 https://github.com/fangqing/wehub-callback/blob/master/faq.md
 
 微信消息的静态表情转义对照表见emoji_index.html 或
-http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html
+https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
 ------
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
@@ -31,7 +31,7 @@ http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html
 
 - 2019.2.26:
   发布0.3.12版本,适配支持微信最新的2.6.7.40版本
-  https://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/package/WeHubSetup0.3.12.exe
+  https://s.weituibao.com/wehub/package/WeHubSetup0.3.12.exe
 
 - 2019.1.18:
   发布0.3.8版本:  新增report_friend_removed (上报好友被删除的事件)
