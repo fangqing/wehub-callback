@@ -15,19 +15,22 @@
 ## 概述
 
 ```
-WeTool: 
-	推宝科技在2017年推出的一款微信PC客户端的辅助产品,详情见[wetool网站](https://www.wxb.com/wetool)
-WeHub:  
-	WeHub是一款类似于WeTool的产品,它除了保留原来wetool就具备的各种功能,还提供了对接 企业API的能力.第三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的web接口(以下简称为回调接口).  
+什么是WeHub?
+	WeHub是杭州推宝科技研发的一款针对微信PC客户端的辅助工具,它提供了对接企业服务的能力.第三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的webserver接口(以下简称为回调接口).  
 
-appid: 
-	使用WeHub服务的第三方需在WeHub中配置一个appid和回调接口,appid需要第三方向推宝科技申请,申请时需  提交第三方自己的回调接口地址,推宝科技会对该地址做审核,WeHub会将相关的request数据post到这个到回调接口上.第三方在使用WeHub时首先要在WeHub中配置appid和回调接口,WeHub验证通过后才会post数据到该回调接口
+什么是appid? 
+	appid是一段字符串,WeHub使用它来区分不同的第三方.任何想使用wehub服务的第三方首先向推宝科技申请,申请时需提交自己的回调接口地址,推宝科技会对该地址做审核.第三方在使用WeHub时首先要在WeHub中配置appid,WeHub验证通过后才会post数据到第三方的回调接口地址上.
 
 wxid: 
 	每一个微信号或者微信群,微信系统都定义了唯一的标识字符串.对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);对于个人微信号,其格式wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)或者 xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如 fangqing_hust).
 本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
+如何获取当前微信号的wxid?
+    登陆微信PC客户端,点击当前微信号的头像(位于主界面左上角),弹出的界面中会显示"微信号:xxxxxxx", "xxxxx" 即为当前微信号的wxid
+
+WeHub和第三方回调接口是如何通讯的?
+    WeHub(client)和回调接口(server)之间采用http的方式进行通讯,双方都采用json格式的数据,utf-8编码. 当微信中有相关的事件发生时,WeHub会主动Post http request到回调接口,该http request中包含了解释具体微信事件的数据,回调接口返回http respone,respone中包含第三方需要WeHub执行的任务(任务的格式见文档中描述)
 ```
-WeHub和回调接口采用http的方式进行通讯(因此配置的回调地址必须是能正常接收到http包的url地址),WeHub向回调接口主动发起http request(post方式),回调接口返回http respone.微信-wehub-回调接口 三者之间的数据流如下
+微信-wehub-回调接口 三者之间的数据流如下
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_flow.png)
 
 --------------
@@ -78,14 +81,15 @@ report_friend_add_request|common_ack
 report_new_room|common_ack
 report_friend_removed|common_ack  
 **上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**
-**对于其他不感兴趣/不想处理的action,可简单返回一个空的json {}**
+**对于其他不感兴趣/不想处理的action,可简单返回一个空的json**
 
 ### 微信登录通知/login
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
 
 注: 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"(之后会允许手动修改这个值),同时第三方管理员可以自行开启/关闭 "安全性验证". 
 
-**WeHub 的收费策略是按照使用的微信号的数量收费的,因此登陆的微信号的多少直接影响到第三方的wehub使用费用.为了使登陆的微信号处于可控状态,第三方必须在服务端建立微信号白名单,在处理login请求时对白名单之外的微信号返回失败.**
+**WeHub的计费策略是每月按appid统计登陆wehub的微信号的数量,因此登陆wehub的微信号数量直接影响第三方的wehub使用费用.为了使登陆的微信号处于可控状态,第三方必须在服务端建立微信号(wxid)的白名单,在处理login请求时对白名单之外的微信号返回失败,这样没有列入第三方白名单的微信无法用第三方申请的appid登陆wehub, 不会计入当月的使用量**
+
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s1.png)
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s2.png)
 
