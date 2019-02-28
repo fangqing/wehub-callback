@@ -983,7 +983,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
 
 ```
 ### 向回调接口请求一个任务(pull_task)
-wehub在appid验证通过以后,每间隔x秒请求一次(时间间隔可在wehub后台设置)
+wehub在appid验证通过以后,每间隔x秒请求一次(时间间隔可在wehub后台设置.若无需轮询,则设置任务轮询间隔 为0秒)
 request格式
 
 ```
