@@ -29,20 +29,18 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 ------
 版本更新记录:  
 
-- 2019.2.28:
+- 2019.2.28:   
+发布0.3.13, 对0.3.12版本中适配出现的问题的进行修复
+https://s.weituibao.com/wehub/package/WeHubSetup0.3.13.exe
 
-​	发布0.3.13, 对0.3.12版本中适配出现的问题的进行修复
-
-​	https://s.weituibao.com/wehub/package/WeHubSetup0.3.13.exe
-
-- 2019.2.26:
+- 2019.2.26:   
   发布0.3.12版本,适配支持微信最新的2.6.7.40版本
   https://s.weituibao.com/wehub/package/WeHubSetup0.3.12.exe
 
-- 2019.1.18:
+- 2019.1.18:   
   发布0.3.8版本:  新增report_friend_removed (上报好友被删除的事件)
 
--   2018.12.27:
+- 2018.12.27:
 
     发布0.3.6版本:  增加缓存清理功能  
 
