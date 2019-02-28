@@ -1,5 +1,5 @@
 微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.3.12.exe
+wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.3.13.exe
 
 支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40 这几个版本的微信
 
@@ -28,6 +28,12 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
 ------
 版本更新记录:  
+
+- 2019.2.28:
+
+​	发布0.3.13, 对0.3.12版本中适配出现的问题的进行修复
+
+​	https://s.weituibao.com/wehub/package/WeHubSetup0.3.13.exe
 
 - 2019.2.26:
   发布0.3.12版本,适配支持微信最新的2.6.7.40版本
