@@ -1,5 +1,5 @@
-微信最新版本下载:https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe  
-wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.3.13.exe
+
+wehub最新版本下载:https://s.weituibao.com/wehub/package/package/WeHubSetup0.4.0.exe
 
 支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40 这几个版本的微信
 
