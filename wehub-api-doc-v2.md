@@ -12,6 +12,7 @@
 2018.12.11|v0.3.3|上报的文本消息中新增atuserlist字段;支持发文件消息中的文件数据上传;report_room_member_info有新增字段
 2018.12.27|v0.3.6|客户端增加缓存清理设置(接口协议无修改)
 2019.1.18|v0.3.8|增加report_friend_removed
+2019.3.15|v0.4.0|客户端新增升级功能并强制在登陆时做安全验证.  新增检查僵尸粉的任务类型(task_type为15), report_contact_update 的userInfo 结构中新增is_friend字段.
 ## 概述
 
 ```
@@ -80,13 +81,16 @@ report_room_member_change|common_ack
 report_friend_add_request|common_ack
 report_new_room|common_ack
 report_friend_removed|common_ack  
+report_zoom_check_status|common_ack
 **上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**
-**对于其他不感兴趣/不想处理的action,可简单返回一个空的json**
+**对于其他不感兴趣/不想处理的action,可简单返回一个空的json**{}
 
 ### 微信登录通知/login
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
 
-注: 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"(之后会允许手动修改这个值),同时第三方管理员可以自行开启/关闭 "安全性验证". 
+回调接口必须对这个request做出正确的响应,否则wehub 会提示登陆失败/安全验证失败.
+
+注: 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"
 
 **WeHub的计费策略是每月按appid统计登陆wehub的微信号的数量,因此登陆wehub的微信号数量直接影响第三方的wehub使用费用.为了使登陆的微信号处于可控状态,第三方必须在服务端建立微信号(wxid)的白名单,在处理login请求时对白名单之外的微信号返回失败,这样没有列入第三方白名单的微信无法用第三方申请的appid登陆wehub, 不会计入当月的使用量**
 
@@ -95,8 +99,9 @@ report_friend_removed|common_ack
 
 若"任务轮询间隔" <=0 ,则wehub 不会向回调接口轮询任务.
 
--  若开启安全性验证,wehub在发送login 请求时,data中会附带"nonce" 字段,并且会对返回的signature 进行校验,若校验失败则wehub无法正常工作.
+
 request格式为
+
 ```
 {
     "action" : "login",				 //登录的业务名为"login"
@@ -107,7 +112,7 @@ request格式为
       "wx_alias": "mccbill",           //微信号(有可能为空)
       "head_img": "http://xxxxxx",     //微信的头像地址
       "client_version":"xxxxxx"		 //wehub的版本号
-      "nonce":"xxxxxxxxxxxxxxx"       //回调接口在计算签名时用到这个nonce值
+      "nonce":"xxxxxxxxxxxxxxx"     //回调接口在计算签名时用到这个nonce值
       								//有这个字段时服务端必须返回正确的签名
       								//没有这个字段时回调接口无需做签名处理
       "local_ip":"192.168.0.104|211.168.0.104"
@@ -134,34 +139,7 @@ request格式为
 则signature = md5("fangqing_hust#helloworld#112233") = "4B8D798F8B34A7BD2CD3B4CBFA309D9C"
 ```
 
--  若关闭了安全性验证,则request 的data中不带"nonce"字段,回调接口无需处理签名.
-
-   **该模式请仅在调试期使用(正式收费开始之后请勿使用)**
-```
-{
-    "action" : "login",				 //登录的业务名为"login"
-    "appid": "xxxx",					 //申请的appid
-    "wxid" : "wxid_fo1039029348sfj",   //当前登陆的微信账号的wxid
-    "data" : {
-      "nickname": "Bill",               //微信昵称
-      "wx_alias": "mccbill",           //微信号(有可能为空)
-      "head_img": "http://xxxxxx",     	//微信的头像地址
-      "client_version":"xxxxxx"		 //wehub的版本号
-      "local_ip":"192.168.0.104|211.168.0.104"
-      //当前wehub所在系统中的网卡ip,如有多个以'|'分隔, 该字段是在0.2.3 版本中新加入的
-       "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
-    }
-}
-```
-回调接口返回(respone):
-```
-{
-    "error_code": 0,                       
-    "error_reason": "",                    
-    "ack_type":"login_ack",
-    "data":{}
-}
-```
+**说明: 从0.4.0版本开始,wehub客户端已强制要求做安全验证(不管你后台是否取消了安全验证,request中都会有nonce 字段) .<u>对于服务端而言,只需判断受到的request中是否有nonce 字段, 有这个字段时服务端必须返回正确的签名!!! 没有这个字段时回调接口无需做签名处理(signature可以置空)</u>**.
 
 
 ### 微信退出通知/logout
@@ -324,7 +302,20 @@ request格式
   }
 }
 
-$userInfo 同report_contact 中的userInfo 结构
+$userInfo 
+- userInfo(好友信息结构)
+{
+    "wxid":  "wxid",                //wxid
+    "wx_alias": "xxxxx",            //微信号(有可能为空)
+    "nickname":"xxxxx",             //微信昵称
+    "remark_name" :"xxxx",          //好友备注
+    "head_img":"http://xxxxxxxx"    //头像的url地址
+    "sex" : xx ,    				//性别:0或者1,默认是0,1代表女性
+    "country":"xxx",				//祖国(可能为空)
+    "province":"xxxx",				//省份(可能为空)
+    "city":"xxxxx"					//城市(可能为空)
+    'is_friend': x   			//0:不是我的好友;1:是我的好友     
+}
 
 $groupbaseInfo (群基本信息):
 {
@@ -508,11 +499,14 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
-    "link_url":"http://xxxxx", 		//分享链接的url
     "link_title":"标题", 			  //链接标题
     "link_desc": "副标题",           //链接描述（副标题）
+    "link_url":"http://xxxxx", 		//分享链接的url
     "link_img_url": "http://xxxxxxx" //链接的缩略图的的Url,jpg或者png格式
+    "raw_msg": "xxxxxxx"		//微信的原始消息,xml格式,0.3.14版本中新增
 }
+raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,link_desc,link_url,link_img_url值对应),如果link_url值为空,请自行分析raw_msg中的url.
+
 
 - 表情消息
 {
@@ -521,7 +515,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
     "emoji_url": "xxxxxxxxx" //表情的url地址(若有需要,请回调接口自行下载该文件)
-    "raw_msg": "xxxxxxx"
+    "raw_msg": "xxxxxxx"  
 }
 
 - 小程序
@@ -803,6 +797,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    删除好友|12
    通过好友验证|13
    重新上报当前好友列表和群列表|14
+   检测某个wxid是否是僵尸|15
 
 [文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)
 
@@ -857,8 +852,6 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "wxid_card":"xxxxxx" 		//发送谁的个人名片
 }
    
-
-
 - 踢人任务:
 (把一个微信号从指定的群踢出,当前微信必须有群主权限)
 {
@@ -981,7 +974,37 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_dict":{}
 }
 
+- 僵死粉检测 (检测结果通过report_zoom_check_status上报)
+ {
+     "task_type":15
+     "task_dict":
+     {
+		"wxid":"xxxxx"		//待检测的wxid
+	 }
+ }
+
+
 ```
+### 上报僵死粉检测结果(report_zoom_check_status)
+
+触发时机: 无论是操作客户端主动开始检测或者下发任务让客户端被动检测,都会上报检测到的结果.
+
+```
+request格式
+{
+    "action":"report_zoom_check_status",
+    "appid": "xxxxxxx",
+    "wxid":	"xxxxxxx",
+    "data":{
+    	"wxid":"xxxxxx",//被检测的wxid
+    	"status": x  	//0 :正常状态(不是僵尸粉)
+    					//1 :检测为僵尸粉(对方把我拉黑了)
+                    	//2 :检测为僵尸粉(对方把我从他的好友列表中删除了)
+	}
+}
+```
+respone格式为<a href="#common_ack">[common_ack格式]</a>
+
 ### 向回调接口请求一个任务(pull_task)
 wehub在appid验证通过以后,每间隔x秒请求一次(时间间隔可在wehub后台设置.若无需轮询,则设置任务轮询间隔 为0秒)
 request格式

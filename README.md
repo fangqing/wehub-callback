@@ -29,6 +29,14 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 ------
 版本更新记录:  
 
+- 2019.3.15:
+
+  发布0.4.0 :客户端强制做安全验证, 新增检测更新功能(下次升级可支持通过客户端进行升级).
+
+  添加对僵尸粉检测任务的支持.
+
+  https://s.weituibao.com/wehub/package/package/WeHubSetup0.4.0.exe
+
 - 2019.2.28:   
 发布0.3.13, 对0.3.12版本中适配出现的问题的进行修复  
 https://s.weituibao.com/wehub/package/WeHubSetup0.3.13.exe
