@@ -1,5 +1,5 @@
 
-wehub最新版本下载:https://s.weituibao.com/wehub/package/package/WeHubSetup0.4.0.exe
+wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.0.exe
 
 支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40 这几个版本的微信
 
@@ -35,7 +35,7 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
   添加对僵尸粉检测任务的支持.
 
-  https://s.weituibao.com/wehub/package/package/WeHubSetup0.4.0.exe
+  https://s.weituibao.com/wehub/package/WeHubSetup0.4.0.exe
 
 - 2019.2.28:   
 发布0.3.13, 对0.3.12版本中适配出现的问题的进行修复  
