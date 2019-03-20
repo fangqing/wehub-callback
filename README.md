@@ -55,12 +55,8 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 - 2019.2.28:   
   发布0.3.13, 对0.3.12版本中适配出现的问题的进行修复  
 
-  
-
 - 2019.2.26:   
   发布0.3.12版本,适配支持微信最新的2.6.7.40版本  
-
-  
 
 - 2019.1.18:   
   发布0.3.8版本:  新增report_friend_removed (上报好友被删除的事件)
@@ -101,13 +97,9 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
    发布0.2.3: login 中增加 "local_ip" 字段
 
 -  2018.10.12:
-    发布wehub 0.2.2
+    发布wehub 0.2.2, 增加了安全验证机制
 
-出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 请第三方管理员请登录wehub后台 http://wehub.weituibao.com  对回调参数进行配置, 系统会自动为每一个appID生成了单独的"secret key",第三方管理员可以开启/关闭 "安全性验证"(默认不开启安全性验证). 若在后台开启安全性验证,回调接口必须在收到 wehub 的login request后将正确签名返回给wehub客户端进行校验. 详情见文档 wehub-api-doc-v2.md
-
-<u>**回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**</u>
-
-
+**回调接口必须实现对login的正确处理: 在接收到login request后必须有login_ack 返回,并且按照文档中规定的格式返回,否则wehub 会认为第三方回调接口没有正常开启而停止数据上报.**
 
 - 2018.9.28:
   发布wehub 0.2.0
