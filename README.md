@@ -20,8 +20,12 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 微信消息的静态表情转义对照表见emoji_index.html 或
 https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
-------
+
+
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
+
+对接的demo(java版): https://github.com/tuibao/wehub-demo-java
+
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server  
 
 (demo仅展示数据的处理方式)
