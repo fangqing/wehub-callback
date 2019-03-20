@@ -28,7 +28,7 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
 对接的demo(python版): https://github.com/fangqing/wehub_callback_server  
 
-(demo仅展示数据的处理方式)
+(这些demo的核心都是开启httpServer服务,处理wehub 发送的http request 并且返回相应的http respone)
 
 
 
