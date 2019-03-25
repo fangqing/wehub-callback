@@ -9,6 +9,8 @@ WeHub只是一个提供些许便利的工具软件,无法保证你的微信不�
 
 是否封号取决于你使用工具做了什么(微信后台后分析和记录你的行为特征),当你无节制地滥用工具时,封号将是不可避免的.请心怀敬畏,用合适的工具做合适的事.
 
+**杀毒软件会对wehub 的正常运行构成影响,导致各种崩溃问题(请保证运行wehub的系统上没有360,卡巴斯基,麦咖啡等等软件, 至少将wehub主进程加入这些软件的白名单里)**
+
 ------
 
 wehub 回调接口开发文档:  
@@ -20,8 +22,6 @@ https://github.com/fangqing/wehub-callback/blob/master/faq.md
 微信消息的静态表情转义对照表见emoji_index.html 或
 https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
-
-
 对接的demo(php版) : https://github.com/tuibao/wehub-demo-php  
 
 对接的demo(java版): https://github.com/tuibao/wehub-demo-java
@@ -30,15 +30,11 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
 (这些demo的核心都是开启httpServer服务,处理wehub 发送的http request 并且返回相应的http respone)
 
-
-
-关于更新wehub:
+------
 
 从0.4.0版本开始,wehub 支持在线更新. 
 
 更新方式: 开启一个wehub客户端(此时最好不要登陆任何微信),点击右上角设置按钮-->弹出菜单-->检测更新,更新包下载完成之后会自动运安装.
-
-
 
 版本更新记录:  
 
