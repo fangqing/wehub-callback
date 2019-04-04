@@ -86,7 +86,8 @@ report_zoom_check_status|common_ack
 **上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**
 **对于其他不感兴趣/不想处理的action,可简单返回一个空的json**{}
 
-### `微信登录通知/login`
+### 微信登录通知/login
+
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
 
 回调接口必须对这个request做出正确的响应,否则wehub 会提示登陆失败/安全验证失败.
