@@ -40,11 +40,13 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
 - 2019.4.4:
 
-  发布0.4.2: https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe,(可通过0.4.0 或者0.4.1版本升级到该版本)
+  发布0.4.2: https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe 
+
+  (可通过0.4.0 或者0.4.1版本升级到该版本)
 
   wehub对websocket连接的支持(如何让wehub连接到第三方的websocket 服务 见文档中的详细描述.)
 
-  (websocket服务端的demo:https://github.com/fangqing/wehub-callback-websocket)
+  (websocket服务端/客户端的demo:https://github.com/fangqing/wehub-callback-websocket)
 
   新增两种任务类型(操作wehub本地的标签);
 
