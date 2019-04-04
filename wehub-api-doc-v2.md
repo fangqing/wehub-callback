@@ -13,6 +13,7 @@
 2018.12.27|v0.3.6|客户端增加缓存清理设置(接口协议无修改)
 2019.1.18|v0.3.8|增加report_friend_removed
 2019.3.15|v0.4.0|客户端新增升级功能并强制在登陆时做安全验证.  新增检查僵尸粉的任务类型(task_type为15), report_contact_update 的userInfo 结构中新增is_friend字段.
+2019.4.4|v0.4.2|上报的个人微信号的信息中(城市,省份,国家等信息已准确),新增100,101两种本地打标签的任务类型.  wehub已支持websocket方式的通讯(见文档最下方的描述).   在发消息任务中增加at_style字段,可以把@符号放在文本中的任意位置 (见该任务类型的详细描述)
 ## 概述
 
 ```
@@ -85,7 +86,7 @@ report_zoom_check_status|common_ack
 **上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**
 **对于其他不感兴趣/不想处理的action,可简单返回一个空的json**{}
 
-### 微信登录通知/login
+### `微信登录通知/login`
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
 
 回调接口必须对这个request做出正确的响应,否则wehub 会提示登陆失败/安全验证失败.
@@ -783,9 +784,9 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 任务类型|类型值task_type
    ----|----
-   发消息任务|1(只支持文字,图片,链接,视频,个人名片)
-   踢人任务|2
- 拉群任务(邀请入群) |3
+ 发消息 |1(只支持文字,图片,链接,视频,个人名片)
+ 踢人 |2
+ 邀请入群(发送入群邀请) |3
    上报群成员信息 |4
    加群成员为好友|5
    修改好友备注|6
@@ -799,12 +800,12 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    重新上报当前好友列表和群列表|14
    检测某个wxid是否是僵尸|15
 
-[文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)
+[文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)``
 
 当你在微信中发送一个的静态的![](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/001.png)表情时,其实你只是发送了 "[笑脸]" 这几个文字
 
+#### 发消息任务 ####
 ```
-- 发消息任务:
 (向一个微信群或一个微信号发一组消息单元)
 {
     "task_type": 1,  
@@ -814,6 +815,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
       "at_list":['xxxx','xxxx'],  //发群消息时,需要@的对象的wxid列表,可以为空
       							  //at_list对msg_list里所有的文本消息生效
       "msg_list":[$push_msgunit,$push_msgunit,....]  //待发送的消息单元列表
+      "at_style": xx //0或者1, 默认为0.  该字段在0.4.2中新增.
     }
 }
 
@@ -823,6 +825,9 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     'msg_type':1,
     'msg': "xxxxxx"  发送的文字(可以嵌入转义的静态表情文字,参阅上方的链接 静态表情转义对照表)
 }
+关于@符号的位置
+
+
 ⑵图片消息
 {
     'msg_type':3,
@@ -851,7 +856,36 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "msg_type":42, 	
     "wxid_card":"xxxxxx" 		//发送谁的个人名片
 }
-   
+```
+
+**关于'@'符号的位置**
+
+```
+只针对发往群的文本消息有效
+在0.4.2版本之前,wehub是默认把@符号放在文本消息的最前面的.
+从0.4.2版本开始,支持把'@'放在文本消息的任意位置,具体操作如下:
+1.发消息任务中的at_style字段设置为1
+2.文本消息的msg的内容中设置占位字符串 {$@},这些字符的位置就是最终的@符号所在的位置
+{
+    "task_type": 1,  
+    "task_dict":
+    {
+      "wxid_to":"xxxxxx",   		
+      "at_list":["wxid_a","wxid_b"],  //假设这两个被@的微信号的群昵称分别为aa,bb
+      "msg_list":[
+          {
+              'msg_type':1,
+              'msg':"test,你好{$@},你好{$@}.早上好"
+          }
+      ]  
+      "at_style": 1  //注意这里必须为1.
+    }
+}
+则wehub收到后,则实际发送的内容为 "test,你好@ aa,你好@ bb.早上好"(占位符被替换了)
+注意at_list不能为空,at_style必须为1,占位字符串的数量必须和at_list中的微信数量相等.
+当at_style为0时仍然按照以往的方式(@符号放在文本最前面,此时发送文本总即使有{$@}占位符wehub也不会进行替换)进行发送
+```
+```
 - 踢人任务:
 (把一个微信号从指定的群踢出,当前微信必须有群主权限)
 {
@@ -862,6 +896,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
       "wxid":"xxxxxxx"              //被踢者的wxid
     }
 }
+```
+```
 - 拉群任务:
 (向一个好友发入群邀请,注意必须是自己的好友)
 {
@@ -983,6 +1019,28 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
 	 }
  }
 
+- 操作标签(新增,删除标签)
+{
+    "task_type":100
+    "task_dict":
+    {
+    	"tag_name":"xxxxx",  //被操作的标签名
+    	"wxid_list":["wxid_xxx","wxid_xxx"]    //群或者好友的wxid(不能包含陌生人)
+    	"op_code" : xx   // 1:将wxid_list加入到tag_name标签中(如果没有这个标签则新建这个标签)
+    					 // 2:将wxid_list中的成员从tag_name标签中删除
+    					 // 3:删除tag_name标签(此时会忽略wxid_list参数)  					 
+	}
+}
+- 重命名标签
+(将old_tag_name标签重命名为new_tag_name)
+{
+    "task_type":101
+    "task_dict":
+    {
+    	"old_tag_name": "xxxx",
+    	"new_tag_name":"xxxx"
+	}
+}
 
 ```
 ### 上报僵死粉检测结果(report_zoom_check_status)
@@ -1090,4 +1148,37 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
   common_ack 与pull_task_ack中的任务格式都是一样的,见<a href="#task"> [任务类型格式]</a>
 
+  
+
+
+#### 从0.4.2 版本开始如何让wehub连接到第三方的websocket 服务上?(目前处于测试阶段) ####
+```
+无需在wehub后台修改现有回调接口地址,保持http方式的回调地址不变.
+该回调地址在收到wehub发送的login请求后,回调接口返回如下(包含extension_protocol字段)
+{
+    "error_code": 0,                       
+    "error_reason": "",                    
+    "ack_type":"login_ack",
+    "data":{
+        "signature":"xxxxxxxxxxx"    //返回给wehub客户端的签名(同上)
+        "extension_protocol":{
+          	"type":"websocket",                   //目前只能是"websocket"
+			"param":{
+				"ws_url":"ws://127.0.0.1:3456/ws", //第三方的websocket服务地址
+				"heartbeat_interval":30    		   //wehub与websocket的心跳时间间隔(秒)
+			}
+        }
+    }
+}
+wehub之后就会与ws_url字段中指定的websocket服务进行连接.不再将数据post到原有的http回调接口地址上.websocket建立后wehub会主动定时发送心跳包给第三方websocket服务
+心跳包格式如下,websocket服务端无需处理.
+{
+    "atcion":"heartbeat",
+    "appid": "xxxxx",
+    "wxid": "xxxx",
+    "data":{}
+}
+双方约定采用json格式的文本进行通讯,所有的数据格式仍然和目前已有的格式保持一致
+由于websocket连接的双方都可以双向收发数据,因此wehub不再会定时发pull_task,websocket服务端可以直接通过发送common_ack, pull_task_ack格式的指令给wehub(json格式的文本)
+```
 更多的问题请参考<a href="./faq.md">[faq]</a>

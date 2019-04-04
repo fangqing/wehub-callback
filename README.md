@@ -1,5 +1,5 @@
 
-wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.1.exe
+wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe
 
 支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40|2.6.7.57 这几个版本的微信
 
@@ -37,6 +37,18 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 更新方式: 开启一个wehub客户端(此时最好不要登陆任何微信),点击右上角设置按钮-->弹出菜单-->检测更新,更新包下载完成之后会自动运安装.
 
 版本更新记录:  
+
+- 2019.4.4:
+
+  (可通过0.4.0 或者0.4.1版本升级到该版本)
+
+  发布0.4.2: https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe
+
+  增加websocket连接功能;
+
+  新增两种任务类型(操作wehub本地的标签);
+
+  发消息@别人时'@'符号可放任意位置
 
 - 2019.3.18:
 
