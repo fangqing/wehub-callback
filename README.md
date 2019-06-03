@@ -1,7 +1,5 @@
 
-wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe
-
-支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40|2.6.7.57 这几个版本的微信
+wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.4.exe
 
 使用wehub是否会导致封号?
 
@@ -44,9 +42,13 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
   适配最新版本微信(2.6.8.51/2.6.8.52)
 
+  支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40|2.6.7.57 |2.6.8.51|2.6.8.52 这几个版本的微信
+
 - 2019.4.4:
 
   发布0.4.2: https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe 
+
+  支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40|2.6.7.57 这几个版本的微信
 
   (可通过0.4.0 或者0.4.1版本升级到该版本)
 
