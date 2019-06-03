@@ -38,6 +38,12 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
 版本更新记录:  
 
+- 2019.6.3:
+
+  发布0.4.4: https://s.weituibao.com/wehub/package/WeHubSetup0.4.4.exe 
+
+  适配最新版本微信(2.6.8.51/2.6.8.52)
+
 - 2019.4.4:
 
   发布0.4.2: https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe 
