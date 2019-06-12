@@ -36,11 +36,14 @@
   本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
 
 - 如何获取当前微信号的wxid?
-  登陆微信PC客户端,点击当前微信号的头像(位于主界面左上角),弹出的界面中会显示"微信号:xxxxxxx", "xxxxx" 即为当前微信号的wxid
+  登陆微信PC客户端,点击当前微信号的头像(位于主界面左上角),弹出的界面中会显示"微信号:xxxxxxx", 
+  "xxxxx" 即为当前微信号的wxid
 
 - WeHub和第三方回调接口是如何通讯的?
   WeHub和回调接口之间采用http的方式进行通讯,双方都采用json格式的数据,utf-8编码. 
-  当微信中有相关的事件发生时,WeHub会主动Post http request到回调接口,该http request中包含了解释具体微信事件的数据,回调接口返回http respone,respone中包含第三方需要WeHub执行的任务(任务的格式见文档中描述)
+  当微信中有相关的事件发生时,WeHub会主动Post http request到回调接口,
+  该http request中包含了解释具体微信事件的数据,回调接口返回
+  http respone,respone中包含第三方需要WeHub执行的任务(任务的格式见文档中描述)
 ```
 
 微信-wehub-回调接口 三者之间的数据流如下
@@ -110,7 +113,7 @@ report_zoom_check_status|common_ack
 因此登陆wehub的微信号数量直接影响第三方的wehub使用费用.
 为了使登陆的微信号处于可控状态,第三方必须在服务端建立微信号(wxid)的白名单,
 在处理login请求时对白名单之外的微信号返回错误,这样没有列入
-第三方白名单的微信无法用第三方申请的appid登陆wehub,也不会计入当月的使用量<b></p>
+第三方白名单的微信无法用第三方申请的appid登陆wehub,也不会计入当月的使用量</b></p>
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_s1.png)
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_s2.png)
 
@@ -1176,7 +1179,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ###   关于websocket的通讯方式
   <div>WeHub默认采用http短连接的方式和回调接口进行数据,这导致了回调接口只能被动的响应wehub,无法主动下发指令给WeHub.从0.4.2版本开始,WeHub支持用websocket的方式和第三方服务器进行通讯.具体流程如下:</div>
-  ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/websocket.png)
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/websocket.png)
 
 
 ><p>wehub会先发送login request到当前回调地址,然后尝试从respone中寻找extension_protocol字段,
