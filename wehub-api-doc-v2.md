@@ -1179,6 +1179,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ###   关于websocket的通讯方式
   <div>WeHub默认采用http短连接的方式和回调接口进行数据,这导致了回调接口只能被动的响应wehub,无法主动下发指令给WeHub.从0.4.2版本开始,WeHub支持用websocket的方式和第三方服务器进行通讯.具体流程如下:</div>
+  
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/websocket.png)
 
 
