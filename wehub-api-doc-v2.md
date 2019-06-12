@@ -1157,7 +1157,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 
 ## 其他
-### - 容易混淆的地方
+### 容易混淆的地方
 - wehub主动上报的消息与服务端下发的任务的区别
 
   (1).前者是在http request中(通过report_xxxxx),数据从wehub流向server;后者是在http respone中(通过common_ack 或者pull_task_ack),数据由服务端流向wehub
@@ -1177,15 +1177,14 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
   
 
 
-###   关于websocket的通讯方式
+### 关于websocket的通讯方式
   <div>WeHub默认采用http短连接的方式和回调接口进行数据,这导致了回调接口只能被动的响应wehub,无法主动下发指令给WeHub.从0.4.2版本开始,WeHub支持用websocket的方式和第三方服务器进行通讯.具体流程如下:</div>
-  
+
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/websocket.png)
 
-
-><p>wehub会先发送login request到当前回调地址,然后尝试从respone中寻找extension_protocol字段,
-并获取到要去连接的websocket服务器的真实ws地址(url格式为ws://xxxx或者wss://xxxx,和原有的http回调地址不一样).
-这样做的好处是把目前的回调接口当做跳板,并且可以配置多个ws地址进行负载均衡.</p>
+>wehub会先发送login request到当前回调地址,然后尝试从respone中寻找extension_protocol字段,
+>并获取到要去连接的websocket服务器的真实ws地址(格式为ws://xxxx或者wss://xxxx,和原有的http回调地址不一样).
+>这样做的好处是把目前的回调接口当做跳板,并且可以配置多个ws地址进行负载均衡.
 
 回调接口在收到wehub发送的login请求后返回如下(如果测试的话可以只对特定的wxid才返回这个ws地址)
 ```
@@ -1205,13 +1204,13 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     }
 }
 ```
-<p>
-wehub获取到ws地址后,之后就会websocket服务进行连接,不再将数据post到原来回调接口地址上.
-websocket连接建立后wehub会主动定时发送心跳包给第三方websocket服务,时间间隔在heartbeat_interval字段中指定</p>
+<div>wehub获取到ws地址后,之后就会websocket服务进行连接,不再将数据post到原来回调接口地址上.
+websocket连接建立后wehub会主动定时发送心跳包给第三方websocket服务,时间间隔在heartbeat_interval字段中指定</div>
 
 websocket为什么需要心跳? 参考 https://blog.csdn.net/feiwutudou/article/details/80564630 
+
 ```
-心跳包格式如下(websocket服务端无需回应)
+心跳包格式如下
 {
     "atcion":"heartbeat",
     "appid": "xxxxx",
@@ -1219,9 +1218,8 @@ websocket为什么需要心跳? 参考 https://blog.csdn.net/feiwutudou/article/
     "data":{}
 }
 ```
-<p>
-双方约定采用json格式的文本进行通讯,所有的数据格式仍然和目前已有的格式保持一致.
-由于websocket连接的双方都可以收发数据,因此wehub不再会定时发pull_task,websocket服务端可以直接通过发送common_ack, pull_task_ack格式的指令给wehub(json格式的文本) </p>
+<div>双方约定采用json格式的文本进行通讯,所有的数据格式仍然和目前已有的格式保持一致.
+由于websocket连接的双方都可以收发数据,因此wehub不再会定时发pull_task,websocket服务端可以直接通过发送common_ack, pull_task_ack格式的指令给wehub(json格式的文本) </div>
 关于websocket服务端的demo:https://github.com/fangqing/wehub-callback-websocket
 
 更多的问题请参考<a href="./faq.md">faq</a>
