@@ -14,30 +14,41 @@
 2019.1.18|v0.3.8|增加report_friend_removed
 2019.3.15|v0.4.0|客户端新增升级功能并强制在登陆时做安全验证.  新增检查僵尸粉的任务类型(task_type为15), report_contact_update 的userInfo 结构中新增is_friend字段.
 2019.4.4|v0.4.2|上报的个人微信号的信息中(城市,省份,国家等信息已准确),新增100,101两种本地打标签的任务类型.  wehub已支持websocket方式的通讯(见文档最下方的描述).   在发消息任务中增加at_style字段,可以把@符号放在文本中的任意位置 (见该任务类型的详细描述)
+
 ## 概述
 
 ```
-什么是WeHub?
-	WeHub是杭州推宝科技研发的一款针对微信PC客户端的辅助工具,它提供了对接企业服务的能力.第三方企业/个人(以下简称为第三方)需要开发一套符合WeHub数据应答格式的webserver接口(以下简称为回调接口).  
+- 什么是WeHub?
+  WeHub是杭州推宝科技研发的一款针对微信windows客户端的辅助工具,它能监测微信中的各种事件,
+  并辅助微信执行各种操作.它同时提供了对接企业服务的能力, 这需要第三方企业(以下简称为第三方)
+  开发一套符合WeHub数据应答格式的webserver接口(以下简称为回调接口)
 
-什么是appid? 
-	appid是一段字符串,WeHub使用它来区分不同的第三方.任何想使用wehub服务的第三方首先向推宝科技申请,申请时需提交自己的回调接口地址,推宝科技会对该地址做审核.第三方在使用WeHub时首先要在WeHub中配置appid,WeHub验证通过后才会post数据到第三方的回调接口地址上.
+- 什么是appid? 
+  appid是一段字符串,WeHub使用它来区分不同的第三方.任何想使用wehub服务的第三方首先向推宝科技申请,
+  申请时需提交自己的回调接口地址,推宝科技会对该地址做审核.第三方在使用WeHub时首先要在WeHub中
+  配置appid,WeHub验证通过后才会post数据到第三方的回调接口地址上.
 
-wxid: 
-	每一个微信号或者微信群,微信系统都定义了唯一的标识字符串.对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);对于个人微信号,其格式wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)或者 xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如 fangqing_hust).
-本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
-如何获取当前微信号的wxid?
-    登陆微信PC客户端,点击当前微信号的头像(位于主界面左上角),弹出的界面中会显示"微信号:xxxxxxx", "xxxxx" 即为当前微信号的wxid
+- 什么是wxid?
+  就如同每个人都有一个身份证号一样,每一个微信号/微信群都有唯一的标识字符串用来做区分.
+  对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);
+  对于个人微信号,其格式wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)
+  或者 xxxxxxx(不以wxid_开头,在注册微信号时由注册者指定,如fangqing_hust).
+  本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
 
-WeHub和第三方回调接口是如何通讯的?
-    WeHub(client)和回调接口(server)之间采用http的方式进行通讯,双方都采用json格式的数据,utf-8编码. 当微信中有相关的事件发生时,WeHub会主动Post http request到回调接口,该http request中包含了解释具体微信事件的数据,回调接口返回http respone,respone中包含第三方需要WeHub执行的任务(任务的格式见文档中描述)
+- 如何获取当前微信号的wxid?
+  登陆微信PC客户端,点击当前微信号的头像(位于主界面左上角),弹出的界面中会显示"微信号:xxxxxxx", "xxxxx" 即为当前微信号的wxid
+
+- WeHub和第三方回调接口是如何通讯的?
+  WeHub和回调接口之间采用http的方式进行通讯,双方都采用json格式的数据,utf-8编码. 
+  当微信中有相关的事件发生时,WeHub会主动Post http request到回调接口,该http request中包含了解释具体微信事件的数据,回调接口返回http respone,respone中包含第三方需要WeHub执行的任务(任务的格式见文档中描述)
 ```
+
 微信-wehub-回调接口 三者之间的数据流如下
-![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_flow.png)
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_flow.png)
 
 --------------
-## 基本的数据结构(request/respone)
-wehub主动发起的数据(简称为:request)json格式为:
+## 数据结构(request/respone)
+wehub发送的数据(简称为:request)json格式为:
 ```
 {
     "action": "具体业务名",
@@ -46,6 +57,10 @@ wehub主动发起的数据(简称为:request)json格式为:
     "data": {具体业务的相关数据}
 }
 ```
+>wehub用"action"字段来区分发送的数据/事件的种类.
+>比如当前微信收到一条新消息时,wehub会发送action为"report_new_msg"的json数据, "data"中的数据为一条具体的消息(包含的消息发送者的wxid和消息的内容)
+>不同种类的action,对应的data的数据格式也不一样(接下来文档中会有详细描述)
+
 回调接口返回的数据(简称为:respone)json格式为:
 ```
 {
@@ -63,12 +78,10 @@ wehub主动发起的数据(简称为:request)json格式为:
 又如: "error_code": 0, 
 	error_code其值语义为一个具体的错误码(数字),因此0前后不需要""符号
 ```
-注意:wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析 ,文档的示例代码中出现的  "$xxx"  符号代表这里应该出现一个名为"xxx"结构的数据对象,如 <a href="#memberInfo">$memberInfo</a>,  <a href="#task">$task</a>,  <a   href ="#report_msgunit">$report_msgunit</a>等
+>wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析 ,文档的示例代码中出现的  "$xxx"  符号代表这里应该出现一个名为"xxx"结构的数据对象,如 <a href="#memberInfo">$memberInfo</a>,  <a href="#task">$task</a>,  <a   href ="#report_msgunit">$report_msgunit</a>等
 
-
-## 业务数据定义
-action 类型|返回的ack_type
-----|---
+request中的action 类型|respone中的ack_type
+----|----
 login|login_ack
 logout|logout_ack
 pull_task|pull_task_ack
@@ -86,18 +99,20 @@ report_zoom_check_status|common_ack
 **上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**
 **对于其他不感兴趣/不想处理的action,可简单返回一个空的json**{}
 
-### 微信登录通知/login
-
+### login(微信登录通知)
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
+<b>回调接口必须对这个request做出正确的响应,否则wehub 会提示登陆失败/安全验证失败</b>
 
-回调接口必须对这个request做出正确的响应,否则wehub 会提示登陆失败/安全验证失败.
+<p>自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录<a href="http://wehub.weituibao.com">WeHub后台</a>
+对回调参数进行配置, 系统会自动为每一个appID生成了"secret key".</p>
 
-注: 出于安全性考虑,自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录wehub 后台  http://wehub.weituibao.com  对回调参数进行配置, 系统会自动为每一个appID生成了 "secret key"
-
-**WeHub的计费策略是每月按appid统计登陆wehub的微信号的数量,因此登陆wehub的微信号数量直接影响第三方的wehub使用费用.为了使登陆的微信号处于可控状态,第三方必须在服务端建立微信号(wxid)的白名单,在处理login请求时对白名单之外的微信号返回失败,这样没有列入第三方白名单的微信无法用第三方申请的appid登陆wehub, 不会计入当月的使用量**
-
-![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s1.png)
-![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wetool/wehub_s2.png)
+<p><b>WeHub的计费策略是每月按appid统计登陆wehub的微信号的数量,
+因此登陆wehub的微信号数量直接影响第三方的wehub使用费用.
+为了使登陆的微信号处于可控状态,第三方必须在服务端建立微信号(wxid)的白名单,
+在处理login请求时对白名单之外的微信号返回错误,这样没有列入
+第三方白名单的微信无法用第三方申请的appid登陆wehub,也不会计入当月的使用量<b></p>
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_s1.png)
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_s2.png)
 
 若"任务轮询间隔" <=0 ,则wehub 不会向回调接口轮询任务.
 
@@ -141,10 +156,10 @@ request格式为
 则signature = md5("fangqing_hust#helloworld#112233") = "4B8D798F8B34A7BD2CD3B4CBFA309D9C"
 ```
 
-**说明: 从0.4.0版本开始,wehub客户端已强制要求做安全验证(不管你后台是否取消了安全验证,request中都会有nonce 字段) .<u>对于服务端而言,只需判断受到的request中是否有nonce 字段, 有这个字段时服务端必须返回正确的签名!!! 没有这个字段时回调接口无需做签名处理(signature可以置空)</u>**.
+<p><b>从0.4.0版本开始,wehub客户端已强制要求做安全验证(无论后台是否取消了安全验证,request中都会有nonce 字段).对于服务端而言,只需判断受到的request中是否有nonce 字段, 有这个字段时服务端必须返回正确的签名!!! 没有这个字段时回调接口无需做签名处理(signature可以置空)</b></p>
 
 
-### 微信退出通知/logout
+###  logout(微信退出通知)
 request格式:
 ```
 {
@@ -166,11 +181,10 @@ respone格式
     "data":{}
 }
 ```
-### 上报当前好友列表和群列表/report_contact
-这是紧接login之后发送的request, 如果微信的好友/群的数量比较多,这个request post的数据将会非常大(不要试图在调试的代码中打印这个数据 )
-因为微信客户端对联系人的信息加载是个lazy load 的过程,因此在report_contact 中上报的联系人信息可能不全,比如有的头像信息没有获取到,wehub会通过 report_contact_update的方式进行增量更新,详情见[上报成员信息变化]
-
-注意:report_contact 这个http请求Post的数据量会比较大(好友/群越多,post的数据就越大),请将服务端能接受的**post_max_size** 调整成至少10M 
+### report_contact(上报当前好友列表和群列表)
+<p>这是紧接login之后发送的request, 如果微信的好友/群的数量比较多,这个request post的数据将会非常大.
+由于微信客户端对联系人的信息加载是个lazy load 的过程,因此在report_contact 中上报的联系人信息可能不全,比如有的头像信息没有获取到,wehub会通过 report_contact_update的方式进行增量更新,详情见[上报成员信息变化]</p>
+<b>report_contact 这个http请求Post的数据量会比较大(好友/群越多,post的数据就越大),请将服务端能接受的**post_max_size** 调整成至少10M </b>
 
 request格式
 ```
@@ -282,7 +296,7 @@ respone格式为:common_ack格式
     }
 }
 ```
-### 上报成员信息变化/report_contact_update
+### report_contact_update(上报成员信息变化)
 触发时机:
 wehub探测到联系人列表中的信息有更新(如昵称,头像等)."联系人"可能是我的好友,也可能是某个群里的成员,也可能是某个陌生人---总之这个联系人不表述好友关系);
 亦或是在上报report_contact时尚未获取到的联系人/群信息.
@@ -332,7 +346,7 @@ $groupbaseInfo (群基本信息):
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
-### 上报群成员详细信息/report_room_member_info
+### report_room_member_info(上报群成员详细信息)
 触发时机: 由回调接口通过下发"任务"来被触发
 ```
 request
@@ -368,9 +382,8 @@ request
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
-### 上报群成员变化/report_room_member_change
-
-触发:群成员增加或减少时上报
+### report_room_member_change(上报群成员变化)
+触发时机:群成员增加或减少时上报
 
 ```
 request
@@ -389,7 +402,8 @@ request
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 
-### 上报新群/report_new_room
+### report_new_room(上报新群)
+触发时机:当发现新的群时(比如被拉进了新的群或新建了新的群)
 ```
 request
 {
@@ -408,7 +422,7 @@ request
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 
-### 上报新的聊天消息/report_new_msg
+### report_new_msg(上报新的聊天消息)
 
 触发时机:当收到私聊消息或所在的某个群内有人发言(含自己发送的消息)
 
@@ -436,7 +450,7 @@ request
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
-###   <a name="report_msgunit">上报的消息单元的格式($report_msgunit)</a>
+####   <a name="report_msgunit">上报的消息单元的格式($report_msgunit)</a>
 
  聊天消息类型|类型值msg_type|是否支持任务下发|是否支持上传消息中的文件
    ----|----|---|----
@@ -483,7 +497,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "room_wxid": "",
     "wxid_from":"我的wxid",
     "wxid_to": "A的wxid",
-    
+  
 - 图片消息
 {
     "msg_type": 3, 					  //3 代表图片消息
@@ -613,6 +627,7 @@ eg:
 ```
 
 ### 文件上传
+在<a href="http://wehub.weituibao.com">WeHub后台</a>配置文件上传的接口地址,WeHub会将需要上传的文件(比如聊天消息中的图片,语音,视频等)数据post到该地址上(form-data方式).
 ```
 基本流程:
 1.wehub收到图片消息/视频消息,上报基本信息(此时wehub仅仅通过report_new_msg上报该图片的索引file_index值,不上传具体文件的二进制信息)
@@ -637,7 +652,7 @@ eg:
     }
 }
 
-3.wehub收到指令后通过第三方自定义的上传接口上传文件(post 方式)
+3.wehub收到指令后通过文件上传接口上传文件(post 方式)
 4.上传接口返回文件处理的结果
 {
     'error_code':0,        
@@ -666,7 +681,7 @@ Content-Disposition: form-data; name="file_index"
 Content-Type: image/jpeg
 Content-Disposition: form-data; name="file";filename="6a0b2e8d81857cd9ac7cf4fcb6ac271fd409fc1d.jpg"
 
-xxxxxxxxxxxxxxx.....  //图片的2进制字节流
+xxxxxxxxxxxxxxx.....  //图片的二进制字节流
 xxxxxxxxxxxxxxx.....
 ```
 
@@ -690,7 +705,7 @@ Content-Disposition: form-data; name="file_index"
 Content-Type: video/mp4
 Content-Disposition: form-data; name="file";filename="c899cebad9877280af73d4e595f5d1e41e7b1ed8.mp4"
 
-xxxxxxxxxxxxxxx.....  //视频文件的2进制字节流
+xxxxxxxxxxxxxxx.....  //视频文件的二进制字节流
 xxxxxxxxxxxxxxx.....
 ```
 上传语音
@@ -712,13 +727,16 @@ Content-Disposition: form-data; name="file_index"
 --boundary_.oOo._NDM2NQ==NTkyNQ==MzE1ODQ=
 Content-Type: audio/mpeg
 Content-Disposition: form-data; name="file";filename="274cfbce78d88c83a9d0bd7d0cda9fe3c2da2d64.mp3"
+
+xxxxxxxxxxxxxxx.....  //mp3文件的二进制字节流
+xxxxxxxxxxxxxxx.....
 ```
 
 注意: 
 1.服务端的上传接口接收到wehub的request后需要取出 request中 file_index的值.
 2.目前wehub支持上传图片/视频类型的文件,但wehub的文件上传功能并不是一个完全可靠的服务,当微信中的图片/视频没有下载完成时,wehub是无法上传这些文件的.
 
-### 新的加好友请求/report_friend_add_request
+### report_friend_add_request(新的加好友请求)
 收到添加好友的请求(此时对方还不是我的好友,不能给对方发消息)
 微信系统对每个账号每天通过的好友请求有限制(每天200左右) 
 服务端需要储存(v1,v2) 值, 以便通过任务下发的方式通过好友验证  
@@ -740,7 +758,7 @@ request
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
-### 删除好友通知/report_friend_removed
+### report_friend_removed(删除好友通知)
 当某个好友被删除了会上报该事件
 ```
 request格式
@@ -755,9 +773,9 @@ request格式
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
-### 新好友通知/report_new_friend
+### report_new_friend(新好友通知)
 
-每当有新的好友时,上报新好友的个人信息(对方已经成为了我的好友)
+每当有新的好友时,上报新好友的个人信息(此时对方已经成为了我的好友)
 
 
 ```
@@ -801,11 +819,11 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    重新上报当前好友列表和群列表|14
    检测某个wxid是否是僵尸|15
 
-[文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)``
+[文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)
 
 当你在微信中发送一个的静态的![](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/001.png)表情时,其实你只是发送了 "[笑脸]" 这几个文字
 
-#### 发消息任务 ####
+#### 发消息任务类型的数据格式
 ```
 (向一个微信群或一个微信号发一组消息单元)
 {
@@ -886,6 +904,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 注意at_list不能为空,at_style必须为1,占位字符串的数量必须和at_list中的微信数量相等.
 当at_style为0时仍然按照以往的方式(@符号放在文本最前面,此时发送文本总即使有{$@}占位符wehub也不会进行替换)进行发送
 ```
+
 ```
 - 踢人任务:
 (把一个微信号从指定的群踢出,当前微信必须有群主权限)
@@ -898,6 +917,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     }
 }
 ```
+
 ```
 - 拉群任务:
 (向一个好友发入群邀请,注意必须是自己的好友)
@@ -1064,7 +1084,7 @@ request格式
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
-### 向回调接口请求一个任务(pull_task)
+### pull_task(向回调接口请求一个任务)
 wehub在appid验证通过以后,每间隔x秒请求一次(时间间隔可在wehub后台设置.若无需轮询,则设置任务轮询间隔 为0秒)
 request格式
 
@@ -1115,7 +1135,7 @@ respone格式
     }
 }
 ```
-### 向回调接口反馈任务执行的结果/report_task_result 
+### report_task_result(向回调接口反馈任务执行的结果)
 request格式
 ```
 {
@@ -1132,7 +1152,9 @@ request格式
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
-### 容易混淆的地方
+
+## 其他
+### - 容易混淆的地方
 - wehub主动上报的消息与服务端下发的任务的区别
 
   (1).前者是在http request中(通过report_xxxxx),数据从wehub流向server;后者是在http respone中(通过common_ack 或者pull_task_ack),数据由服务端流向wehub
@@ -1152,14 +1174,17 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
   
 
 
-#### 从0.4.2 版本开始如何让wehub连接到第三方的websocket 服务上?(目前处于测试阶段) ####
-```
-无需修改现有的回调接口地址url(不要把http://xxxxx 换成ws://xxxxxx)
-wehub会先发送login request到当前回调地址,然后尝试从respone中寻找extension_protocol字段,并获取到要去连接的websocket服务器的真实ws地址(url格式为ws://xxxx或者wss://xxxx,和原有的http回调地址不一样).
-这样做的好处是把目前的回调接口当做跳板,并且可以配置多个ws地址进行负载均衡.
+###   关于websocket的通讯方式
+  <div>WeHub默认采用http短连接的方式和回调接口进行数据,这导致了回调接口只能被动的响应wehub,无法主动下发指令给WeHub.从0.4.2版本开始,WeHub支持用websocket的方式和第三方服务器进行通讯.具体流程如下:</div>
+  ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/websocket.png)
 
-(目前只有0.4.2版本支持,所以需先判断下login request的client_version字段,如果测试的话可以只对特定的wxid才返回这个ws地址)
-回调接口在收到wehub发送的login请求后返回如下
+
+><p>wehub会先发送login request到当前回调地址,然后尝试从respone中寻找extension_protocol字段,
+并获取到要去连接的websocket服务器的真实ws地址(url格式为ws://xxxx或者wss://xxxx,和原有的http回调地址不一样).
+这样做的好处是把目前的回调接口当做跳板,并且可以配置多个ws地址进行负载均衡.</p>
+
+回调接口在收到wehub发送的login请求后返回如下(如果测试的话可以只对特定的wxid才返回这个ws地址)
+```
 {
     "error_code": 0,                       
     "error_reason": "",                    
@@ -1175,8 +1200,13 @@ wehub会先发送login request到当前回调地址,然后尝试从respone中寻
         }
     }
 }
+```
+<p>
 wehub获取到ws地址后,之后就会websocket服务进行连接,不再将数据post到原来回调接口地址上.
-websocket连接建立后wehub会主动定时发送心跳包给第三方websocket服务,时间间隔在heartbeat_interval字段中指定.为什么需要心跳.参考(https://blog.csdn.net/feiwutudou/article/details/80564630)
+websocket连接建立后wehub会主动定时发送心跳包给第三方websocket服务,时间间隔在heartbeat_interval字段中指定</p>
+
+websocket为什么需要心跳? 参考 https://blog.csdn.net/feiwutudou/article/details/80564630 
+```
 心跳包格式如下(websocket服务端无需回应)
 {
     "atcion":"heartbeat",
@@ -1184,9 +1214,11 @@ websocket连接建立后wehub会主动定时发送心跳包给第三方websocket
     "wxid": "xxxx",
     "data":{}
 }
-双方约定采用json格式的文本进行通讯,所有的数据格式仍然和目前已有的格式保持一致
-由于websocket连接的双方都可以收发数据,因此wehub不再会定时发pull_task,websocket服务端可以直接通过发送common_ack, pull_task_ack格式的指令给wehub(json格式的文本)
 ```
+<p>
+双方约定采用json格式的文本进行通讯,所有的数据格式仍然和目前已有的格式保持一致.
+由于websocket连接的双方都可以收发数据,因此wehub不再会定时发pull_task,websocket服务端可以直接通过发送common_ack, pull_task_ack格式的指令给wehub(json格式的文本) </p>
 关于websocket服务端的demo:https://github.com/fangqing/wehub-callback-websocket
 
-更多的问题请参考<a href="./faq.md">[faq]</a>
+更多的问题请参考<a href="./faq.md">faq</a>
+
