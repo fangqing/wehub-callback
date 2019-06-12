@@ -61,15 +61,10 @@
 
 - 什么是wxid?
   就如同每个人都有一个身份证号一样,个人微信帐号/微信群都有唯一的标识字符串用来做区分.
-  对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);
-  对于个人微信账号,其wxid格式为wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)
-  或者xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如fangqing_hust).
+  对于微信群,其格式为xxxxxx@chatroom(如8680025352@chatroom);
+  对于个人微信账号,其格式为wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)
+  或者xxxxxxx(不以wxid_开头,在注册微信时由注册者自定义,如fangqing_hust).
   本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表个人微信账号/微信群号的唯一的标识字符串.
-
-
-- 如何获取当前微信号的wxid?
-  登陆微信PC客户端,点击当前微信号的头像(位于主界面左上角),弹出的界面中会显示"微信号:xxxxxxx", 
-  "xxxxx" 即为当前微信号的wxid
 
 - WeHub和第三方回调接口是如何通讯的?
   WeHub和回调接口之间采用http的方式进行通讯,双方都采用json格式的数据,utf-8编码. 
@@ -80,6 +75,32 @@
 
 微信-wehub-回调接口 三者之间的数据流如下
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_flow.png)
+
+
+
+注册个人号时微信会默认提供一个wxid_xxxxxx 格式的微信号
+注册公众号时微信会默认提供一个gh_xxxxxx 格式的微信号
+
+一个微信账号典型的注册场景如下:
+微信刚刚推出时,允许用手机号注册(只输入正确的手机验证码你的微信帐号就注册好了,这个过程中你无法自定义微信号),之后微信的系统中就有了一个的wxid_xxxxx格式的账号(wxid)，并且和你的手机号做了一一映射。之后你每次登陆时输入手机号和验证码就可以正常登陆(微信号显示为wxid_xxxxx);后来你觉得每次输入手机号很麻烦,于是自定义了一个让自己容易记住的帐号别名(wx_alias)和密码，登陆之后微信号显示为wx_alias。无论是wxid还是wx_alias都能唯一确定当前的账号.
+
+<b>如何获取当前微信帐号的wxid?</b>
+方案1: 打开wehub客户端-->设置界面-->切换到"辅助设置"页,界面上会显示当前微信账号的wxid.
+方案2: 打开微信客户端主界面,点击左上角头像,弹出的界面上显示"微信号:xxxxx", 若是wxid_xxxx格式的,则该值为wxid,<b>否则该值可能是自定义的帐号别名(wx_alias)而非wxid</b>.
+
+<b>wxid 与wx_alias的多种形态</b>
+
+ 账号类型| wxid |wx_alias|最终在微信客户端上显示的微信号|说明
+ ----|---|---|----|----
+ 个人号1|wxid_7092880929211|空|wxid_7092880929211| 注册时用了微信默认提供的微信号(该账号之后还有1次自定义微信号的修改机会) 
+个人号2|wxid_hrtv4z7etgvc22|fangqing0827|fangqing0827|注册时用了微信系统默认提供的微信号,但后来又重新修改为自定义的微信号.
+个人号3|fangqing_hust|空|fangqing_hust|注册时用了自定义的微信号,之后也没有机会再次修改了
+个人号4|qq526552198|heiheizwx| heiheizwx|注册时用了自定义的微信号, 但中间微信也给了这种账号一次修改微信号的机会.(微信的历史原因) 
+公众号'绝对搞笑视频'|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888|普通的公众号
+公众号'腾讯游戏'|Tencent-Games|空|Tencent-Games|腾讯自家的公众号,不以gh_开头
+因此任何帐号,其wxid一定有,而wx_alias 则可能为空.<b>在wehub的数据结构中,统一用wxid来做参数进行各种操作.</b>
+
+
 
 --------------
 ## 数据结构(request/respone)
@@ -1259,3 +1280,4 @@ websocket为什么需要心跳? 参考 https://blog.csdn.net/feiwutudou/article/
 
 更多的问题请参考<a href="./faq.md">faq</a>
 
+``
