@@ -60,11 +60,12 @@
   配置appid,WeHub验证通过后才会post数据到第三方的回调接口地址上.
 
 - 什么是wxid?
-  就如同每个人都有一个身份证号一样,每一个微信号/微信群都有唯一的标识字符串用来做区分.
+  就如同每个人都有一个身份证号一样,个人微信帐号/微信群都有唯一的标识字符串用来做区分.
   对于微信群,其唯一标识格式为xxxxxx@chatroom(如8680025352@chatroom);
-  对于个人微信号,其格式wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)
-  或者 xxxxxxx(不以wxid_开头,在注册微信号时由注册者指定,如fangqing_hust).
-  本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表微信号/群的唯一的标识字符串.
+  对于个人微信账号,其wxid格式为wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)
+  或者xxxxxxx(不以wxid_开头,在注册微信时由注册者指定,如fangqing_hust).
+  本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表个人微信账号/微信群号的唯一的标识字符串.
+
 
 - 如何获取当前微信号的wxid?
   登陆微信PC客户端,点击当前微信号的头像(位于主界面左上角),弹出的界面中会显示"微信号:xxxxxxx", 
@@ -907,7 +908,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 ⑹个人名片
 {
     "msg_type":42, 	
-    "wxid_card":"xxxxxx" 		//发送谁的个人名片
+    "wxid_card":"xxxxxx" 		//个人号/公众号的wxid
 }
 ```
 
