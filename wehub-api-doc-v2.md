@@ -1200,9 +1200,9 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
             "type":"websocket",                     //目前只能是"websocket"
             "param":
              {
-				        "ws_url":"ws://127.0.0.1:3456/ws",  //ws服务地址
-				        "heartbeat_interval":30    		      //心跳时间间隔(秒)
-			       }
+                "ws_url":"ws://127.0.0.1:3456/ws",  //ws服务地址
+                "heartbeat_interval":30    		      //心跳时间间隔(秒)
+             }
         }
     }
 }
