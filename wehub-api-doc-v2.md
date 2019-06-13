@@ -100,11 +100,11 @@
 说明:注册时用了自定义的微信号,之后也没有机会再次修改了
 个人号4|qq526552198|heiheizwx| heiheizwx
 说明:注册时用了自定义的微信号, 但中间微信也给了这种账号一次修改微信号的机会(微信的历史原因) 
+公众号'绝对搞笑视频'|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888
+说明:普通的公众号
+公众号'腾讯游戏'|Tencent-Games|空|Tencent-Games
+说明:腾讯自家的公众号,不以gh_开头
 
-账号类型| wxid |wx_alias|最终在微信客户端上显示的微信号|说明
-----|---|---|----|----
-公众号'绝对搞笑视频'|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888|普通的公众号
-公众号'腾讯游戏'|Tencent-Games|空|Tencent-Games|腾讯自家的公众号,不以gh_开头
 因此任何帐号,其wxid一定有,而wx_alias 则可能为空.<b>在wehub的数据结构中,统一用wxid来做参数进行各种操作.</b>
 
 
