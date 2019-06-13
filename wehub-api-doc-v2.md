@@ -165,8 +165,8 @@ report_friend_add_request|common_ack
 report_new_room|common_ack
 report_friend_removed|common_ack  
 report_zoom_check_status|common_ack
-**上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用**
-**对于其他不感兴趣/不想处理的action,可简单返回一个空的json**{}
+
+**上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用,对于其他不感兴趣/不想处理的action,可简单返回一个空的json**{}
 
 ### login(微信登录通知)
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
@@ -180,6 +180,7 @@ report_zoom_check_status|common_ack
 为了使登陆的微信号处于可控状态,第三方必须在服务端建立微信号(wxid)的白名单,
 在处理login请求时对白名单之外的微信号返回错误,这样没有列入
 第三方白名单的微信无法用第三方申请的appid登陆wehub,也不会计入当月的使用量</b></p>
+
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_s1.png)
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_s2.png)
 
