@@ -76,13 +76,19 @@
 微信-wehub-回调接口 三者之间的数据流如下
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_flow.png)
 
-<b>一个微信账号典型的注册场景如下:</b>
-<br>注册个人号时微信会默认提供一个wxid_xxxxxx 格式的微信号
-<br>注册公众号时微信会默认提供一个gh_xxxxxx 格式的微信号
-<br><div>微信刚刚推出时,允许用手机号注册(只输入正确的手机验证码你的微信帐号就注册好了,这个过程中你无法自定义微信号),之后微信的系统中就有了一个的wxid_xxxxx格式的账号(wxid)，并且和你的手机号做了一一映射。之后你每次登陆时输入手机号和验证码就可以正常登陆(微信号显示为wxid_xxxxx);后来你觉得每次输入手机号很麻烦,于是自定义了一个让自己容易记住并且彰显个性的帐号别名(wx_alias)</div>
+<h4><b>一个微信帐号典型的注册场景如下</b></h4>
+<br>注册个人号时微信会默认提供一个wxid_xxxxxx格式的微信号
+<br>注册公众号时微信会默认提供一个gh_xxxxxx格式的微信号
+<br><div>你用手机号注册一个微信帐号(输入正确的手机验证码你的微信帐号就注册好了,这个过程中你无法自定义微信号),注册成功后你的帐号显示的微信号格式为:wxid_xxxxx(这就是wxid,由微信系统默认生成)，并且和你的手机号做了默认的绑定(bind_phone_number),之后你每次登陆时输入手机号和短信验证码就可以正常登陆(微信号仍然显示为wxid_xxxxx);后来你觉得每次用手机号登陆输入验证码的过程很繁琐,并且那一长串wxid_xxxxxx 很难记住,于是你把你的微信号修改成一个让自己容易记住并且彰显个性的别名比如spider_man(这就是wx_alias)</div>
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wxid_wx_alias.png)
-之后你的微信号显示为自定义的wx_alias,无论是wxid还是wx_alias都能代表你的这个微信账号.    
+之后你的微信号显示为自定义的wx_alias(无论是wxid还是wx_alias都能标识你的这个微信账号).    
+因此我们推测微信的帐号数据库中的表结构应该是这样的:
+
+wxid|wx_alias|bind_phone_number|bind_qq_number|bind_email|...
+ ----|---|---|---|---|----
+wxid_xxxx| 帐号的别名|与帐号绑定的手机号|与帐号绑定的QQ号|与帐号绑定的邮箱地址|...
+
 
 <h4><b>获取当前微信帐号的wxid的方式</b></h4>  
 
@@ -90,7 +96,7 @@
 <div>方案2: 打开微信客户端主界面,点击左上角头像,弹出的界面上显示"微信号:xxxxx", 若是wxid_xxxx格式的,则该值为wxid,<b>否则该值可能是自定义的帐号别名(wx_alias)而非wxid</b>.</div>
 <br>
 
-<h4><b>微信账号中wxid与wx_alias存在的多种形态</b></h4>
+<h4><b>微信帐号中wxid与wx_alias存在的多种形态</b></h4>
 
  账号类型| wxid |wx_alias|最终在微信客户端上显示的微信号
  ----|---|---|----
@@ -101,11 +107,11 @@
 个人号3|fangqing_hust|空|fangqing_hust
 说明:该帐号注册时用了自定义的微信号,之后也没有机会再次修改了
 个人号4|qq526552198|heiheizwx| heiheizwx
-说明:该帐号注册时用了自定义的微信号, 但中间微信也给了这种账号一次修改微信号的机会(微信的历史原因) 
-公众号'绝对搞笑视频'|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888
+说明:该帐号最初是用QQ注册的(现在已经不允许这种方式注册了),并且自定义了微信号, 但后来微信也给了这种账号一次修改微信号的机会(微信的历史原因) 
+公众号:绝对搞笑视频|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888
 说明:普通的公众号wxid以gh_开头
-公众号'腾讯游戏'|Tencent-Games|空|Tencent-Games
-说明:腾讯自家的公众号,不以gh_开头
+公众号:腾讯游戏|Tencent-Games|空|Tencent-Games
+说明:腾讯自家的公众号wxid不以gh_开头
 
 因此任何帐号,其wxid一定存在并且不为空,而wx_alias则可能为空.<b>在wehub的数据结构中,统一用wxid来做参数进行各种操作.</b>
 
