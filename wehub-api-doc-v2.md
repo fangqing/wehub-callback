@@ -84,13 +84,13 @@
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wxid_wx_alias.png)
 之后你的微信号显示为自定义的wx_alias,无论是wxid还是wx_alias都能代表你的这个微信账号.    
 
-<b>获取当前微信帐号的wxid的方式</b>  
+<h4><b>获取当前微信帐号的wxid的方式</b></h4>  
 
 <div>方案1: 打开wehub客户端-->设置界面-->切换到"辅助设置"页,界面上会显示当前微信账号的wxid.  
 <div>方案2: 打开微信客户端主界面,点击左上角头像,弹出的界面上显示"微信号:xxxxx", 若是wxid_xxxx格式的,则该值为wxid,<b>否则该值可能是自定义的帐号别名(wx_alias)而非wxid</b>.</div>
+<br>
 
-
-<b>微信账号中wxid与wx_alias存在的多种形态</b>
+<h4><b>微信账号中wxid与wx_alias存在的多种形态</b></h4>
 
  账号类型| wxid |wx_alias|最终在微信客户端上显示的微信号
  ----|---|---|----
