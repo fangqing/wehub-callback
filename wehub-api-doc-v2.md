@@ -77,9 +77,7 @@
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_flow.png)
 
 <h4><b>一个微信帐号典型的注册场景如下</b></h4>
-<br>注册个人号时微信会默认提供一个wxid_xxxxxx格式的微信号
-<br>注册公众号时微信会默认提供一个gh_xxxxxx格式的微信号
-<br><div>你用手机号注册一个微信帐号(输入正确的手机验证码你的微信帐号就注册好了,这个过程中你无法自定义微信号),注册成功后你的帐号显示的微信号格式为:wxid_xxxxx(这就是wxid,由微信系统默认生成)，并且和你的手机号做了默认的绑定(bind_phone_number),之后你每次登陆时输入手机号和短信验证码就可以正常登陆(微信号仍然显示为wxid_xxxxx);后来你觉得每次用手机号登陆输入验证码的过程很繁琐,并且那一长串wxid_xxxxxx 很难记住,于是你把你的微信号修改成一个让自己容易记住并且彰显个性的别名比如spider_man(这就是wx_alias)</div>
+<div>你用手机号注册一个微信帐号(输入正确的手机验证码你的微信帐号就注册好了,这个过程中你无法自定义微信号),注册成功后你的帐号显示的微信号格式为:wxid_xxxxx(这就是wxid,由微信系统默认生成)，并且和你的手机号做了默认的绑定(bind_phone_number),之后你每次登陆时输入手机号和短信验证码就可以正常登陆(微信号仍然显示为wxid_xxxxx);后来你觉得每次用手机号登陆输入验证码的过程很繁琐,并且那一长串wxid_xxxxxx 很难记住,于是你把你的微信号修改成一个让自己容易记住并且彰显个性的别名比如spider_man(这就是wx_alias)</div>
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wxid_wx_alias.png)
 之后你的微信号显示为自定义的wx_alias(无论是wxid还是wx_alias都能标识你的这个微信账号).    
@@ -97,7 +95,8 @@ wxid_xxxx| 帐号的别名|与帐号绑定的手机号|与帐号绑定的QQ号|�
 <br>
 
 <h4><b>微信帐号中wxid与wx_alias存在的多种形态</b></h4>
-
+<br>注册个人号时微信会默认提供一个wxid_xxxxxx格式的微信号
+<br>注册公众号时微信会默认提供一个gh_xxxxxx格式的微信号
  账号类型| wxid |wx_alias|最终在微信客户端上显示的微信号
  ----|---|---|----
  个人号1|wxid_7092880929211|空|wxid_7092880929211
@@ -109,7 +108,7 @@ wxid_xxxx| 帐号的别名|与帐号绑定的手机号|与帐号绑定的QQ号|�
 个人号4|qq526552198|heiheizwx| heiheizwx
 说明:该帐号最初是用QQ注册的(现在已经不允许这种方式注册了),并且自定义了微信号, 但后来微信也给了这种账号一次修改微信号的机会(微信的历史原因) 
 公众号:绝对搞笑视频|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888
-说明:普通的公众号wxid以gh_开头
+说明:普通的公众号wxid以gh_开头,允许修改一次微信号
 公众号:腾讯游戏|Tencent-Games|空|Tencent-Games
 说明:腾讯自家的公众号wxid不以gh_开头
 
@@ -1294,5 +1293,3 @@ websocket为什么需要心跳? 参考 https://blog.csdn.net/feiwutudou/article/
 关于websocket服务端的demo:https://github.com/fangqing/wehub-callback-websocket
 
 更多的问题请参考<a href="./faq.md">faq</a>
-
-``
