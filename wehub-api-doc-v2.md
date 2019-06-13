@@ -81,13 +81,14 @@
 <br>注册公众号时微信会默认提供一个gh_xxxxxx 格式的微信号
 <br><div>微信刚刚推出时,允许用手机号注册(只输入正确的手机验证码你的微信帐号就注册好了,这个过程中你无法自定义微信号),之后微信的系统中就有了一个的wxid_xxxxx格式的账号(wxid)，并且和你的手机号做了一一映射。之后你每次登陆时输入手机号和验证码就可以正常登陆(微信号显示为wxid_xxxxx);后来你觉得每次输入手机号很麻烦,于是自定义了一个让自己容易记住并且彰显个性的帐号别名(wx_alias)</div>
 
-![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wx_alias.png)
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wxid_wx_alias.png)
 之后你的微信号显示为自定义的wx_alias,无论是wxid还是wx_alias都能代表你的这个微信账号.    
 
 <b>获取当前微信帐号的wxid的方式</b>  
 
 <div>方案1: 打开wehub客户端-->设置界面-->切换到"辅助设置"页,界面上会显示当前微信账号的wxid.  
 <div>方案2: 打开微信客户端主界面,点击左上角头像,弹出的界面上显示"微信号:xxxxx", 若是wxid_xxxx格式的,则该值为wxid,<b>否则该值可能是自定义的帐号别名(wx_alias)而非wxid</b>.</div>
+
 
 <b>微信账号中wxid与wx_alias存在的多种形态</b>
 
